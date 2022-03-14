@@ -16,6 +16,7 @@ const GlobalStyled = createGlobalStyle`
   body {
     color: ${(props) => props.theme.textColor};
     overflow-x: hidden;
+    background-color: rgba(20, 20, 20, 1);
   }
 
   a {

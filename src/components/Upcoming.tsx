@@ -5,7 +5,7 @@ import { IGetMoviesResult } from '../api';
 import { makeImagePath } from '../utils';
 import { boxVariants, infoVariants, slideVariants } from '../animation';
 import { useRecoilState } from 'recoil';
-import { sliderLeave } from '../atoms';
+import { sliderLeave, sliderLeaveP, sliderLeaveU } from '../atoms';
 import DetailView from './DetailView';
 import { useState } from 'react';
 
@@ -122,12 +122,12 @@ interface INowPlaying {
 }
 
 
-function NowPlaying({data}: INowPlaying) {
-  const [leaving, setLeaving] = useRecoilState(sliderLeave);
-  const [index, setIndex] = useState(0);
-  const [decreChk, setDecreChk] = useState(false);
+function Upcoming({data}: INowPlaying) {
+  const [leavingU, setLeavingU] = useRecoilState(sliderLeaveU);
+  const [indexU, setIndexU] = useState(0);
+  const [decreChkU, setDecreChkU] = useState(false);
 
-  const toggleCaraucel = () => setLeaving((prev) => !prev);
+  const toggleCaraucelP = () => setLeavingU((prev) => !prev);
   const movieMatch = useRouteMatch<{ movieId: string }>('/movies/:movieId');
 
   const history = useHistory();
@@ -139,23 +139,23 @@ function NowPlaying({data}: INowPlaying) {
 
   const incraseIndex = () => {
     if (data) {
-      if (leaving) return;
+      if (leavingU) return;
       const totalMovie = data.results.length - 1;
       const maxIndex = Math.floor(totalMovie / offset);
-      setDecreChk(false);
-      toggleCaraucel();
-      setIndex((prev) => (prev === maxIndex ? prev : prev + 1));
-      if(index === maxIndex) setLeaving(false);
+      setDecreChkU(false);
+      toggleCaraucelP();
+      setIndexU((prev) => (prev === maxIndex ? prev : prev + 1));
+      if(indexU === maxIndex) setLeavingU(false);
     }
   };
 
   const decraseIndex = () => {
     if (data) {
-      if (leaving) return;
-      setDecreChk(true);
-      toggleCaraucel();
-      setIndex((prev) => (prev === 0 ? prev : prev - 1));
-      if(index === 0) setLeaving(false);
+      if (leavingU) return;
+      setDecreChkU(true);
+      toggleCaraucelP();
+      setIndexU((prev) => (prev === 0 ? prev : prev - 1));
+      if(indexU === 0) setLeavingU(false);
     }
   }
 
@@ -165,19 +165,19 @@ function NowPlaying({data}: INowPlaying) {
         <Increadiv>
           <NextButton onClick={decraseIndex}> - </NextButton>
         </Increadiv>
-        <AnimatePresence initial={false} onExitComplete={toggleCaraucel} custom={decreChk}>
+        <AnimatePresence initial={false} onExitComplete={toggleCaraucelP} custom={decreChkU}>
           <Row
-            key={index}
-            custom={decreChk}
+            key={indexU}
+            custom={decreChkU}
             variants={slideVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
           >
-            {data?.results.slice(1).slice(offset * index, offset * index + offset).map(item => (
+            {data?.results.slice(1).slice(offset * indexU, offset * indexU + offset).map(item => (
               <Box
-                key={item.id}
-                layoutId={item.id+""}
+                key={item.id + "U"}
+                layoutId={item.id+"U"}
                 onClick={() => movieClick(item.id + "")}
                 bgphoto={makeImagePath(item.backdrop_path, 'w500')}
                 variants={boxVariants}
@@ -209,4 +209,4 @@ function NowPlaying({data}: INowPlaying) {
   )
 }
 
-export default NowPlaying;
+export default Upcoming;

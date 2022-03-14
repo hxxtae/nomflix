@@ -11,7 +11,7 @@ const Nav = styled(motion.nav)`
   position: fixed;
   width: 100%;
   top: 0;
-  background-color: black;
+  background-color: ${props => props.theme.bgColor};
   font-size: 14px;
   padding: 20px 60px;
   color: white;
@@ -100,10 +100,10 @@ const logoVariants = {
 
 const navVariants = {
   top: {
-    backgroundColor: "rgba(0, 0, 0, 0)"
+    backgroundColor: "rgba(20, 20, 20, 0)"
   },
   scroll: {
-    backgroundColor: "rgba(0, 0, 0, 1)"
+    backgroundColor: "rgba(20, 20, 20, 1)"
   }
 }
 

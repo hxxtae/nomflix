@@ -1,14 +1,15 @@
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
-import { getMovies, IGetMoviesResult } from '../api';
+import { getLatest, getMovies, getPopular, getTop, getUpcoming, IGetMoviesResult } from '../api';
 import { makeImagePath } from '../utils';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { sliderLeave } from '../atoms';
 import NowPlaying from '../components/NowPlaying';
+import Popular from '../components/Popular';
 
 const Wrapper = styled.div`
-
+  
 `;
 
 const Loader = styled.div`
@@ -25,7 +26,7 @@ const Banner = styled.div<{bgphoto: string}>`
   justify-content: center;
   align-items: flex-start;
   padding: 60px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(${(props) => props.bgphoto});
+  background-image: linear-gradient(rgba(20, 20, 20, 0), rgba(20, 20, 20, 1)), url(${(props) => props.bgphoto});
   background-size: cover;
 `;
 
@@ -39,39 +40,55 @@ const Overview = styled.p`
   width: 50%;
 `;
 
+const SliderWrapper = styled.div`
+  
+`;
+
+const SliderTitle = styled.h2`
+  display: block;
+  font-size: 30px;
+  transform: translateY(-120px);
+  margin-left: 60px;
+`;
+
 
 function Home() {
   console.log('Home');
 
-  const { isLoading, data } = useQuery<IGetMoviesResult>(["movies", "nowPlaying"], getMovies);
-  const [index, setIndex] = useState(0);
-  const [leaving, setLeaving] = useRecoilState(sliderLeave);
-  const toggleCaraucel = () => setLeaving((prev) => !prev);
-  const offset = 6;
-  
-  const incraseIndex = () => {
-    if (data) {
-      if (leaving) return;
-      const totalMovie = data.results.length - 1;
-      const maxIndex = Math.floor(totalMovie / offset);
-      toggleCaraucel();
-      setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
-    }
-  };
+  const { isLoading: loadingN, data } = useQuery<IGetMoviesResult>(["movies", "nowPlaying"], getMovies);
+  const { isLoading: loadingP, data: populData } = useQuery<IGetMoviesResult>(["movies", "popular"], getPopular);
+  const { isLoading: loadingT, data: topData } = useQuery<IGetMoviesResult>(["movies", "top"], getTop);
+  const { isLoading: loadingU, data: upcomingData } = useQuery<IGetMoviesResult>(["movies", "upcoming"], getUpcoming);
+
+  const loadings = loadingN || loadingP || loadingT || loadingU;
 
   return (
-    <Wrapper>{isLoading ? (
+    <Wrapper>{loadings ? (
       <Loader>Loading...</Loader>
       ) : (
         <>
           <Banner
-            onClick={incraseIndex}
             bgphoto={makeImagePath(data?.results[0].backdrop_path || "")}
           >
             <Title>{ data?.results[0].title }</Title>
             <Overview>{ data?.results[0].overview }</Overview>
           </Banner>
-          <NowPlaying data={data} index={index} offset={offset} />
+          <SliderWrapper>
+            <SliderTitle>NowPlaying</SliderTitle>
+            <NowPlaying data={data} />
+          </SliderWrapper>
+          <SliderWrapper>
+            <SliderTitle>Popular</SliderTitle>
+            <Popular data={populData} />
+          </SliderWrapper>
+          <SliderWrapper>
+            <SliderTitle>Top</SliderTitle>
+            <Popular data={topData} />
+          </SliderWrapper>
+          <SliderWrapper>
+            <SliderTitle>Upcoming</SliderTitle>
+            <Popular data={upcomingData} />
+          </SliderWrapper>
         </>
       )}
     </Wrapper>

@@ -1,7 +1,7 @@
 export const slideVariants = {
-  hidden: {
-    x: window.outerWidth + 5
-  },
+  hidden: (chk: boolean) => ({
+    x: chk ? -window.innerWidth - 5 : window.innerWidth + 5
+  }),
   visible: {
     x: 0,
     transition: {
@@ -9,22 +9,23 @@ export const slideVariants = {
       duration: 1
     }
   },
-  exit: {
-    x: -window.outerWidth - 5,
+  exit: (chk: boolean) => ({
+    x: chk ? window.innerWidth + 5 : -window.innerWidth - 5,
     transition: {
       type: "tween",
       duration: 1
     }
-  }
+  })
 }
 
 export const boxVariants = {
   before: {
-    scale: 0
+    scale: 1
   },
   hover: {
     scale: 1.3,
     y: -50,
+    height: "100%",
     transition: {
       type: "tween",
       delay: 0.5,
