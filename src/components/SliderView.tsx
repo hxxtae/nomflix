@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { IGetMoviesResult } from '../api';
+import { IGetMoviesResult, IMovie } from '../api';
 import { makeImagePath } from '../utils';
 import { boxVariants, infoVariants, slideVariants } from '../animation';
-import { useRecoilState } from 'recoil';
-import { sliderLeave, sliderLeaveP } from '../atoms';
 import DetailView from './DetailView';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 const Slider = styled.div`
   position: relative;
@@ -118,44 +116,48 @@ const ButtonGroup = styled.div`
 `;
 
 interface INowPlaying {
-  data?: IGetMoviesResult;
+  data?: IMovie[];
+  kind: number;
 }
 
 
-function Popular({data}: INowPlaying) {
-  const [leavingP, setLeavingP] = useRecoilState(sliderLeaveP);
-  const [indexP, setIndexP] = useState(0);
-  const [decreChkP, setDecreChkP] = useState(false);
+function SliderView({data, kind}: INowPlaying) {
+  const [leaving, setLeaving] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [decreChk, setDecreChk] = useState(false);
+  const [sliderkind, setSliderKind] = useState('');
 
-  const toggleCaraucelP = () => setLeavingP((prev) => !prev);
+  const toggleCaraucel = () => setLeaving((prev) => !prev);
   const movieMatch = useRouteMatch<{ movieId: string }>('/movies/:movieId');
 
+  const thisele = useRef<HTMLDivElement>(null);
   const history = useHistory();
   const movieClick = (movieId: string) => {
-    history.push(`/movies/${movieId}`)
+    history.push(`/movies/${movieId}?slider=${kind}`);
+    setSliderKind(thisele.current?.dataset.name || '');
   };
   
   const offset = 6;
 
   const incraseIndex = () => {
     if (data) {
-      if (leavingP) return;
-      const totalMovie = data.results.length - 1;
-      const maxIndex = Math.floor(totalMovie / offset);
-      setDecreChkP(false);
-      toggleCaraucelP();
-      setIndexP((prev) => (prev === maxIndex ? prev : prev + 1));
-      if(indexP === maxIndex) setLeavingP(false);
+      if (leaving) return;
+      const totalMovie = data.length - 1;
+      const maxIndex = Math.floor(totalMovie / offset) - 1;
+      setDecreChk(false);
+      toggleCaraucel();
+      setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
     }
   };
 
   const decraseIndex = () => {
     if (data) {
-      if (leavingP) return;
-      setDecreChkP(true);
-      toggleCaraucelP();
-      setIndexP((prev) => (prev === 0 ? prev : prev - 1));
-      if(indexP === 0) setLeavingP(false);
+      if (leaving) return;
+      const totalMovie = data.length - 1;
+      const maxIndex = Math.floor(totalMovie / offset) - 1;
+      setDecreChk(true);
+      toggleCaraucel();
+      setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
     }
   }
 
@@ -163,26 +165,29 @@ function Popular({data}: INowPlaying) {
     <>
       <Slider>
         <Increadiv>
-          <NextButton onClick={decraseIndex}> - </NextButton>
+          <NextButton onClick={decraseIndex}>
+            <i className="fas fa-chevron-left" data-projection-id="5279"></i>
+          </NextButton>
         </Increadiv>
-        <AnimatePresence initial={false} onExitComplete={toggleCaraucelP} custom={decreChkP}>
+        <AnimatePresence initial={false} onExitComplete={toggleCaraucel} custom={decreChk}>
           <Row
-            key={indexP}
-            custom={decreChkP}
+            key={index}
+            custom={decreChk}
             variants={slideVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
           >
-            {data?.results.slice(1).slice(offset * indexP, offset * indexP + offset).map(item => (
+            {data?.slice(1).slice(offset * index, offset * index + offset).map(item => (
               <Box
-                key={item.id + "P"}
-                layoutId={item.id+"P"}
+                key={item.id + kind.toString()}
+                layoutId={item.id + kind.toString()}
                 onClick={() => movieClick(item.id + "")}
                 bgphoto={makeImagePath(item.backdrop_path, 'w500')}
                 variants={boxVariants}
                 whileHover="hover"
-                transition={{type: "tween"}}
+                transition={{ type: "tween" }}
+                ref={thisele}
               >
                 <BoxImg
                   variants={infoVariants}
@@ -201,12 +206,16 @@ function Popular({data}: INowPlaying) {
           </Row>
         </AnimatePresence>
         <Decreadiv>
-          <NextButton onClick={incraseIndex}> + </NextButton>
+          <NextButton onClick={incraseIndex}>
+            <i className="fas fa-chevron-right" data-projection-id="5279"></i>
+          </NextButton>
         </Decreadiv>
       </Slider>
-      {movieMatch && <DetailView data={data}/>}
+      {movieMatch && (
+        <DetailView key="xmvcd" data={data} kind={kind} sliderkind={sliderkind}/>
+      )}
     </>
   )
 }
 
-export default Popular;
+export default SliderView;

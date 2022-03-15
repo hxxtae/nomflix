@@ -15,6 +15,7 @@ const Nav = styled(motion.nav)`
   font-size: 14px;
   padding: 20px 60px;
   color: white;
+  z-index: 10;
 `;
 
 const Col = styled.div`
@@ -29,7 +30,7 @@ const Logo = styled(motion.svg)`
   fill: ${(props) => props.theme.mainColor};
   path {
     stroke-width: 6px;
-    stroke: white;
+    stroke: transparent;
   }
 `;
 
@@ -89,13 +90,7 @@ const Input = styled(motion.input)`
 const logoVariants = {
   normal: {
     fillOpacity: 1,
-  },
-  active: {
-    fillOpacity: [0, 1, 0],
-    transition: {
-      repeat: Infinity,
-    },
-  },
+  }
 };
 
 const navVariants = {

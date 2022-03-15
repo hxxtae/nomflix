@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { motion, AnimatePresence, useViewportScroll, MotionValue } from 'framer-motion';
 import { makeImagePath } from '../utils';
-import { useHistory, useRouteMatch } from 'react-router-dom';
-import { getDetail, IGetMoviesResult, IGetMovieDetail } from '../api';
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import { getDetail, IGetMoviesResult, IGetMovieDetail, IMovie } from '../api';
 import { useQuery } from 'react-query';
+import { SliderCategory } from '../constants';
 
 const Overlay = styled(motion.div)`
   opacity: 0;
@@ -14,6 +15,7 @@ const Overlay = styled(motion.div)`
   height: 1000px;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
 `;
 
 const BigMovie = styled(motion.div)<{scrolly: MotionValue<number>}>`
@@ -28,6 +30,7 @@ const BigMovie = styled(motion.div)<{scrolly: MotionValue<number>}>`
   border-radius: 10px;
   overflow: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  z-index: 2;
 `;
 
 const BigCover = styled.div<{bgPhoto: string}>`
@@ -105,8 +108,6 @@ const BigDetail = styled.div`
   span {
     margin-bottom: 20px;
   }
-  
-  
 `;
 
 const BigCompany = styled.span`
@@ -114,10 +115,12 @@ const BigCompany = styled.span`
 `;
 
 interface IDetailView {
-  data?: IGetMoviesResult;
+  data?: IMovie[];
+  kind: number;
+  sliderkind: string;
 }
 
-function DetailView({data}: IDetailView) {
+function DetailView({data, kind}: IDetailView) {
   const history = useHistory();
   const movieMatch = useRouteMatch<{ movieId: string }>('/movies/:movieId');
 
@@ -126,14 +129,20 @@ function DetailView({data}: IDetailView) {
   const closeBigMovie = () => history.push('/');
   const { scrollY } = useViewportScroll();
 
+  const location = useLocation();
+  const queryString = require('query-string');
+  const parsed = queryString.parse(location.search);
+
   const clickMovie = movieMatch?.params.movieId &&
-    data?.results.find((movie) =>
+    data?.find((movie) =>
       movie.id === +movieMatch.params.movieId
     );
+  
+  const locationChk = parsed ? parsed.slider : null;
 
   return (
     <AnimatePresence>
-      {(
+      { locationChk == kind && clickMovie && (
         <>
           <Overlay
             onClick={closeBigMovie}
@@ -142,10 +151,10 @@ function DetailView({data}: IDetailView) {
             exit={{ opacity: 0 }}>
           </Overlay>
           <BigMovie
-            layoutId={movieMatch?.params.movieId}
+            layoutId={movieMatch?.params.movieId + kind.toString()}
             scrolly={scrollY}
           >
-            { clickMovie && (
+            {(
               <>
                 <BigCover bgPhoto={makeImagePath(clickMovie.backdrop_path)} />
                 <BigWrapper>
