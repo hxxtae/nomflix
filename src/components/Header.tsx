@@ -182,11 +182,13 @@ function Header() {
             ></path>
           </motion.svg>
           <Input
-            {...register("keyword", {required: true})}
+            {...register("keyword", { required: true })}
             initial={{ scaleX: 0 }}
             animate={inputAnimation}
             transition={{ type: "linear" }}
-            placeholder="Search for movie for tv show" />
+            placeholder="Search for movie for tv show"
+            autoComplete='off'
+          />
         </Search>
       </Col>
     </Nav>
