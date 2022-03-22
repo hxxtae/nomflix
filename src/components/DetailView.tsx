@@ -4,7 +4,9 @@ import { makeImagePath } from '../utils';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import { getDetail, IGetMoviesResult, IGetMovieDetail, IMovie } from '../api';
 import { useQuery } from 'react-query';
-import { SliderCategory } from '../constants';
+import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 const Overlay = styled(motion.div)`
   opacity: 0;
@@ -66,7 +68,12 @@ const BigButtonGroup = styled.div`
     border-radius: 50%;
     background-color: ${props => props.theme.bgColor};
     margin-right: 10px;
+    color: rgba(255, 255, 255, .8);
     cursor: pointer;
+
+    &:active {
+      opacity: .8;
+    }
 
     &:first-child {
       width: 150px;
@@ -76,6 +83,11 @@ const BigButtonGroup = styled.div`
       font-size: 20px;
       font-weight: bold;
       border: none;
+      color: rgba(0, 0, 0, .8);
+
+      span {
+        margin-right: 22px;
+      }
     }
   }
 `;
@@ -117,7 +129,6 @@ const BigCompany = styled.span`
 interface IDetailView {
   data?: IMovie[];
   kind: number;
-  sliderkind: string;
 }
 
 function DetailView({data, kind}: IDetailView) {
@@ -137,6 +148,11 @@ function DetailView({data, kind}: IDetailView) {
     data?.find((movie) =>
       movie.id === +movieMatch.params.movieId
     );
+  // data에 movie id와 route의 movieId가 같으면 true
+  // -> SliderView는 어러 컴포넌트로(재사용) 선언 되었지만,
+  //    DetailView는 하나의 컴포넌트만 선언 되어 호출되므로
+  //    SliderView 컴포넌트들이 하나의 DetailView 컴포넌트를 사용하게 된다.
+  //    그래서 아래 locationChk가 필요한 이유이다.
   
   const locationChk = parsed ? parsed.slider : null;
 
@@ -160,10 +176,19 @@ function DetailView({data, kind}: IDetailView) {
                 <BigWrapper>
                   <BigTitle>{clickMovie.title}</BigTitle>
                   <BigButtonGroup>
-                    <button>재생</button>
-                    <button>1</button>
-                    <button>1</button>
-                    <button>1</button>
+                    <button>
+                      <span>재생</span>
+                      <FontAwesomeIcon icon={faPlay} size="1x" />
+                    </button>
+                    <button>
+                      <FontAwesomeIcon icon={faThumbsUp} size="1x" />
+                    </button>
+                    <button>
+                      <FontAwesomeIcon icon={faThumbsDown} size="1x" />
+                    </button>
+                    <button>
+                      <FontAwesomeIcon icon={faPlus} size="1x" />
+                    </button>
                   </BigButtonGroup>
                   <BigOverview>{clickMovie.overview}</BigOverview>
                   <BigDetail>

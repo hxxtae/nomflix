@@ -220,7 +220,7 @@ function SliderView({data, kind}: INowPlaying) {
         </Decreadiv>
       </Slider>
       {movieMatch && (
-        <DetailView key="xmvcd" data={data} kind={kind} sliderkind={sliderkind}/>
+        <DetailView key="xmvcd" data={data} kind={kind}/>
       )}
     </>
   )
