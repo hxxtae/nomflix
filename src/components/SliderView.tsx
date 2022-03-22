@@ -6,6 +6,8 @@ import { makeImagePath } from '../utils';
 import { boxVariants, infoVariants, slideVariants } from '../animation';
 import DetailView from './DetailView';
 import { useState, useRef } from 'react';
+import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Slider = styled.div`
   position: relative;
@@ -13,18 +15,15 @@ const Slider = styled.div`
   height: 162px;
   margin-bottom: 100px;
 `;
-
 const Increadiv = styled.div`
   position: absolute;
   left: 0;
   z-index: 1;
 `;
-
 const Decreadiv = styled.div`
   position: absolute;
   right: 0;
 `;
-
 const NextButton = styled.button`
   height: 162px;
   background-color: rgba(0, 0, 0, .5);
@@ -34,7 +33,6 @@ const NextButton = styled.button`
   width: 50px;
   cursor: pointer;
 `;
-
 const Row = styled(motion.div)`
   display: grid;
   gap: 10px;
@@ -44,7 +42,6 @@ const Row = styled(motion.div)`
   width: 100%;
   padding: 0 60px;
 `;
-
 const Box = styled(motion.div)<{bgphoto: string}>`
   display: flex;
   flex-direction: column;
@@ -63,13 +60,11 @@ const Box = styled(motion.div)<{bgphoto: string}>`
     transform-origin: right center;
   }
 `;
-
 const BoxImg = styled(motion.img)`
   width: 100%;
   height: 100%;
   object-fit: cover;
 `;
-
 const Info = styled(motion.div)`
   display: flex;
   flex-direction: column;
@@ -104,22 +99,27 @@ const Info = styled(motion.div)`
     color: ${props => props.theme.textColor};
   }
 `;
-
 const ButtonGroup = styled.div`
   display: flex;
   justify-content: flex-start;
   margin-bottom: 10px;
 
   button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, .8);
     cursor: pointer;
+
+    &:first-child {
+      color: rgba(0, 0, 0, .8);
+    }
   }
 `;
-
 interface INowPlaying {
   data?: IMovie[];
   kind: number;
 }
-
 
 function SliderView({data, kind}: INowPlaying) {
   const [leaving, setLeaving] = useState(false);
@@ -194,10 +194,18 @@ function SliderView({data, kind}: INowPlaying) {
                   src={makeImagePath(item.backdrop_path, 'w500')} />
                 <Info variants={infoVariants} >
                   <ButtonGroup>
-                    <button>1</button>
-                    <button>2</button>
-                    <button>+</button>
-                    <button>-</button>
+                    <button>
+                      <FontAwesomeIcon icon={faPlay} size="1x" />
+                    </button>
+                    <button>
+                      <FontAwesomeIcon icon={faThumbsUp} size="1x" />
+                    </button>
+                    <button>
+                      <FontAwesomeIcon icon={faThumbsDown} size="1x" />
+                    </button>
+                    <button>
+                      <FontAwesomeIcon icon={faPlus} size="1x" />
+                    </button>
                   </ButtonGroup>
                   <span>{item.title}</span>
                 </Info>
