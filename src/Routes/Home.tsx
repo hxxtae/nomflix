@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
-import { getMovies, getPopular, getTop, getUpcoming, IGetMoviesResult, IMovie } from '../api';
+import { getMovies, getPopular, getTop, getUpcoming, IGetDataResult, IData } from '../api';
 import { makeImagePath } from '../utils';
 import SliderView from '../components/SliderView';
 import { SliderCategory } from '../constants';
@@ -8,14 +8,12 @@ import { SliderCategory } from '../constants';
 const Wrapper = styled.div`
   
 `;
-
 const Loader = styled.div`
   height: 20vh;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
-
 const Banner = styled.div<{bgphoto: string}>`
   height: 100vh;
   display: flex;
@@ -26,7 +24,6 @@ const Banner = styled.div<{bgphoto: string}>`
   background-image: linear-gradient(rgba(20, 20, 20, 0), rgba(20, 20, 20, 1)), url(${(props) => props.bgphoto});
   background-size: cover;
 `;
-
 const Title = styled.h2`
   font-size: 68px;
   font-weight: bold;
@@ -36,7 +33,6 @@ const Title = styled.h2`
     background-color: transparent;
   }
 `;
-
 const Overview = styled.p`
   font-size: 40px;
   width: 60%;
@@ -46,11 +42,9 @@ const Overview = styled.p`
     background-color: transparent;
   }
 `;
-
 const SliderWrapper = styled.div`
   
 `;
-
 const SliderTitle = styled.h2`
   display: block;
   font-size: 30px;
@@ -58,7 +52,6 @@ const SliderTitle = styled.h2`
   transform: translateY(-120px);
   margin-left: 60px;  
 `;
-
 const FooterWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -67,7 +60,6 @@ const FooterWrapper = styled.div`
   padding: 70px 0;
   box-shadow: 0 -10px 50px rgba(255, 255, 255, 1);
 `;
-
 const FooterBox = styled.div`
   display: flex;
   justify-content: center;
@@ -93,9 +85,9 @@ function Home() {
   console.log('Home');
 
   // 서버 데이터 캐싱
-  const { isLoading: loadingN1, data: nowplayingData1 } = useQuery<IGetMoviesResult>(["movies", "nowPlaying1"], () => getMovies(1));
-  const { isLoading: loadingN2, data: nowplayingData2 } = useQuery<IGetMoviesResult>(["movies", "nowPlaying2"], () => getMovies(2));
-  const { isLoading: loadingN3, data: nowplayingData3 } = useQuery<IGetMoviesResult>(["movies", "nowPlaying3"], () => getMovies(3));
+  const { isLoading: loadingN1, data: nowplayingData1 } = useQuery<IGetDataResult>(["movies", "nowPlaying1"], () => getMovies(1));
+  const { isLoading: loadingN2, data: nowplayingData2 } = useQuery<IGetDataResult>(["movies", "nowPlaying2"], () => getMovies(2));
+  const { isLoading: loadingN3, data: nowplayingData3 } = useQuery<IGetDataResult>(["movies", "nowPlaying3"], () => getMovies(3));
   const nowPlayLoading = loadingN1 || loadingN2 || loadingN3;
 
   const nowPlayDataFunc = () => {
@@ -105,9 +97,9 @@ function Home() {
     return [...arr1, ...arr2, ...arr3];
   };
 
-  const { isLoading: loadingP1, data: populData1 } = useQuery<IGetMoviesResult>(["movies", "popular1"], () => getPopular(1));
-  const { isLoading: loadingP2, data: populData2 } = useQuery<IGetMoviesResult>(["movies", "popular2"], () => getPopular(2));
-  const { isLoading: loadingP3, data: populData3 } = useQuery<IGetMoviesResult>(["movies", "popular3"], () => getPopular(3));
+  const { isLoading: loadingP1, data: populData1 } = useQuery<IGetDataResult>(["movies", "popular1"], () => getPopular(1));
+  const { isLoading: loadingP2, data: populData2 } = useQuery<IGetDataResult>(["movies", "popular2"], () => getPopular(2));
+  const { isLoading: loadingP3, data: populData3 } = useQuery<IGetDataResult>(["movies", "popular3"], () => getPopular(3));
   const popularLoading = loadingP1 || loadingP2 || loadingP3;
 
   const popularDataFunc = () => {
@@ -117,9 +109,9 @@ function Home() {
     return [...arr1, ...arr2, ...arr3];
   };
 
-  const { isLoading: loadingT1, data: topData1 } = useQuery<IGetMoviesResult>(["movies", "top1"], () => getTop(1));
-  const { isLoading: loadingT2, data: topData2 } = useQuery<IGetMoviesResult>(["movies", "top2"], () => getTop(2));
-  const { isLoading: loadingT3, data: topData3 } = useQuery<IGetMoviesResult>(["movies", "top3"], () => getTop(3));
+  const { isLoading: loadingT1, data: topData1 } = useQuery<IGetDataResult>(["movies", "top1"], () => getTop(1));
+  const { isLoading: loadingT2, data: topData2 } = useQuery<IGetDataResult>(["movies", "top2"], () => getTop(2));
+  const { isLoading: loadingT3, data: topData3 } = useQuery<IGetDataResult>(["movies", "top3"], () => getTop(3));
   const topLoading = loadingT1 || loadingT2 || loadingT3;
 
   const topDataFunc = () => {
@@ -130,9 +122,9 @@ function Home() {
   };
 
 
-  const { isLoading: loadingU1, data: upcomingData1 } = useQuery<IGetMoviesResult>(["movies", "upcoming1"], () => getUpcoming(1));
-  const { isLoading: loadingU2, data: upcomingData2 } = useQuery<IGetMoviesResult>(["movies", "upcoming2"], () => getUpcoming(2));
-  const { isLoading: loadingU3, data: upcomingData3 } = useQuery<IGetMoviesResult>(["movies", "upcoming3"], () => getUpcoming(3));
+  const { isLoading: loadingU1, data: upcomingData1 } = useQuery<IGetDataResult>(["movies", "upcoming1"], () => getUpcoming(1));
+  const { isLoading: loadingU2, data: upcomingData2 } = useQuery<IGetDataResult>(["movies", "upcoming2"], () => getUpcoming(2));
+  const { isLoading: loadingU3, data: upcomingData3 } = useQuery<IGetDataResult>(["movies", "upcoming3"], () => getUpcoming(3));
   const upcomingLoading = loadingU1 || loadingU2 || loadingU3;
 
   const upcomingDataFunc = () => {

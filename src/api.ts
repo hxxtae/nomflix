@@ -1,21 +1,24 @@
 const API_KEY = "ce41ccaab71298ec7349b99aef4909e2";
 const BASE_PATH = "https://api.themoviedb.org/3";
 
-export interface IMovie {
+export interface IData {
   id: number;
+  first_air_date: string;
   backdrop_path: string;
   poster_path: string;
   title: string;
   overview: string;
+  name: string;
+  original_name: string;
 };
 
-export interface IGetMoviesResult {
+export interface IGetDataResult {
   dates: {
     maximum: string;
     minimum: string;
   };
   page: number;
-  results: IMovie[];
+  results: IData[];
   total_pages: number;
   total_results: number;
 }
@@ -51,22 +54,6 @@ export function getUpcoming(page: number) {
 }
 
 
-export interface ITv {
-  backdrop_path: string;
-  first_air_date: string;
-  id: number;
-  name: string;
-  original_name: string;
-  overview: string;
-  poster_path: string;
-}
-
-export interface IGetTvResult {
-  page: number;
-  results: ITv[];
-  total_pages: number;
-  total_results: number;
-}
 
 
 export async function getTvOntheAir(page: number) {

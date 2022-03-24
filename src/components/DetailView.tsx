@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { motion, AnimatePresence, useViewportScroll, MotionValue } from 'framer-motion';
 import { makeImagePath } from '../utils';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
-import { getDetail, IGetMoviesResult, IGetMovieDetail, IMovie } from '../api';
+import { getDetail, IGetDataResult, IGetMovieDetail, IData } from '../api';
 import { useQuery } from 'react-query';
 import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -127,7 +127,7 @@ const BigCompany = styled.span`
 `;
 
 interface IDetailView {
-  data?: IMovie[];
+  data?: IData[];
   kind: number;
 }
 

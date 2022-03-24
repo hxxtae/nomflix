@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { IGetMoviesResult, IMovie } from '../api';
+import { IData } from '../api';
 import { makeImagePath } from '../utils';
 import { boxVariants, infoVariants, slideVariants } from '../animation';
 import DetailView from './DetailView';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -116,48 +116,55 @@ const ButtonGroup = styled.div`
     }
   }
 `;
-interface INowPlaying {
-  data?: IMovie[];
+interface ISliderData {
+  data?: IData[];
   kind: number;
 }
 
-function SliderView({data, kind}: INowPlaying) {
+function SliderView({ data, kind }: ISliderData) {
   const [leaving, setLeaving] = useState(false);
   const [index, setIndex] = useState(0);
   const [decreChk, setDecreChk] = useState(false);
-  const [sliderkind, setSliderKind] = useState('');
 
   const toggleCaraucel = () => setLeaving((prev) => !prev);
   const movieMatch = useRouteMatch<{ movieId: string }>('/movies/:movieId');
 
-  const thisele = useRef<HTMLDivElement>(null);
   const history = useHistory();
   const movieClick = (movieId: string) => {
     history.push(`/movies/${movieId}?slider=${kind}`);
-    setSliderKind(thisele.current?.dataset.name || '');
   };
   
   const offset = 6;
 
+  const increaFunc = (data: IData[]) => {
+    const totalMovie = data.length - 1;
+    const maxIndex = Math.floor(totalMovie / offset) - 1;
+    setDecreChk(false);
+    toggleCaraucel();
+    setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
+  }
+
+  const decreaFunc = (data: IData[]) => {
+    const totalMovie = data.length - 1;
+    const maxIndex = Math.floor(totalMovie / offset) - 1;
+    setDecreChk(true);
+    toggleCaraucel();
+    setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
+  }
+
   const incraseIndex = () => {
+    if (leaving) return;
     if (data) {
-      if (leaving) return;
-      const totalMovie = data.length - 1;
-      const maxIndex = Math.floor(totalMovie / offset) - 1;
-      setDecreChk(false);
-      toggleCaraucel();
-      setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
+      increaFunc(data);
     }
   };
 
   const decraseIndex = () => {
+    if (leaving) return;
     if (data) {
-      if (leaving) return;
-      const totalMovie = data.length - 1;
-      const maxIndex = Math.floor(totalMovie / offset) - 1;
-      setDecreChk(true);
-      toggleCaraucel();
-      setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
+      decreaFunc(data);
+    } else if (data) {
+      decreaFunc(data);
     }
   }
 
@@ -187,7 +194,6 @@ function SliderView({data, kind}: INowPlaying) {
                 variants={boxVariants}
                 whileHover="hover"
                 transition={{ type: "tween" }}
-                ref={thisele}
               >
                 <BoxImg
                   variants={infoVariants}
@@ -207,7 +213,7 @@ function SliderView({data, kind}: INowPlaying) {
                       <FontAwesomeIcon icon={faPlus} size="1x" />
                     </button>
                   </ButtonGroup>
-                  <span>{item.title}</span>
+                  <span>{item.title || item.name}</span>
                 </Info>
               </Box>
             ))}
