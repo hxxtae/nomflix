@@ -51,6 +51,29 @@ export function getUpcoming(page: number) {
 }
 
 
+export interface ITv {
+  backdrop_path: string;
+  first_air_date: string;
+  id: number;
+  name: string;
+  original_name: string;
+  overview: string;
+  poster_path: string;
+}
+
+export interface IGetTvResult {
+  page: number;
+  results: ITv[];
+  total_pages: number;
+  total_results: number;
+}
+
+
+export async function getTvOntheAir(page: number) {
+  return await (await fetch(`${BASE_PATH}/tv/on_the_air?api_key=${API_KEY}&page=${page}`)).json();
+}
+
+
 
 interface ICompany {
   id: number;
