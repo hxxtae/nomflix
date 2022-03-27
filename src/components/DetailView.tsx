@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { motion, AnimatePresence, useViewportScroll, MotionValue } from 'framer-motion';
 import { makeImagePath } from '../utils';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
-import { getDetail, IGetDataResult, IGetMovieDetail, IData } from '../api';
+import { getDetail, IGetMovieDetail, IData } from '../api';
 import { useQuery } from 'react-query';
 import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -192,15 +192,15 @@ function DetailView({data, kind}: IDetailView) {
                   </BigButtonGroup>
                   <BigOverview>{clickMovie.overview}</BigOverview>
                   <BigDetail>
-                    {isLoading || detailData?.production_companies.map(item => (
-                      <div>
+                    {isLoading || detailData?.production_companies.map((item, index) => (
+                      <div key={index.toString()}>
                         <img src={makeImagePath(item.logo_path, 'w500')} alt={item.name} />
                       </div>
                     ))}
                   </BigDetail>
                   <BigDetail>
-                    {isLoading || detailData?.production_companies.map(item => (
-                      <span>{item.name}</span>
+                    {isLoading || detailData?.production_companies.map((item, index) => (
+                      <span key={index.toString()}>{item.name}</span>
                     ))}
                   </BigDetail>
                 </BigWrapper>
