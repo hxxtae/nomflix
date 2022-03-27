@@ -3,13 +3,13 @@ const BASE_PATH = "https://api.themoviedb.org/3";
 
 export interface IData {
   id: number;
+  name: string;
   first_air_date: string;
   backdrop_path: string;
   poster_path: string;
   title: string;
-  overview: string;
-  name: string;
   original_name: string;
+  overview: string;
 };
 
 export interface IGetDataResult {

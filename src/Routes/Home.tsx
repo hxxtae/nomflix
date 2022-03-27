@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
-import { getMovies, getPopular, getTop, getUpcoming, IGetDataResult, IData } from '../api';
+import { getMovies, getPopular, getTop, getUpcoming, IGetDataResult } from '../api';
 import { makeImagePath } from '../utils';
 import SliderView from '../components/SliderView';
 import { SliderCategory } from '../constants';
