@@ -83,6 +83,8 @@ const FooterBox = styled.div`
 
 
 function Tv() {
+  console.log('Tv');
+
   const { isLoading: loadingAir1, data: onAirData1 } = useQuery<IGetDataResult>(["Tv", "onTheAir1"], () => getTvOntheAir(1));
   const { isLoading: loadingAir2, data: onAirData2 } = useQuery<IGetDataResult>(["Tv", "onTheAir2"], () => getTvOntheAir(2));
   const { isLoading: loadingAir3, data: onAirData3 } = useQuery<IGetDataResult>(["Tv", "onTheAir3"], () => getTvOntheAir(3));

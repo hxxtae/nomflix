@@ -133,27 +133,37 @@ interface IDetailView {
 
 function DetailView({data, kind}: IDetailView) {
   const history = useHistory();
-  const movieMatch = useRouteMatch<{ movieId: string }>('/movies/:movieId');
+  const detailMatch = useRouteMatch<{ movieId: string, tvId: string }>(['/movies/:movieId', '/tv/:tvId']);
 
-  const { isLoading, data: detailData } = useQuery<IGetMovieDetail>(["movie", "detail"], () => getDetail(movieMatch?.params.movieId));
+  const { isLoading, data: detailData } = useQuery<IGetMovieDetail>(["movie", "detail"], () => getDetail(detailMatch?.params.movieId));
   
-  const closeBigMovie = () => history.push('/');
+  const closeBigMovie = () => {
+    if (detailMatch?.params.movieId) {
+      history.push('/');
+    } else if(detailMatch?.params.tvId) {
+      history.push('/tv');
+    }
+  };
   const { scrollY } = useViewportScroll();
 
   const location = useLocation();
   const queryString = require('query-string');
   const parsed = queryString.parse(location.search);
 
-  const clickMovie = movieMatch?.params.movieId &&
-    data?.find((movie) =>
-      movie.id === +movieMatch.params.movieId
-    );
-  // data에 movie id와 route의 movieId가 같으면 true
+  const clickMovie = (detailMatch?.params.movieId || detailMatch?.params.tvId) && data?.find((movie) =>
+    movie.id === (+detailMatch.params.movieId || +detailMatch.params.tvId)
+  );
+  
+  // data에 movie id와 route의 movieId가 같으면 true가 되면서 DetailView 컴포넌트가 render 된다.
   // -> SliderView는 어러 컴포넌트로(재사용) 선언 되었지만,
   //    DetailView는 하나의 컴포넌트만 선언 되어 호출되므로
   //    SliderView 컴포넌트들이 하나의 DetailView 컴포넌트를 사용하게 된다.
-  //    그래서 아래 locationChk가 필요한 이유이다.
-  
+  //    그래서 아래 locationChk가 추가로 필요한 이유이다.
+  //  ※ (A)같은 컴포넌트를 여러개 선언하여 render 하는 경우와
+  //     (B)여러 컴포넌트에서 하나의 컴포넌트를 render 하는 경우의 차이
+  //     (컴포넌트의 스코프에 존재하는 값들의 공유 유무의 차이)
+  //     (A : 같은 컴포넌트를 여러개 선언 : 같은 컴포넌트지만 선언된 컴포넌트는 독립적이다.)
+  //     (B : 하나의 컴포넌트를 참조하여 사용되므로 참조된다.)
   const locationChk = parsed ? parsed.slider : null;
 
   return (
@@ -167,14 +177,14 @@ function DetailView({data, kind}: IDetailView) {
             exit={{ opacity: 0 }}>
           </Overlay>
           <BigMovie
-            layoutId={movieMatch?.params.movieId + kind.toString()}
+            layoutId={(detailMatch?.params.movieId || detailMatch?.params.tvId) + kind.toString()}
             scrolly={scrollY}
           >
             {(
               <>
                 <BigCover bgPhoto={makeImagePath(clickMovie.backdrop_path)} />
                 <BigWrapper>
-                  <BigTitle>{clickMovie.title}</BigTitle>
+                  <BigTitle>{clickMovie.title || clickMovie.name}</BigTitle>
                   <BigButtonGroup>
                     <button>
                       <span>재생</span>
@@ -191,7 +201,7 @@ function DetailView({data, kind}: IDetailView) {
                     </button>
                   </BigButtonGroup>
                   <BigOverview>{clickMovie.overview}</BigOverview>
-                  <BigDetail>
+                  {/* <BigDetail>
                     {isLoading || detailData?.production_companies.map((item, index) => (
                       <div key={index.toString()}>
                         <img src={makeImagePath(item.logo_path, 'w500')} alt={item.name} />
@@ -202,7 +212,7 @@ function DetailView({data, kind}: IDetailView) {
                     {isLoading || detailData?.production_companies.map((item, index) => (
                       <span key={index.toString()}>{item.name}</span>
                     ))}
-                  </BigDetail>
+                  </BigDetail> */}
                 </BigWrapper>
               </>
             )}

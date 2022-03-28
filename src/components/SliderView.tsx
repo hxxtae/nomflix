@@ -128,10 +128,13 @@ function SliderView({ data, kind }: ISliderData) {
 
   const toggleCaraucel = () => setLeaving((prev) => !prev);
   const movieMatch = useRouteMatch<{ movieId: string }>('/movies/:movieId');
+  const tvMatch = useRouteMatch<{ tvId: string }>('/tv/:tvId');
 
   const history = useHistory();
-  const movieClick = (movieId: string) => {
-    history.push(`/movies/${movieId}?slider=${kind}`);
+  const detailClick = (movieId: string) => {
+    const { pathname } = history.location;
+    const path = pathname === '/' ? '/movies' : pathname; 
+    history.push(`${path}/${movieId}?slider=${kind}`);
   };
   
   const offset = 6;
@@ -189,7 +192,7 @@ function SliderView({ data, kind }: ISliderData) {
               <Box
                 key={item.id + kind.toString()}
                 layoutId={item.id + kind.toString()}
-                onClick={() => movieClick(item.id + "")}
+                onClick={() => detailClick(item.id + "")}
                 bgphoto={makeImagePath(item.backdrop_path, 'w500')}
                 variants={boxVariants}
                 whileHover="hover"
@@ -225,8 +228,8 @@ function SliderView({ data, kind }: ISliderData) {
           </NextButton>
         </Decreadiv>
       </Slider>
-      {movieMatch && (
-        <DetailView key="xmvcd" data={data} kind={kind}/>
+      {(movieMatch || tvMatch) && (
+        <DetailView data={data} kind={kind}/>
       )}
     </>
   )
