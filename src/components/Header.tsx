@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const Nav = styled(motion.nav)`
@@ -109,7 +109,7 @@ interface IForm {
 function Header() {
   console.log('header');
   const [searchOpen, setSearchOpen] = useState(false);
-  const homeMatch = useRouteMatch('/');
+  const homeMatch = useRouteMatch('/'); // useRouteMatch 를 사용하면 re-render 된다??
   const tvMatch = useRouteMatch('/tv');
   const inputAnimation = useAnimation(); // useAnimation()
   const navAnimation = useAnimation();
