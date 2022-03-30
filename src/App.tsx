@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Home from './Routes/Home';
 import Tv from './Routes/Tv';
 import Search from './Routes/Search';
+import Footer from './components/Footer';
 
 function App() {
   console.log('App');
@@ -21,6 +22,7 @@ function App() {
           <Home />
         </Route>
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 }
