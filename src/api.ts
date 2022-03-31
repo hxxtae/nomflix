@@ -1,6 +1,10 @@
 const API_KEY = "ce41ccaab71298ec7349b99aef4909e2";
 const BASE_PATH = "https://api.themoviedb.org/3";
 
+// ----------------------------
+// Interface
+// ----------------------------
+// Movie & TV interface
 export interface IData {
   id: number;
   name: string;
@@ -23,6 +27,25 @@ export interface IGetDataResult {
   total_results: number;
 }
 
+// Detail interface
+interface ICompany {
+  id: number;
+  logo_path: string;
+  name: string;
+}
+
+export interface IGetMovieDetail {
+  production_companies: ICompany[];
+  release_date: string;
+  production_countries: {
+    name: string;
+  }[];
+}
+
+// ----------------------------
+// API
+// ----------------------------
+// Movie api
 export function getMovies(page: number) {
   return fetch(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}&page=${page}`).then(
     response => response.json()
@@ -52,30 +75,12 @@ export function getUpcoming(page: number) {
     response => response.json()
   );
 }
-
-
-
-
+// Tv api
 export async function getTvOntheAir(page: number) {
   return await (await fetch(`${BASE_PATH}/tv/on_the_air?api_key=${API_KEY}&page=${page}`)).json();
 }
 
-
-
-interface ICompany {
-  id: number;
-  logo_path: string;
-  name: string;
-}
-
-export interface IGetMovieDetail {
-  production_companies: ICompany[];
-  release_date: string;
-  production_countries: {
-    name: string;
-  }[];
-}
-
+// Movie & Tv Detail api
 export function getDetail(movieId?: string) {
   return fetch(`${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}`).then(
     response => response.json()
