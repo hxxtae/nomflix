@@ -1,3 +1,4 @@
+// Home.tsx
 export const slideVariants = {
   hidden: (chk: boolean) => ({
     x: chk ? -window.innerWidth - 5 : window.innerWidth + 5

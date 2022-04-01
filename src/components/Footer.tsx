@@ -31,7 +31,6 @@ const FooterBox = styled.div`
 
 function Footer() {
   console.log('Footer');
-  
 
   return (
     <FooterWrapper>
