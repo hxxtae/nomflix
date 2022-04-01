@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
-import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+
+import { useEffect, useState } from 'react';
+import { logoVariants, navVariants } from '../animation';
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -86,21 +88,6 @@ const Input = styled(motion.input)`
   height: 40px;
   z-index: -1;
 `;
-
-const logoVariants = {
-  normal: {
-    fillOpacity: 1,
-  }
-};
-
-const navVariants = {
-  top: {
-    backgroundColor: "rgba(20, 20, 20, 0)"
-  },
-  scroll: {
-    backgroundColor: "rgba(20, 20, 20, 1)"
-  }
-}
 
 interface IForm {
   keyword: string;

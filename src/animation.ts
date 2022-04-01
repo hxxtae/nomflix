@@ -1,4 +1,6 @@
-// Home.tsx
+// -----------------------------
+// used SliderView.tsx
+// -----------------------------
 export const slideVariants = {
   hidden: (chk: boolean) => ({
     x: chk ? -window.innerWidth - 5 : window.innerWidth + 5
@@ -44,4 +46,22 @@ export const infoVariants = {
       duration: 0.3
     }
   },
+}
+
+// -----------------------------
+// used Header.tsx
+// -----------------------------
+export const logoVariants = {
+  normal: {
+    fillOpacity: 1,
+  }
+};
+
+export const navVariants = {
+  top: {
+    backgroundColor: "rgba(20, 20, 20, 0)"
+  },
+  scroll: {
+    backgroundColor: "rgba(20, 20, 20, 1)"
+  }
 }
