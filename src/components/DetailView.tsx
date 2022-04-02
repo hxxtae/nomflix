@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { motion, AnimatePresence, useViewportScroll, MotionValue } from 'framer-motion';
 import { makeImagePath } from '../utils';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
-import { getDetail, IGetMovieDetail, IData } from '../api';
+import { getDetail, IGetDetail, IData } from '../api';
 import { useQuery } from 'react-query';
 import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -122,10 +122,6 @@ const BigDetail = styled.div`
   }
 `;
 
-const BigCompany = styled.span`
-
-`;
-
 interface IDetailView {
   data?: IData[];
   kind: number;
@@ -135,7 +131,7 @@ function DetailView({data, kind}: IDetailView) {
   const history = useHistory();
   const detailMatch = useRouteMatch<{ movieId: string, tvId: string }>(['/movies/:movieId', '/tv/:tvId']);
 
-  const { isLoading, data: detailData } = useQuery<IGetMovieDetail>(["movie", "detail"], () => getDetail(detailMatch?.params.movieId));
+  const { isLoading, data: detailData } = useQuery<IGetDetail>(["movieAndtv", "detail"], () => getDetail(detailMatch?.params.movieId, detailMatch?.params.tvId));
   
   const closeBigMovie = () => {
     if (detailMatch?.params.movieId) {
@@ -168,7 +164,7 @@ function DetailView({data, kind}: IDetailView) {
 
   return (
     <AnimatePresence>
-      { locationChk == kind && clickMovie && (
+      { locationChk === kind.toString() && clickMovie && (
         <>
           <Overlay
             onClick={closeBigMovie}
@@ -201,18 +197,24 @@ function DetailView({data, kind}: IDetailView) {
                     </button>
                   </BigButtonGroup>
                   <BigOverview>{clickMovie.overview}</BigOverview>
-                  {/* <BigDetail>
-                    {isLoading || detailData?.production_companies.map((item, index) => (
-                      <div key={index.toString()}>
-                        <img src={makeImagePath(item.logo_path, 'w500')} alt={item.name} />
-                      </div>
-                    ))}
-                  </BigDetail>
-                  <BigDetail>
-                    {isLoading || detailData?.production_companies.map((item, index) => (
-                      <span key={index.toString()}>{item.name}</span>
-                    ))}
-                  </BigDetail> */}
+                  {isLoading || 
+                    (
+                      <>
+                        <BigDetail>
+                          {detailData?.production_companies.map((item, index) => (
+                            <div key={index.toString()}>
+                              <img src={makeImagePath(item.logo_path, 'w500')} alt={item.name} />
+                            </div>
+                          ))}
+                        </BigDetail>
+                        <BigDetail>
+                          {detailData?.production_companies.map((item, index) => (
+                            <span key={index.toString()}>{item.name}</span>
+                          ))}
+                        </BigDetail>
+                      </>
+                    )
+                  }
                 </BigWrapper>
               </>
             )}
