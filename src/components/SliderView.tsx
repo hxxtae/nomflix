@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { IData } from '../api';
+import { IData } from '../api/api';
 import { makeImagePath } from '../utils';
-import { boxVariants, infoVariants, slideVariants } from '../animation';
+import { boxVariants, infoVariants, slideVariants } from '../constants/animation';
 import DetailView from './DetailView';
 import { useState } from 'react';
 import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";

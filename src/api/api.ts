@@ -52,6 +52,10 @@ export async function getMovies(page: number) {
   );
 }
 
+export async function getMoviesAll() {
+  return Promise.all([getMovies(1), getMovies(2), getMovies(3)]);
+}
+
 export async function getPopular(page: number) {
   return fetch(`${BASE_PATH}/movie/popular?api_key=${API_KEY}&page=${page}`).then(
     response => response.json()

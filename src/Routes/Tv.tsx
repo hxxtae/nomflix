@@ -1,8 +1,8 @@
 import { useQuery } from 'react-query';
-import { getTvOntheAir, IGetDataResult } from '../api';
+import { getTvOntheAir, IGetDataResult } from '../api/api';
 import styled from 'styled-components';
 import SliderView from '../components/SliderView';
-import { SliderCategory } from '../constants';
+import { SliderCategory } from '../constants/constants';
 import { makeImagePath } from '../utils';
 
 const Wrapper = styled.div`

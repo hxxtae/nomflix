@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { motion, AnimatePresence, useViewportScroll, MotionValue } from 'framer-motion';
 import { makeImagePath } from '../utils';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
-import { getDetail, IGetDetail, IData } from '../api';
+import { getDetail, IGetDetail, IData } from '../api/api';
 import { useQuery } from 'react-query';
 import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
-import { getMovies, getPopular, getTop, getUpcoming, IGetDataResult } from '../api';
+import { getMovies, getPopular, getTop, getUpcoming, IGetDataResult } from '../api/api';
 import { makeImagePath } from '../utils';
 import SliderView from '../components/SliderView';
-import { SliderCategory } from '../constants';
+import { SliderCategory } from '../constants/constants';
 
 const Wrapper = styled.div`
   
