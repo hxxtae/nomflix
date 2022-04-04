@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
-import { getMovies, getPopular, getTop, getUpcoming, IGetDataResult } from '../api/api';
+import { getNowPlayAll, getPopularAll, getTopAll, getUpcoming, getUpcomingAll, IGetDataResult } from '../api/api';
 import { makeImagePath } from '../utils';
 import SliderView from '../components/SliderView';
 import { SliderCategory } from '../constants/constants';
@@ -58,54 +58,33 @@ function Home() {
   console.log('Home');
 
   // 서버 데이터 캐싱
-  const { isLoading: loadingN1, data: nowplayingData1 } = useQuery<IGetDataResult>(["movies", "nowPlaying1"], () => getMovies(1));
-  const { isLoading: loadingN2, data: nowplayingData2 } = useQuery<IGetDataResult>(["movies", "nowPlaying2"], () => getMovies(2));
-  const { isLoading: loadingN3, data: nowplayingData3 } = useQuery<IGetDataResult>(["movies", "nowPlaying3"], () => getMovies(3));
-  const nowPlayLoading = loadingN1 || loadingN2 || loadingN3;
+  const { isLoading: nowPlayLoading, data: nowplayingData } = useQuery<IGetDataResult[]>(["movie", "nowPlaying"], () => getNowPlayAll());
+  const nowPlayDatas = nowPlayLoading ?
+    [] : nowplayingData ?
+      [ ...nowplayingData[0].results,
+        ...nowplayingData[1].results,
+        ...nowplayingData[2].results ] : [];
 
-  const nowPlayDataFunc = () => {
-    const arr1 = loadingN1 ? [] : nowplayingData1 ? nowplayingData1.results : [];
-    const arr2 = loadingN2 ? [] : nowplayingData2 ? nowplayingData2.results : [];
-    const arr3 = loadingN3 ? [] : nowplayingData3 ? nowplayingData3.results : [];
-    return [...arr1, ...arr2, ...arr3];
-  };
+  const { isLoading: popularLoading, data: popularData } = useQuery<IGetDataResult[]>(["movies", "popular"], () => getPopularAll());
+  const popularDatas = popularLoading ?
+    [] : popularData ?
+      [...popularData[0].results,
+        ...popularData[1].results,
+        ...popularData[2].results] : [];
 
-  const { isLoading: loadingP1, data: populData1 } = useQuery<IGetDataResult>(["movies", "popular1"], () => getPopular(1));
-  const { isLoading: loadingP2, data: populData2 } = useQuery<IGetDataResult>(["movies", "popular2"], () => getPopular(2));
-  const { isLoading: loadingP3, data: populData3 } = useQuery<IGetDataResult>(["movies", "popular3"], () => getPopular(3));
-  const popularLoading = loadingP1 || loadingP2 || loadingP3;
+  const { isLoading: topLoading, data: topData } = useQuery<IGetDataResult[]>(["movies", "top"], () => getTopAll());
+  const topDatas = topLoading ?
+    [] : topData ?
+      [...topData[0].results,
+        ...topData[1].results,
+        ...topData[2].results] : [];
 
-  const popularDataFunc = () => {
-    const arr1 = loadingP1 ? [] : populData1 ? populData1.results : [];
-    const arr2 = loadingP2 ? [] : populData2 ? populData2.results : [];
-    const arr3 = loadingP3 ? [] : populData3 ? populData3.results : [];
-    return [...arr1, ...arr2, ...arr3];
-  };
-
-  const { isLoading: loadingT1, data: topData1 } = useQuery<IGetDataResult>(["movies", "top1"], () => getTop(1));
-  const { isLoading: loadingT2, data: topData2 } = useQuery<IGetDataResult>(["movies", "top2"], () => getTop(2));
-  const { isLoading: loadingT3, data: topData3 } = useQuery<IGetDataResult>(["movies", "top3"], () => getTop(3));
-  const topLoading = loadingT1 || loadingT2 || loadingT3;
-
-  const topDataFunc = () => {
-    const arr1 = loadingT1 ? [] : topData1 ? topData1.results : [];
-    const arr2 = loadingT2 ? [] : topData2 ? topData2.results : [];
-    const arr3 = loadingT3 ? [] : topData3 ? topData3.results : [];
-    return [...arr1, ...arr2, ...arr3];
-  };
-
-
-  const { isLoading: loadingU1, data: upcomingData1 } = useQuery<IGetDataResult>(["movies", "upcoming1"], () => getUpcoming(1));
-  const { isLoading: loadingU2, data: upcomingData2 } = useQuery<IGetDataResult>(["movies", "upcoming2"], () => getUpcoming(2));
-  const { isLoading: loadingU3, data: upcomingData3 } = useQuery<IGetDataResult>(["movies", "upcoming3"], () => getUpcoming(3));
-  const upcomingLoading = loadingU1 || loadingU2 || loadingU3;
-
-  const upcomingDataFunc = () => {
-    const arr1 = loadingU1 ? [] : upcomingData1 ? upcomingData1.results : [];
-    const arr2 = loadingU2 ? [] : upcomingData2 ? upcomingData2.results : [];
-    const arr3 = loadingU3 ? [] : upcomingData3 ? upcomingData3.results : [];
-    return [...arr1, ...arr2, ...arr3];
-  };
+  const { isLoading: upcomingLoading, data: upcomingData } = useQuery<IGetDataResult[]>(["movies", "upcoming"], () => getUpcomingAll());
+  const upcomingDatas = upcomingLoading ?
+    [] : upcomingData ?
+      [...upcomingData[0].results,
+        ...upcomingData[1].results,
+        ...upcomingData[2].results] : [];
 
 
   return (
@@ -114,35 +93,35 @@ function Home() {
         <Loader>Loading...</Loader>) :
         (<>
           <Banner
-            bgphoto={makeImagePath(nowPlayDataFunc()[0].backdrop_path || "")}
+            bgphoto={makeImagePath(nowPlayDatas[0].backdrop_path || "")}
           >
-            <Title>{ nowPlayDataFunc()[0].title }</Title>
-            <Overview>{ nowPlayDataFunc()[0].overview }</Overview>
+            <Title>{ nowPlayDatas[0].title }</Title>
+            <Overview>{ nowPlayDatas[0].overview }</Overview>
           </Banner>
           <SliderWrapper>
             <SliderTitle>지금 뜨는 콘텐츠</SliderTitle>
-            <SliderView data={ nowPlayDataFunc() } kind={SliderCategory.NowPlaying} />
+            <SliderView data={ nowPlayDatas } kind={SliderCategory.NowPlaying} />
           </SliderWrapper>
         </>)}
       { popularLoading ? (
         <Loader>Loading...</Loader>) : 
         ( <SliderWrapper>
             <SliderTitle>인기 상승 콘텐츠</SliderTitle>
-            <SliderView data={ popularDataFunc() } kind={SliderCategory.Popular} />
+            <SliderView data={ popularDatas } kind={SliderCategory.Popular} />
           </SliderWrapper> 
         )}
       { topLoading ? (
         <Loader>Loading...</Loader>) : 
         ( <SliderWrapper>
             <SliderTitle>베스트 인기 콘텐츠</SliderTitle>
-            <SliderView data={ topDataFunc() } kind={SliderCategory.Top} />
+            <SliderView data={ topDatas } kind={SliderCategory.Top} />
           </SliderWrapper> 
         )}
       { upcomingLoading ? (
         <Loader>Loading...</Loader>) : 
         ( <SliderWrapper>
             <SliderTitle>개봉 예정작 콘텐츠</SliderTitle>
-            <SliderView data={ upcomingDataFunc() } kind={SliderCategory.Upcoming} />
+            <SliderView data={ upcomingDatas } kind={SliderCategory.Upcoming} />
           </SliderWrapper> 
         )}
     </Wrapper>
