@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import { motion, AnimatePresence, useViewportScroll, MotionValue } from 'framer-motion';
-import { makeImagePath } from '../utils';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
-import { getDetail, IGetDetail, IData } from '../api/api';
 import { useQuery } from 'react-query';
+import queryString from 'query-string';
 import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { makeImagePath } from '../utils';
+import { getDetail, IGetDetail, IData } from '../api/api';
 
 
 const Overlay = styled(motion.div)`
@@ -127,29 +129,28 @@ interface IDetailView {
   kind: number;
 }
 
-function DetailView({data, kind}: IDetailView) {
+function DetailView({ data, kind }: IDetailView) {
   const history = useHistory();
   const detailMatch = useRouteMatch<{ movieId: string, tvId: string }>(['/movies/:movieId', '/tv/:tvId']);
+  const location = useLocation();
+  const parsed = queryString.parse(location.search);
+  const locationChk = parsed ? parsed.slider : null;
+  const { scrollY } = useViewportScroll();
 
   const { isLoading, data: detailData } = useQuery<IGetDetail>(["movieAndtv", "detail"], () => getDetail(detailMatch?.params.movieId, detailMatch?.params.tvId));
   
   const closeBigMovie = () => {
     if (detailMatch?.params.movieId) {
       history.push('/');
-    } else if(detailMatch?.params.tvId) {
+    } else if (detailMatch?.params.tvId) {
       history.push('/tv');
     }
   };
-  const { scrollY } = useViewportScroll();
+  
 
-  const location = useLocation();
-  const queryString = require('query-string');
-  const parsed = queryString.parse(location.search);
-
-  const clickMovie = (detailMatch?.params.movieId || detailMatch?.params.tvId) && data?.find((movie) =>
+  const clickDetail = (detailMatch?.params.movieId || detailMatch?.params.tvId) && data?.find((movie) =>
     movie.id === (+detailMatch.params.movieId || +detailMatch.params.tvId)
   );
-  
   // data에 movie id와 route의 movieId가 같으면 true가 되면서 DetailView 컴포넌트가 render 된다.
   // -> SliderView는 어러 컴포넌트로(재사용) 선언 되었지만,
   //    DetailView는 하나의 컴포넌트만 선언 되어 호출되므로
@@ -160,11 +161,10 @@ function DetailView({data, kind}: IDetailView) {
   //     (컴포넌트의 스코프에 존재하는 값들의 공유 유무의 차이)
   //     (A : 같은 컴포넌트를 여러개 선언 : 같은 컴포넌트지만 선언된 컴포넌트는 독립적이다.)
   //     (B : 하나의 컴포넌트를 참조하여 사용되므로 참조된다.)
-  const locationChk = parsed ? parsed.slider : null;
-
+  
   return (
     <AnimatePresence>
-      { locationChk === kind.toString() && clickMovie && (
+      {locationChk === kind.toString() && clickDetail &&
         <>
           <Overlay
             onClick={closeBigMovie}
@@ -176,51 +176,46 @@ function DetailView({data, kind}: IDetailView) {
             layoutId={(detailMatch?.params.movieId || detailMatch?.params.tvId) + kind.toString()}
             scrolly={scrollY}
           >
-            {(
-              <>
-                <BigCover bgPhoto={makeImagePath(clickMovie.backdrop_path)} />
-                <BigWrapper>
-                  <BigTitle>{clickMovie.title || clickMovie.name}</BigTitle>
-                  <BigButtonGroup>
-                    <button>
-                      <span>재생</span>
-                      <FontAwesomeIcon icon={faPlay} size="1x" />
-                    </button>
-                    <button>
-                      <FontAwesomeIcon icon={faThumbsUp} size="1x" />
-                    </button>
-                    <button>
-                      <FontAwesomeIcon icon={faThumbsDown} size="1x" />
-                    </button>
-                    <button>
-                      <FontAwesomeIcon icon={faPlus} size="1x" />
-                    </button>
-                  </BigButtonGroup>
-                  <BigOverview>{clickMovie.overview}</BigOverview>
-                  {isLoading || 
-                    (
-                      <>
-                        <BigDetail>
-                          {detailData?.production_companies.map((item, index) => (
-                            <div key={index.toString()}>
-                              <img src={makeImagePath(item.logo_path, 'w500')} alt={item.name} />
-                            </div>
-                          ))}
-                        </BigDetail>
-                        <BigDetail>
-                          {detailData?.production_companies.map((item, index) => (
-                            <span key={index.toString()}>{item.name}</span>
-                          ))}
-                        </BigDetail>
-                      </>
-                    )
-                  }
-                </BigWrapper>
-              </>
-            )}
+            <BigCover bgPhoto={makeImagePath(clickDetail.backdrop_path)} />
+            <BigWrapper>
+              <BigTitle>{clickDetail.title || clickDetail.name}</BigTitle>
+              <BigButtonGroup>
+                <button>
+                  <span>재생</span>
+                  <FontAwesomeIcon icon={faPlay} size="1x" />
+                </button>
+                <button>
+                  <FontAwesomeIcon icon={faThumbsUp} size="1x" />
+                </button>
+                <button>
+                  <FontAwesomeIcon icon={faThumbsDown} size="1x" />
+                </button>
+                <button>
+                  <FontAwesomeIcon icon={faPlus} size="1x" />
+                </button>
+              </BigButtonGroup>
+              <BigOverview>{clickDetail.overview}</BigOverview>
+              {isLoading ||
+                <>
+                  <BigDetail>
+                    {detailData?.production_companies.map((item, index) => (
+                      <div key={index.toString()}>
+                        <img src={makeImagePath(item.logo_path, 'w500')} alt={item.name} />
+                      </div>
+                    ))}
+                  </BigDetail>
+                  <BigDetail>
+                    {detailData?.production_companies.map((item, index) => (
+                      <span key={index.toString()}>{item.name}</span>
+                    ))}
+                  </BigDetail>
+                </>
+              }
+            </BigWrapper>
           </BigContent>
-        </>)}
-    </AnimatePresence>
+        </>
+      }
+    </AnimatePresence > 
   )
 }
 

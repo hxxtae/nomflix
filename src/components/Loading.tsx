@@ -16,7 +16,7 @@ function Loading() {
   return (
     <Loader>
       <motion.div variants={ loadVariants } initial="before" animate="start">
-        <FontAwesomeIcon icon={faSpinner} size={'2x'}></FontAwesomeIcon>
+        <FontAwesomeIcon icon={faSpinner} size={'2x'} />
       </motion.div>
     </Loader>
   )

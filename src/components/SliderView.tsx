@@ -1,13 +1,14 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useHistory, useRouteMatch } from 'react-router-dom';
+import { faPlay, faThumbsDown, faThumbsUp, faPlus, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { IData } from '../api/api';
 import { makeImagePath } from '../utils';
 import { boxVariants, infoVariants, slideVariants } from '../constants/animation';
 import DetailView from './DetailView';
-import { useState } from 'react';
-import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Slider = styled.div`
   position: relative;
@@ -125,19 +126,18 @@ function SliderView({ data, kind }: ISliderData) {
   const [leaving, setLeaving] = useState(false);
   const [index, setIndex] = useState(0);
   const [decreChk, setDecreChk] = useState(false);
-
+  const offset = 6;
+  
   const toggleCaraucel = () => setLeaving((prev) => !prev);
   const movieMatch = useRouteMatch<{ movieId: string }>('/movies/:movieId');
   const tvMatch = useRouteMatch<{ tvId: string }>('/tv/:tvId');
-
   const history = useHistory();
+
   const detailClick = (movieId: string) => {
     const { pathname } = history.location;
     const path = pathname === '/' ? '/movies' : pathname; 
     history.push(`${path}/${movieId}?slider=${kind}`);
   };
-  
-  const offset = 6;
 
   const increaFunc = (data: IData[]) => {
     const totalMovie = data.length - 1;
@@ -155,28 +155,26 @@ function SliderView({ data, kind }: ISliderData) {
     setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
   }
 
-  const incraseIndex = () => {
+  const incraseSlider = () => {
     if (leaving) return;
     if (data) {
       increaFunc(data);
     }
   };
 
-  const decraseIndex = () => {
+  const decraseSlider = () => {
     if (leaving) return;
     if (data) {
       decreaFunc(data);
-    } else if (data) {
-      decreaFunc(data);
     }
-  }
+  };
 
   return (
     <>
       <Slider>
         <Increadiv>
-          <NextButton onClick={decraseIndex}>
-            <i className="fas fa-chevron-left" data-projection-id="5279"></i>
+          <NextButton onClick={decraseSlider}>
+            <FontAwesomeIcon icon={faChevronLeft} size={'2x'} />
           </NextButton>
         </Increadiv>
         <AnimatePresence initial={false} onExitComplete={toggleCaraucel} custom={decreChk}>
@@ -198,9 +196,7 @@ function SliderView({ data, kind }: ISliderData) {
                 whileHover="hover"
                 transition={{ type: "tween" }}
               >
-                <BoxImg
-                  variants={infoVariants}
-                  src={makeImagePath(item.backdrop_path, 'w500')} />
+                <BoxImg variants={infoVariants} src={makeImagePath(item.backdrop_path, 'w500')} />
                 <Info variants={infoVariants} >
                   <ButtonGroup>
                     <button>
@@ -223,11 +219,12 @@ function SliderView({ data, kind }: ISliderData) {
           </Row>
         </AnimatePresence>
         <Decreadiv>
-          <NextButton onClick={incraseIndex}>
-            <i className="fas fa-chevron-right" data-projection-id="5279"></i>
+          <NextButton onClick={incraseSlider}>
+            <FontAwesomeIcon icon={faChevronRight} size={'2x'} />
           </NextButton>
         </Decreadiv>
       </Slider>
+      
       {(movieMatch || tvMatch) && (
         <DetailView data={data} kind={kind}/>
       )}

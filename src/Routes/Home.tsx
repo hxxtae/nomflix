@@ -85,12 +85,10 @@ function Home() {
 
   return (
     <Wrapper>
-      { nowPlayLoading ? (
-        <Loading />) :
-        (<>
-          <Banner
-            bgphoto={makeImagePath(nowPlayDatas[0].backdrop_path || "")}
-          >
+      { nowPlayLoading ?
+        <Loading /> :
+        <>
+          <Banner bgphoto={makeImagePath(nowPlayDatas[0].backdrop_path)}>
             <Title>{ nowPlayDatas[0].title }</Title>
             <Overview>{ nowPlayDatas[0].overview }</Overview>
           </Banner>
@@ -98,28 +96,25 @@ function Home() {
             <SliderTitle>지금 뜨는 콘텐츠</SliderTitle>
             <SliderView data={ nowPlayDatas } kind={SliderCategory.NowPlaying} />
           </SliderWrapper>
-        </>)}
-      { popularLoading ? (
-        <Loading />) : 
-        ( <SliderWrapper>
-            <SliderTitle>인기 상승 콘텐츠</SliderTitle>
-            <SliderView data={ popularDatas } kind={SliderCategory.Popular} />
-          </SliderWrapper> 
-        )}
-      { topLoading ? (
-        <Loading />) : 
-        ( <SliderWrapper>
-            <SliderTitle>베스트 인기 콘텐츠</SliderTitle>
-            <SliderView data={ topDatas } kind={SliderCategory.Top} />
-          </SliderWrapper> 
-        )}
-      { upcomingLoading ? (
-        <Loading />) : 
-        ( <SliderWrapper>
-            <SliderTitle>개봉 예정작 콘텐츠</SliderTitle>
-            <SliderView data={ upcomingDatas } kind={SliderCategory.Upcoming} />
-          </SliderWrapper> 
-        )}
+        </>}
+      { popularLoading ? 
+        <Loading /> : 
+        <SliderWrapper>
+          <SliderTitle>인기 상승 콘텐츠</SliderTitle>
+          <SliderView data={ popularDatas } kind={SliderCategory.Popular} />
+        </SliderWrapper> }
+      { topLoading ? 
+        <Loading /> : 
+        <SliderWrapper>
+          <SliderTitle>베스트 인기 콘텐츠</SliderTitle>
+          <SliderView data={ topDatas } kind={SliderCategory.Top} />
+        </SliderWrapper> }
+      { upcomingLoading ? 
+        <Loading /> : 
+        <SliderWrapper>
+          <SliderTitle>개봉 예정작 콘텐츠</SliderTitle>
+          <SliderView data={ upcomingDatas } kind={SliderCategory.Upcoming} />
+        </SliderWrapper> }
     </Wrapper>
   );
 }
