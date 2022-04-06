@@ -1,4 +1,22 @@
 // -----------------------------
+// used Home.tsx
+// -----------------------------
+export const loadVariants = {
+  before: {
+    rotate: 0,
+  },
+  start: {
+    rotate: 360,
+    transition: {
+      type: 'tween',
+      duration: 1,
+      repeat: Infinity,
+    }
+  }
+}
+
+
+// -----------------------------
 // used SliderView.tsx
 // -----------------------------
 export const slideVariants = {
@@ -64,4 +82,4 @@ export const navVariants = {
   scroll: {
     backgroundColor: "rgba(20, 20, 20, 1)"
   }
-}
+};

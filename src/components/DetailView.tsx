@@ -20,7 +20,7 @@ const Overlay = styled(motion.div)`
   z-index: 2;
 `;
 
-const BigMovie = styled(motion.div)<{scrolly: MotionValue<number>}>`
+const BigContent = styled(motion.div)<{scrolly: MotionValue<number>}>`
   position: absolute;
   width: 42vw;
   height: 90vh;
@@ -172,7 +172,7 @@ function DetailView({data, kind}: IDetailView) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}>
           </Overlay>
-          <BigMovie
+          <BigContent
             layoutId={(detailMatch?.params.movieId || detailMatch?.params.tvId) + kind.toString()}
             scrolly={scrollY}
           >
@@ -218,7 +218,7 @@ function DetailView({data, kind}: IDetailView) {
                 </BigWrapper>
               </>
             )}
-          </BigMovie>
+          </BigContent>
         </>)}
     </AnimatePresence>
   )

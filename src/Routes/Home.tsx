@@ -1,18 +1,14 @@
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
+
 import { getNowPlayAll, getPopularAll, getTopAll, getUpcoming, getUpcomingAll, IGetDataResult } from '../api/api';
 import { makeImagePath } from '../utils';
 import SliderView from '../components/SliderView';
 import { SliderCategory } from '../constants/constants';
+import Loading from '../components/Loading';
 
 const Wrapper = styled.div`
   
-`;
-const Loader = styled.div`
-  height: 20vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 const Banner = styled.div<{bgphoto: string}>`
   height: 100vh;
@@ -90,7 +86,7 @@ function Home() {
   return (
     <Wrapper>
       { nowPlayLoading ? (
-        <Loader>Loading...</Loader>) :
+        <Loading />) :
         (<>
           <Banner
             bgphoto={makeImagePath(nowPlayDatas[0].backdrop_path || "")}
@@ -104,21 +100,21 @@ function Home() {
           </SliderWrapper>
         </>)}
       { popularLoading ? (
-        <Loader>Loading...</Loader>) : 
+        <Loading />) : 
         ( <SliderWrapper>
             <SliderTitle>인기 상승 콘텐츠</SliderTitle>
             <SliderView data={ popularDatas } kind={SliderCategory.Popular} />
           </SliderWrapper> 
         )}
       { topLoading ? (
-        <Loader>Loading...</Loader>) : 
+        <Loading />) : 
         ( <SliderWrapper>
             <SliderTitle>베스트 인기 콘텐츠</SliderTitle>
             <SliderView data={ topDatas } kind={SliderCategory.Top} />
           </SliderWrapper> 
         )}
       { upcomingLoading ? (
-        <Loader>Loading...</Loader>) : 
+        <Loading />) : 
         ( <SliderWrapper>
             <SliderTitle>개봉 예정작 콘텐츠</SliderTitle>
             <SliderView data={ upcomingDatas } kind={SliderCategory.Upcoming} />
