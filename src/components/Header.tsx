@@ -3,7 +3,7 @@ import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { useForm } from 'react-hook-form';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { logoVariants, navVariants } from '../constants/animation';
 
 const Nav = styled(motion.nav)`

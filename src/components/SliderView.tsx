@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useHistory, useRouteMatch } from 'react-router-dom';
@@ -123,6 +123,8 @@ interface ISliderData {
 }
 
 function SliderView({ data, kind }: ISliderData) {
+  console.log('SliderView');
+
   const [leaving, setLeaving] = useState(false);
   const [index, setIndex] = useState(0);
   const [decreChk, setDecreChk] = useState(false);
@@ -179,7 +181,7 @@ function SliderView({ data, kind }: ISliderData) {
         </Increadiv>
         <AnimatePresence initial={false} onExitComplete={toggleCaraucel} custom={decreChk}>
           <Row
-            key={index}
+            key={index + kind.toString()}
             custom={decreChk}
             variants={slideVariants}
             initial="hidden"

@@ -6,6 +6,7 @@ import { makeImagePath } from '../utils';
 import SliderView from '../components/SliderView';
 import { SliderCategory } from '../constants/constants';
 import Loading from '../components/Loading';
+import { useMemo } from 'react';
 
 const Wrapper = styled.div`
   
@@ -81,7 +82,6 @@ function Home() {
       [...upcomingData[0].results,
         ...upcomingData[1].results,
         ...upcomingData[2].results] : [];
-
 
   return (
     <Wrapper>

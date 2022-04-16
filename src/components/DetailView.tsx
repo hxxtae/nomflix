@@ -127,9 +127,11 @@ const BigDetail = styled.div`
 interface IDetailView {
   data?: IData[];
   kind: number;
-}
+};
 
 function DetailView({ data, kind }: IDetailView) {
+  console.log("DetailView");
+
   const history = useHistory();
   const detailMatch = useRouteMatch<{ movieId: string, tvId: string }>(['/movies/:movieId', '/tv/:tvId']);
   const location = useLocation();
