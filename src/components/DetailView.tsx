@@ -148,7 +148,6 @@ function DetailView({ data, kind }: IDetailView) {
       history.push('/tv');
     }
   };
-  
 
   const clickDetail = (detailMatch?.params.movieId || detailMatch?.params.tvId) && data?.find((movie) =>
     movie.id === (+detailMatch.params.movieId || +detailMatch.params.tvId)

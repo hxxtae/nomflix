@@ -1,6 +1,3 @@
-const API_KEY = "ce41ccaab71298ec7349b99aef4909e2";
-const BASE_PATH = "https://api.themoviedb.org/3";
-
 // ----------------------------
 // Interface
 // ----------------------------
@@ -47,7 +44,7 @@ export interface IGetDetail {
 // ----------------------------
 // Movie api
 export async function getNowPlay(page: number) {
-  return fetch(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}&page=${page}`).then(
+  return fetch(`${process.env.REACT_APP_BASE_PATH}/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`).then(
     response => response.json()
   );
 }
@@ -56,9 +53,8 @@ export async function getNowPlayAll() {
   return Promise.all([getNowPlay(1), getNowPlay(2), getNowPlay(3)]);
 }
 
-
 export async function getPopular(page: number) {
-  return fetch(`${BASE_PATH}/movie/popular?api_key=${API_KEY}&page=${page}`).then(
+  return fetch(`${process.env.REACT_APP_BASE_PATH}/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`).then(
     response => response.json()
   );
 }
@@ -67,9 +63,8 @@ export async function getPopularAll() {
   return Promise.all([getPopular(1), getPopular(2), getPopular(3)]);
 }
 
-
 export async function getTop(page: number) {
-  return fetch(`${BASE_PATH}/movie/top_rated?api_key=${API_KEY}&page=${page}`).then(
+  return fetch(`${process.env.REACT_APP_BASE_PATH}/movie/top_rated?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`).then(
     response => response.json()
   );
 }
@@ -79,13 +74,13 @@ export async function getTopAll() {
 }
 
 export async function getLatest() {
-  return fetch(`${BASE_PATH}/movie/latest?api_key=${API_KEY}`).then(
+  return fetch(`${process.env.REACT_APP_BASE_PATH}/movie/latest?api_key=${process.env.REACT_APP_API_KEY}`).then(
     response => response.json()
   );
 }
 
 export async function getUpcoming(page: number) {
-  return fetch(`${BASE_PATH}/movie/upcoming?api_key=${API_KEY}&page=${page}`).then(
+  return fetch(`${process.env.REACT_APP_BASE_PATH}/movie/upcoming?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`).then(
     response => response.json()
   );
 }
@@ -96,12 +91,12 @@ export async function getUpcomingAll() {
 
 // Tv api
 export async function getTvOntheAir(page: number) {
-  return await (await fetch(`${BASE_PATH}/tv/on_the_air?api_key=${API_KEY}&page=${page}`)).json();
+  return await (await fetch(`${process.env.REACT_APP_BASE_PATH}/tv/on_the_air?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`)).json();
 }
 
 // Movie & Tv Detail api
 export async function getDetail(movieId?: string, tvId?: string) {
-  return fetch(`${BASE_PATH}/${detailValidate(movieId, tvId)}?api_key=${API_KEY}`).then(
+  return fetch(`${process.env.REACT_APP_BASE_PATH}/${detailValidate(movieId, tvId)}?api_key=${process.env.REACT_APP_API_KEY}`).then(
     response => response.json()
   );
 }
