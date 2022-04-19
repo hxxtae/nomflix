@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import React, { useEffect, useState } from 'react';
 import { logoVariants, navVariants } from '../constants/animation';
+import { publicUrlStr } from '../utils';
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -96,8 +97,8 @@ interface IForm {
 function Header() {
   console.log('header');
   const [searchOpen, setSearchOpen] = useState(false);
-  const homeMatch = useRouteMatch('/'); // useRouteMatch 를 사용하면 re-render 된다??
-  const tvMatch = useRouteMatch('/tv');
+  const homeMatch = useRouteMatch(`${publicUrlStr()}/`); // useRouteMatch 를 사용하면 re-render 된다??
+  const tvMatch = useRouteMatch(`${publicUrlStr()}/tv`);
   const inputAnimation = useAnimation(); // useAnimation()
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll(); // useViewportScroll()
@@ -146,10 +147,10 @@ function Header() {
         </Logo>
         <Items>
           <Item>
-            <Link to="/">Home {homeMatch?.isExact && <Circle layoutId="circle"/>}</Link>
+            <Link to={`${publicUrlStr()}/`}>Home {homeMatch?.isExact && <Circle layoutId="circle"/>}</Link>
           </Item>
           <Item>
-            <Link to="/tv">Tv {tvMatch && <Circle layoutId="circle"/>}</Link>
+            <Link to={`${publicUrlStr()}/tv`}>Tv {tvMatch && <Circle layoutId="circle"/>}</Link>
           </Item>
         </Items>
       </Col>

@@ -6,7 +6,7 @@ import queryString from 'query-string';
 import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { makeImagePath } from '../utils';
+import { makeImagePath, publicUrlStr } from '../utils';
 import { getDetail, IGetDetail, IData } from '../api/api';
 
 
@@ -133,7 +133,7 @@ function DetailView({ data, kind }: IDetailView) {
   console.log("DetailView");
 
   const history = useHistory();
-  const detailMatch = useRouteMatch<{ movieId: string, tvId: string }>(['/movies/:movieId', '/tv/:tvId']);
+  const detailMatch = useRouteMatch<{ movieId: string, tvId: string }>([`${publicUrlStr()}/movies/:movieId`, `${publicUrlStr()}/tv/:tvId`]);
   const location = useLocation();
   const parsed = queryString.parse(location.search);
   const locationChk = parsed ? parsed.slider : null;
@@ -143,9 +143,9 @@ function DetailView({ data, kind }: IDetailView) {
   
   const closeBigMovie = () => {
     if (detailMatch?.params.movieId) {
-      history.push('/');
+      history.push(`${publicUrlStr()}/`);
     } else if (detailMatch?.params.tvId) {
-      history.push('/tv');
+      history.push(`${publicUrlStr()}/tv`);
     }
   };
 

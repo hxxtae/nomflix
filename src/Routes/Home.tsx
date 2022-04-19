@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
 
-import { getNowPlayAll, getPopularAll, getTopAll, getUpcoming, getUpcomingAll, IGetDataResult } from '../api/api';
+import { getNowPlayAll, getPopularAll, getTopAll, getUpcomingAll, IGetDataResult } from '../api/api';
 import { makeImagePath } from '../utils';
 import SliderView from '../components/SliderView';
 import { SliderCategory } from '../constants/constants';

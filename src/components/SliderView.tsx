@@ -6,7 +6,7 @@ import { faPlay, faThumbsDown, faThumbsUp, faPlus, faChevronLeft, faChevronRight
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IData } from '../api/api';
-import { makeImagePath } from '../utils';
+import { makeImagePath, publicUrlStr } from '../utils';
 import { boxVariants, infoVariants, slideVariants } from '../constants/animation';
 import DetailView from './DetailView';
 
@@ -131,13 +131,13 @@ function SliderView({ data, kind }: ISliderData) {
   const offset = 6;
   
   const toggleCaraucel = () => setLeaving((prev) => !prev);
-  const movieMatch = useRouteMatch<{ movieId: string }>('/movies/:movieId');
-  const tvMatch = useRouteMatch<{ tvId: string }>('/tv/:tvId');
+  const movieMatch = useRouteMatch<{ movieId: string }>(`${publicUrlStr()}/movies/:movieId`);
+  const tvMatch = useRouteMatch<{ tvId: string }>(`${publicUrlStr()}/tv/:tvId`);
   const history = useHistory();
 
   const detailClick = (movieId: string) => {
     const { pathname } = history.location;
-    const path = pathname === '/' ? '/movies' : pathname; 
+    const path = pathname === `${publicUrlStr()}/` ? 'movies' : pathname;
     history.push(`${path}/${movieId}?slider=${kind}`);
   };
 
