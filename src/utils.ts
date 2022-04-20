@@ -4,7 +4,7 @@ export function makeImagePath(id: string, format: string = 'original') {
   return `${IMAGE_PATH}/${format}${id}`;
 };
 
-export function publicUrlStr(deploy: boolean = false) {
+export function publicUrlStr(deploy: boolean = true) {
   if (deploy) {
     return process.env.PUBLIC_URL;
   }
