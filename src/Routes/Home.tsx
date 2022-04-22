@@ -6,7 +6,7 @@ import { makeImagePath } from '../utils';
 import SliderView from '../components/SliderView';
 import { SliderCategory } from '../constants/constants';
 import Loading from '../components/Loading';
-import { movieDataFetch } from '../api/query';
+import { useMovieFetch } from '../api/query';
 
 const Wrapper = styled.div`
   
@@ -55,17 +55,10 @@ function Home() {
   console.log('Home');
 
   // 서버 데이터 캐싱
-  const { isLoading: nowPlayLoading, data: nowplayingData } = useQuery<IGetDataResult[]>(["movie", "nowPlaying"], () => getNowPlayAll());
-  const nowPlayDatas = movieDataFetch(nowPlayLoading, nowplayingData);
-
-  const { isLoading: popularLoading, data: popularData } = useQuery<IGetDataResult[]>(["movies", "popular"], () => getPopularAll());
-  const popularDatas = movieDataFetch(popularLoading, popularData);
-
-  const { isLoading: topLoading, data: topData } = useQuery<IGetDataResult[]>(["movies", "top"], () => getTopAll());
-  const topDatas = movieDataFetch(topLoading, topData);
-
-  const { isLoading: upcomingLoading, data: upcomingData } = useQuery<IGetDataResult[]>(["movies", "upcoming"], () => getUpcomingAll());
-  const upcomingDatas = movieDataFetch(upcomingLoading, upcomingData);
+  const { isLoading: nowPlayLoading, datas: nowPlayDatas } = useMovieFetch(["movies", "nowPlaying"], getNowPlayAll);
+  const { isLoading: popularLoading, datas: popularDatas } = useMovieFetch(["movies", "popular"], getPopularAll);
+  const { isLoading: topLoading, datas: topDatas } = useMovieFetch(["movies", "top"], getTopAll);
+  const { isLoading: upcomingLoading, datas: upcomingDatas } = useMovieFetch(["movies", "upcoming"], getUpcomingAll);
 
   return (
     <Wrapper>
