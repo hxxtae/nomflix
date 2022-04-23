@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getNowPlayAll, IGetDataResult } from './api';
+import { IGetDataResult } from './api';
 
 const movieDataFetch = ( loading: boolean, data: IGetDataResult[] | undefined ) => {  
   return loading ?

@@ -90,8 +90,12 @@ export async function getUpcomingAll() {
 }
 
 // Tv api
-export async function getTvOntheAir(page: number) {
+export async function getTvOnAir(page: number) {
   return await (await fetch(`${process.env.REACT_APP_BASE_PATH}/tv/on_the_air?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`)).json();
+}
+
+export async function getTvOnAirAll() {
+  return Promise.all([getTvOnAir(1), getTvOnAir(2), getTvOnAir(3)]);
 }
 
 // Movie & Tv Detail api

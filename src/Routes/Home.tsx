@@ -1,4 +1,3 @@
-import { useQuery } from 'react-query';
 import styled from 'styled-components';
 
 import { getNowPlayAll, getPopularAll, getTopAll, getUpcomingAll, IGetDataResult } from '../api/api';

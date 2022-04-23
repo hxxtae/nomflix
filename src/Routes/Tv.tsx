@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getTvOntheAir, IGetDataResult } from '../api/api';
+import { getTvOnAir, getTvOnAirAll, IGetDataResult } from '../api/api';
 import styled from 'styled-components';
 import SliderView from '../components/SliderView';
 import { SliderCategory } from '../constants/constants';
@@ -56,21 +56,19 @@ const SliderTitle = styled.h2`
 function Tv() {
   console.log('Tv');
 
-  const { isLoading: loadingAir1, data: onAirData1 } = useQuery<IGetDataResult>(["Tv", "onTheAir1"], () => getTvOntheAir(1));
-  const { isLoading: loadingAir2, data: onAirData2 } = useQuery<IGetDataResult>(["Tv", "onTheAir2"], () => getTvOntheAir(2));
-  const { isLoading: loadingAir3, data: onAirData3 } = useQuery<IGetDataResult>(["Tv", "onTheAir3"], () => getTvOntheAir(3));
-  const loadingAir = loadingAir1 || loadingAir2 || loadingAir3;
-
+  // const { isLoading: loadingAir1, data: onAirData1 } = useQuery<IGetDataResult>(["Tv", "onTheAir1"], () => getTvOntheAir(1));
+  // const { isLoading: loadingAir2, data: onAirData2 } = useQuery<IGetDataResult>(["Tv", "onTheAir2"], () => getTvOntheAir(2));
+  // const { isLoading: loadingAir3, data: onAirData3 } = useQuery<IGetDataResult>(["Tv", "onTheAir3"], () => getTvOntheAir(3));
+  // const loadingAir = loadingAir1 || loadingAir2 || loadingAir3;
+  const { isLoading: onAirLoading, data: onAirData } = useQuery<IGetDataResult[]>(["Tv", "onAir"], () => getTvOnAirAll());
   const onAirDataFunc = () => {
-    const arr1 = loadingAir1 ? [] : onAirData1 ? onAirData1.results : [];
-    const arr2 = loadingAir2 ? [] : onAirData2 ? onAirData2.results : [];
-    const arr3 = loadingAir3 ? [] : onAirData3 ? onAirData3.results : [];
-    return [...arr1, ...arr2, ...arr3];
+    const onAirDatas = onAirLoading ? [] : onAirData ? [...onAirData[0].results, ...onAirData[1].results, ...onAirData[2].results] : [];
+    return onAirDatas;
   };
 
   return (
     <Wrapper>
-      { loadingAir ? (
+      { onAirLoading ? (
         <Loader>Loading...</Loader>) :
         (<>
           <Banner
