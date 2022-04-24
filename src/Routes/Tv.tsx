@@ -1,9 +1,11 @@
 import { useQuery } from 'react-query';
-import { getTvOnAir, getTvOnAirAll, IGetDataResult } from '../api/api';
 import styled from 'styled-components';
+
+import { getTvOnAir, getTvOnAirAll, IGetDataResult } from '../api/api';
 import SliderView from '../components/SliderView';
 import { SliderCategory } from '../constants/constants';
 import { makeImagePath } from '../utils';
+import { useDataFetch } from '../api/query';
 
 const Wrapper = styled.div`
   
@@ -56,15 +58,7 @@ const SliderTitle = styled.h2`
 function Tv() {
   console.log('Tv');
 
-  // const { isLoading: loadingAir1, data: onAirData1 } = useQuery<IGetDataResult>(["Tv", "onTheAir1"], () => getTvOntheAir(1));
-  // const { isLoading: loadingAir2, data: onAirData2 } = useQuery<IGetDataResult>(["Tv", "onTheAir2"], () => getTvOntheAir(2));
-  // const { isLoading: loadingAir3, data: onAirData3 } = useQuery<IGetDataResult>(["Tv", "onTheAir3"], () => getTvOntheAir(3));
-  // const loadingAir = loadingAir1 || loadingAir2 || loadingAir3;
-  const { isLoading: onAirLoading, data: onAirData } = useQuery<IGetDataResult[]>(["Tv", "onAir"], () => getTvOnAirAll());
-  const onAirDataFunc = () => {
-    const onAirDatas = onAirLoading ? [] : onAirData ? [...onAirData[0].results, ...onAirData[1].results, ...onAirData[2].results] : [];
-    return onAirDatas;
-  };
+  const { isLoading: onAirLoading, datas: onAirDatas } = useDataFetch(["Tv", "onAir"], getTvOnAirAll);
 
   return (
     <Wrapper>
@@ -72,14 +66,14 @@ function Tv() {
         <Loader>Loading...</Loader>) :
         (<>
           <Banner
-            bgphoto={makeImagePath(onAirDataFunc()[0].backdrop_path || "")}
+            bgphoto={makeImagePath(onAirDatas[0].backdrop_path || "")}
           >
-            <Title>{ onAirDataFunc()[0].name }</Title>
-            <Overview>{ onAirDataFunc()[0].overview }</Overview>
+            <Title>{ onAirDatas[0].name }</Title>
+            <Overview>{ onAirDatas[0].overview }</Overview>
           </Banner>
           <SliderWrapper>
             <SliderTitle>현재 방영중인 시리즈</SliderTitle>
-            <SliderView data={ onAirDataFunc() } kind={SliderCategory.NowPlaying} />
+            <SliderView data={ onAirDatas } kind={SliderCategory.onAir} />
           </SliderWrapper>
         </>)}
     </Wrapper>

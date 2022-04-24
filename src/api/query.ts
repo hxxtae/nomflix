@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import { IGetDataResult } from './api';
 
-const movieDataFetch = ( loading: boolean, data: IGetDataResult[] | undefined ) => {  
+const dataFetch = ( loading: boolean, data: IGetDataResult[] | undefined ) => {  
   return loading ?
     [] : data ?
       [ ...data[0].results,
@@ -10,8 +10,8 @@ const movieDataFetch = ( loading: boolean, data: IGetDataResult[] | undefined ) 
 };
 
 // Custom Hook
-export const useMovieFetch = (keyArr: string[], callback: Function) => {
+export const useDataFetch = (keyArr: string[], callback: Function) => {
   const { isLoading, data } = useQuery<IGetDataResult[]>([...keyArr], () => callback());
-  const datas = movieDataFetch(isLoading, data);
+  const datas = dataFetch(isLoading, data);
   return { isLoading, datas };
 }
