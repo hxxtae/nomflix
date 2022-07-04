@@ -43,13 +43,12 @@ const Row = styled(motion.div)`
   width: 100%;
   padding: 0 60px;
 `;
-const Box = styled(motion.div)<{bgphoto: string}>`
-  display: flex;
+const Box = styled(motion.div) <{ bgphoto: string }>`
+  position: relative;
   flex-direction: column;
   color: red;
   font-size: 30px;
   border-radius: 6px;
-  overflow: hidden;
   height: 162px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 1);
   cursor: pointer;
@@ -60,21 +59,30 @@ const Box = styled(motion.div)<{bgphoto: string}>`
   &:last-child {
     transform-origin: right center;
   }
+  &:hover {
+    z-index: 1;
+  }
 `;
 const BoxImg = styled(motion.img)`
+  border-radius: 6px;
   width: 100%;
   height: 100%;
   object-fit: cover;
 `;
 const Info = styled(motion.div)`
+  position: absolute;
+  bottom: -100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
   padding: 15px;
   width: 100%;
-  height: 100%;
+  height: 100px;
   background-color: ${props => props.theme.bgColor};
+  box-shadow: 0 0 10px rgba(0, 0, 0, 1);
   opacity: 0;
 
   button {
@@ -104,6 +112,7 @@ const ButtonGroup = styled.div`
   display: flex;
   justify-content: flex-start;
   margin-bottom: 10px;
+  flex-wrap: wrap;
 
   button {
     display: flex;

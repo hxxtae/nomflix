@@ -8,7 +8,6 @@ import Loading from '../components/Loading';
 import { useDataFetch } from '../api/query';
 
 const Wrapper = styled.div`
-  
 `;
 const Banner = styled.div<{bgphoto: string}>`
   height: 100vh;
@@ -30,10 +29,11 @@ const Title = styled.h2`
   }
 `;
 const Overview = styled.p`
-  font-size: 40px;
-  width: 60%;
+  font-size: 30px;
+  width: 70%;
   letter-spacing: .8px;
   line-height: 50px;
+  
   &::selection {
     background-color: transparent;
   }
@@ -48,7 +48,6 @@ const SliderTitle = styled.h2`
   transform: translateY(-120px);
   margin-left: 60px;  
 `;
-
 
 function Home() {
   console.log('Home');

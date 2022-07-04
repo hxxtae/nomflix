@@ -43,6 +43,7 @@ const BigCover = styled.div<{bgPhoto: string}>`
   background-image: linear-gradient(rgba(20, 20, 20, 0), rgba(20, 20, 20, 1)), url(${(props) => props.bgPhoto});
   background-size: cover;
   background-position: center center;
+  background-repeat: no-repeat;
 `;
 
 const BigWrapper = styled.div`

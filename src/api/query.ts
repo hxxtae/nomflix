@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery, UseQueryOptions } from 'react-query';
 import { IGetDataResult } from './api';
 
 const dataFetch = ( loading: boolean, data: IGetDataResult[] | undefined ) => {  
@@ -11,7 +11,10 @@ const dataFetch = ( loading: boolean, data: IGetDataResult[] | undefined ) => {
 
 // Custom Hook
 export const useDataFetch = (keyArr: string[], callback: Function) => {
-  const { isLoading, data } = useQuery<IGetDataResult[]>([...keyArr], () => callback());
+  const { isLoading, data } = useQuery<IGetDataResult[]>([...keyArr], () => callback(), {
+    refetchOnWindowFocus: false,
+  });
+  
   const datas = dataFetch(isLoading, data);
   return { isLoading, datas };
 }
