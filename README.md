@@ -1,21 +1,55 @@
-# Nomflix - Netflix Clone.
+# Nomflix - Netflix Clone Project.
 
-> Nomflix를 참고하여 제작하였습니다.
+<p align="center">
+  <br>
+  <img src="https://user-images.githubusercontent.com/79623316/177265316-2db89789-a5c2-4eef-a767-188bdfa8d9b1.svg">
+  <br>
+</p>
 
-> Movie 와 TV 시리즈에 대한 소개와 제작 및 정보를 보여주는 클론 사이트 입니다.
+## index
 
-> 주소 : https://hxxtae.github.io/react-masterclass-nomflix/
+- [Description](#description)
+- [Stack](#stack)
+- [Page](#page)
+- [License](#license)
 
-## 설치 및 실행
+## Description
 
-> npm i
+> Netflix를 참고하여 제작하였습니다.
 
-> npm run start  
+> Movie 와 TV 시리즈에 대한 소개와 제작 및 정보를 보여주는 Netflix 클론 웹사이트 입니다. (영상 재생은 생략)
 
-## 사용 예제
+> "The Movie Database" 에서 무료로 제공하는 api를 통해 Movie, TV 데이터를 사용하였습니다.
 
-> (스크린샷) & (코드 예제) 등
+> 링크 : 오른쪽 "About" 참조
 
-## 정보
+## Stack
+
+| TypeScript | React    | React-Query    | styled-components    | framer-motion    |
+| :--------: | :------: | :------------: | :------------------: | :--------------: |
+|   ![ts]    | ![react] | ![react-query] | ![styled-components] | ![framer-motion] |
+
+## Page
+
+### 1. Banner
+![banner](https://user-images.githubusercontent.com/79623316/177258739-ca05fec2-482a-4187-8f25-dd661f2414eb.PNG)
+
+### 2. Content
+
+![content](https://user-images.githubusercontent.com/79623316/177259797-48e67e54-1d82-4e96-a6e6-ade918e53568.PNG)
+
+### 3. Detail
+
+![detail](https://user-images.githubusercontent.com/79623316/177260030-0f1fd951-a397-434e-b0ee-2e143f4da0f4.PNG)
+
+## License
+
+MIT &copy; [hxxtae](mailto:fkdlxmfkdl1@gmail.com)
 
 ![Footer](https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=footer)
+
+[ts]: https://user-images.githubusercontent.com/79623316/175767679-b759c752-d9f9-49d2-a503-276e30292442.svg
+[react]: https://user-images.githubusercontent.com/79623316/175767657-f4926c0c-0c8e-4f4d-957e-c4c4877ffe16.svg
+[react-query]: https://user-images.githubusercontent.com/79623316/175767768-3740450e-cb18-4b23-b2f9-174edcdb87a5.svg
+[styled-components]: https://user-images.githubusercontent.com/79623316/175817624-3a749264-9f78-4e14-a385-cf4561a80dcb.svg
+[framer-motion]: https://user-images.githubusercontent.com/79623316/175818241-8c03852c-3335-4fcf-80d8-e12045dae3c0.png
