@@ -1,5 +1,15 @@
 # Nomflix - Netflix Clone Project.
 
+![git-code-size](https://img.shields.io/github/languages/code-size/hxxtae/react-masterclass-nomflix?color=%23&logo=github)
+![git-repo-size](https://img.shields.io/github/repo-size/hxxtae/react-masterclass-nomflix?color=%23&logo=github)
+![git-last-commit](https://img.shields.io/github/last-commit/hxxtae/react-masterclass-nomflix?color=%23e7e7e7&logo=github)
+![git-branch-check-state](https://img.shields.io/github/checks-status/hxxtae/react-masterclass-nomflix/gh-pages?label=main&logo=github)
+![git-deployments](https://img.shields.io/github/deployments/hxxtae/react-masterclass-nomflix/github-pages?label=deploy-state&logo=github)   
+![git-top-language](https://img.shields.io/github/languages/top/hxxtae/react-masterclass-nomflix)
+![git-language-count](https://img.shields.io/github/languages/count/hxxtae/react-masterclass-nomflix)
+![git-repo-file-count](https://img.shields.io/github/directory-file-count/hxxtae/react-masterclass-nomflix)   
+
+
 <p align="center">
   <br>
   <img src="https://user-images.githubusercontent.com/79623316/177265316-2db89789-a5c2-4eef-a767-188bdfa8d9b1.svg">
@@ -44,7 +54,11 @@
 
 ## License
 
-MIT &copy; [hxxtae](mailto:fkdlxmfkdl1@gmail.com)
+![git-license](https://img.shields.io/github/license/hxxtae/react-masterclass-nomflix?color=%23e7e7e7&logo=github&style=for-the-badge)
+
+<br />
+<br />
+<br />
 
 ![Footer](https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=footer)
 
