@@ -9,6 +9,8 @@
 ![git-language-count](https://img.shields.io/github/languages/count/hxxtae/react-masterclass-nomflix)
 ![git-repo-file-count](https://img.shields.io/github/directory-file-count/hxxtae/react-masterclass-nomflix)   
 
+![Header](https://capsule-render.vercel.app/api?type=slice&color=d81f26&height=100&section=header&rotate=-20)
+
 
 <p align="center">
   <br>
@@ -60,7 +62,7 @@
 <br />
 <br />
 
-![Footer](https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=footer)
+![Footer](https://capsule-render.vercel.app/api?text=Nomflix&desc=Netflix+clone+website.&fontAlignY=69&descAlignY=86&fontAlign=18&descAlign=14&type=slice&color=d81f26&height=200&section=footer)
 
 [ts]: https://user-images.githubusercontent.com/79623316/175767679-b759c752-d9f9-49d2-a503-276e30292442.svg
 [react]: https://user-images.githubusercontent.com/79623316/175767657-f4926c0c-0c8e-4f4d-957e-c4c4877ffe16.svg
