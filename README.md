@@ -6,7 +6,6 @@
   <br>
 </p>
 
----
 <p align="center">
   Nomflix - Netflix clone website.
 </p>
