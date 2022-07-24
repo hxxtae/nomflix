@@ -1,16 +1,4 @@
-# Nomflix - Netflix Clone Project.
-
-![git-code-size](https://img.shields.io/github/languages/code-size/hxxtae/react-masterclass-nomflix?color=%23&logo=github)
-![git-repo-size](https://img.shields.io/github/repo-size/hxxtae/react-masterclass-nomflix?color=%23&logo=github)
-![git-last-commit](https://img.shields.io/github/last-commit/hxxtae/react-masterclass-nomflix?color=%23e7e7e7&logo=github)
-![git-branch-check-state](https://img.shields.io/github/checks-status/hxxtae/react-masterclass-nomflix/gh-pages?label=main&logo=github)
-![git-deployments](https://img.shields.io/github/deployments/hxxtae/react-masterclass-nomflix/github-pages?label=deploy-state&logo=github)   
-![git-top-language](https://img.shields.io/github/languages/top/hxxtae/react-masterclass-nomflix)
-![git-language-count](https://img.shields.io/github/languages/count/hxxtae/react-masterclass-nomflix)
-![git-repo-file-count](https://img.shields.io/github/directory-file-count/hxxtae/react-masterclass-nomflix)   
-
 ![Header](https://capsule-render.vercel.app/api?type=slice&color=d81f26&height=100&section=header&rotate=-20)
-
 
 <p align="center">
   <br>
@@ -18,11 +6,31 @@
   <br>
 </p>
 
+---
+<p align="center">
+  Nomflix - Netflix clone website.
+</p>
+   
+<p align="center">
+  <img src="https://img.shields.io/github/languages/code-size/hxxtae/react-masterclass-nomflix?color=%23&logo=github" alt="git-code-size">
+  <img src="https://img.shields.io/github/repo-size/hxxtae/react-masterclass-nomflix?color=%23&logo=github" alt="git-repository-size">
+  <img src="https://img.shields.io/github/last-commit/hxxtae/react-masterclass-nomflix?color=%23e7e7e7&logo=github" alt="git-last-commit">
+  <img src="https://img.shields.io/github/checks-status/hxxtae/react-masterclass-nomflix/gh-pages?label=main&logo=github" alt="git-branch-check-state">
+  <img src="https://img.shields.io/github/deployments/hxxtae/react-masterclass-nomflix/github-pages?label=deploy-state&logo=github" alt="git-deployments">
+  <br>
+  <img src="https://img.shields.io/github/languages/top/hxxtae/react-masterclass-nomflix" alt="git-top-language">
+  <img src="https://img.shields.io/github/languages/count/hxxtae/react-masterclass-nomflix" alt="git-language-count">
+  <img src="https://img.shields.io/github/directory-file-count/hxxtae/react-masterclass-nomflix" alt="git-repo-file-count">
+</p>
+
 ## index
 
 - [Description](#description)
 - [Stack](#stack)
 - [Page](#page)
+  - [1. Banner](#1-banner)
+  - [2. Content](#2-content)
+  - [3. Detail](#3-detail)
 - [License](#license)
 
 ## Description
