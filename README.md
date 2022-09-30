@@ -63,6 +63,8 @@
 
 ## License
 
+This project is licensed under the MIT License.
+
 ![git-license](https://img.shields.io/github/license/hxxtae/react-masterclass-nomflix?color=%23e7e7e7&logo=github&style=for-the-badge)
 
 <br />
