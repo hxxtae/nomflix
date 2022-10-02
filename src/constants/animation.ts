@@ -69,12 +69,6 @@ export const infoVariants = {
 // -----------------------------
 // used Header.tsx
 // -----------------------------
-export const logoVariants = {
-  normal: {
-    fillOpacity: 1,
-  }
-};
-
 export const navVariants = {
   top: {
     backgroundColor: "rgba(20, 20, 20, 0)"

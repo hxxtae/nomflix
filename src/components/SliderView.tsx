@@ -146,7 +146,7 @@ function SliderView({ data, kind }: ISliderData) {
 
   const detailClick = (movieId: string) => {
     const { pathname } = history.location;
-    const path = pathname === `${publicUrlStr()}/` ? 'movies' : pathname;
+    const path = (pathname === `${publicUrlStr()}/`) ? `movies` : pathname;
     history.push(`${path}/${movieId}?slider=${kind}`);
   };
 
