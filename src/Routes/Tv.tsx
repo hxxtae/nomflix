@@ -1,11 +1,10 @@
-import { useQuery } from 'react-query';
 import styled from 'styled-components';
 
-import { getTvOnAir, getTvOnAirAll, IGetDataResult } from '../api/api';
-import SliderView from '../components/SliderView';
+import { getTvOnAirAll } from '../apis/api';
+import { SliderView } from '../components';
 import { SliderCategory } from '../constants/constants';
 import { makeImagePath } from '../utils';
-import { useDataFetch } from '../api/query';
+import { query } from '../apis';
 
 const Wrapper = styled.div`
   
@@ -58,7 +57,7 @@ const SliderTitle = styled.h2`
 function Tv() {
   console.log('Tv');
 
-  const { isLoading: onAirLoading, datas: onAirDatas } = useDataFetch(["Tv", "onAir"], getTvOnAirAll);
+  const { isLoading: onAirLoading, datas: onAirDatas } = query.useDataFetch(["Tv", "onAir"], getTvOnAirAll);
 
   return (
     <Wrapper>
@@ -66,10 +65,10 @@ function Tv() {
         <Loader>Loading...</Loader>) :
         (<>
           <Banner
-            bgphoto={makeImagePath(onAirDatas[0].backdrop_path || "")}
+            bgphoto={makeImagePath(onAirDatas ? onAirDatas[0].backdrop_path : "")}
           >
-            <Title>{ onAirDatas[0].name }</Title>
-            <Overview>{ onAirDatas[0].overview }</Overview>
+            <Title>{ onAirDatas ? onAirDatas[0].name : "" }</Title>
+            <Overview>{ onAirDatas ? onAirDatas[0].overview : "" }</Overview>
           </Banner>
           <SliderWrapper>
             <SliderTitle>현재 방영중인 시리즈</SliderTitle>

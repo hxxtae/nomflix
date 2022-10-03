@@ -1,11 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import { darkTheme } from './theme';
-import { reset } from 'styled-reset';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { reset } from 'styled-reset';
 import { RecoilRoot } from 'recoil';
+import ReactDOM from 'react-dom';
+import React from 'react';
+
+import { darkTheme } from './constants';
+import App from './App';
 
 const GlobalStyled = createGlobalStyle`
   ${reset};
