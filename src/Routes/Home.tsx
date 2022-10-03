@@ -1,11 +1,54 @@
 import styled from 'styled-components';
 
-import { getNowPlayAll, getPopularAll, getTopAll, getUpcomingAll } from '../api/api';
+import { api, query } from '../apis';
 import { makeImagePath } from '../utils';
-import SliderView from '../components/SliderView';
-import { SliderCategory } from '../constants/constants';
-import Loading from '../components/Loading';
-import { useDataFetch } from '../api/query';
+import { SliderCategory, queryKey } from '../constants';
+import { SliderView, Loading } from '../components';
+
+function Home() {
+  // 서버 데이터 캐싱
+  const { isLoading: nowPlayLoading, datas: nowPlayDatas } = query.useDataFetch(queryKey.movie.nowPlaying(), api.getNowPlayAll);
+  const { isLoading: popularLoading, datas: popularDatas } = query.useDataFetch(queryKey.movie.popular(), api.getPopularAll);
+  const { isLoading: topLoading, datas: topDatas } = query.useDataFetch(queryKey.movie.top(), api.getTopAll);
+  const { isLoading: upcomingLoading, datas: upcomingDatas } = query.useDataFetch(queryKey.movie.upcoming(), api.getUpcomingAll);
+
+  return (
+    <Wrapper>
+      { nowPlayLoading ?
+        <Loading /> :
+        <>
+          <Banner bgphoto={makeImagePath(nowPlayDatas ? nowPlayDatas[0].backdrop_path : "")}>
+            <Title>{ nowPlayDatas ? nowPlayDatas[0].title : "" }</Title>
+            <Overview>{ nowPlayDatas ? nowPlayDatas[0].overview : "" }</Overview>
+          </Banner>
+          <SliderWrapper>
+            <SliderTitle>지금 뜨는 콘텐츠</SliderTitle>
+            <SliderView data={ nowPlayDatas } kind={SliderCategory.NowPlaying} />
+          </SliderWrapper>
+        </>}
+      { popularLoading ? 
+        <Loading /> : 
+        <SliderWrapper>
+          <SliderTitle>인기 상승 콘텐츠</SliderTitle>
+          <SliderView data={ popularDatas } kind={SliderCategory.Popular} />
+        </SliderWrapper> }
+      { topLoading ? 
+        <Loading /> : 
+        <SliderWrapper>
+          <SliderTitle>베스트 인기 콘텐츠</SliderTitle>
+          <SliderView data={ topDatas } kind={SliderCategory.Top} />
+        </SliderWrapper> }
+      { upcomingLoading ? 
+        <Loading /> : 
+        <SliderWrapper>
+          <SliderTitle>개봉 예정작 콘텐츠</SliderTitle>
+          <SliderView data={ upcomingDatas } kind={SliderCategory.Upcoming} />
+        </SliderWrapper> }
+    </Wrapper>
+  );
+}
+
+export default Home;
 
 const Wrapper = styled.div`
 `;
@@ -48,53 +91,6 @@ const SliderTitle = styled.h2`
   transform: translateY(-120px);
   margin-left: 60px;  
 `;
-
-function Home() {
-  console.log('Home');
-
-  // 서버 데이터 캐싱
-  const { isLoading: nowPlayLoading, datas: nowPlayDatas } = useDataFetch(["movies", "nowPlaying"], getNowPlayAll);
-  const { isLoading: popularLoading, datas: popularDatas } = useDataFetch(["movies", "popular"], getPopularAll);
-  const { isLoading: topLoading, datas: topDatas } = useDataFetch(["movies", "top"], getTopAll);
-  const { isLoading: upcomingLoading, datas: upcomingDatas } = useDataFetch(["movies", "upcoming"], getUpcomingAll);
-
-  return (
-    <Wrapper>
-      { nowPlayLoading ?
-        <Loading /> :
-        <>
-          <Banner bgphoto={makeImagePath(nowPlayDatas[0].backdrop_path)}>
-            <Title>{ nowPlayDatas[0].title }</Title>
-            <Overview>{ nowPlayDatas[0].overview }</Overview>
-          </Banner>
-          <SliderWrapper>
-            <SliderTitle>지금 뜨는 콘텐츠</SliderTitle>
-            <SliderView data={ nowPlayDatas } kind={SliderCategory.NowPlaying} />
-          </SliderWrapper>
-        </>}
-      { popularLoading ? 
-        <Loading /> : 
-        <SliderWrapper>
-          <SliderTitle>인기 상승 콘텐츠</SliderTitle>
-          <SliderView data={ popularDatas } kind={SliderCategory.Popular} />
-        </SliderWrapper> }
-      { topLoading ? 
-        <Loading /> : 
-        <SliderWrapper>
-          <SliderTitle>베스트 인기 콘텐츠</SliderTitle>
-          <SliderView data={ topDatas } kind={SliderCategory.Top} />
-        </SliderWrapper> }
-      { upcomingLoading ? 
-        <Loading /> : 
-        <SliderWrapper>
-          <SliderTitle>개봉 예정작 콘텐츠</SliderTitle>
-          <SliderView data={ upcomingDatas } kind={SliderCategory.Upcoming} />
-        </SliderWrapper> }
-    </Wrapper>
-  );
-}
-
-export default Home;
 
 
 // [ AnimatePresence ]
