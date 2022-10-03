@@ -5,9 +5,9 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import { faPlay, faThumbsDown, faThumbsUp, faPlus, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { IData } from '../api/api';
-import { makeImagePath, publicUrlStr } from '../utils';
 import { boxVariants, infoVariants, slideVariants } from '../constants/animation';
+import { makeImagePath, publicUrlStr } from '../utils';
+import { IData } from '../apis/dto';
 import DetailView from './DetailView';
 
 const Slider = styled.div`

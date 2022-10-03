@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
-import { useForm } from 'react-hook-form';
+import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import { useCallback, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
 
 import { navVariants } from '../constants/animation';
 import { publicUrlStr } from '../utils';

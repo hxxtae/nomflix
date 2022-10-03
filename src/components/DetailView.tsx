@@ -7,7 +7,8 @@ import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-soli
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { makeImagePath, publicUrlStr } from '../utils';
-import { getDetail, IGetDetail, IData } from '../api/api';
+import { IGetDetail, IData } from '../apis/dto';
+import { getDetail } from '../apis/api';
 
 
 const Overlay = styled(motion.div)`
