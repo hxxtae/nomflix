@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
-import { getTvOnAirAll } from '../apis/api';
 import { SliderView } from '../components';
-import { SliderCategory } from '../constants/constants';
+import { SliderCategory } from '../constants';
 import { makeImagePath } from '../utils';
-import { query } from '../apis';
+import { query, api } from '../apis';
 
 const Wrapper = styled.div`
   
@@ -57,7 +56,7 @@ const SliderTitle = styled.h2`
 function Tv() {
   console.log('Tv');
 
-  const { isLoading: onAirLoading, datas: onAirDatas } = query.useDataFetch(["Tv", "onAir"], getTvOnAirAll);
+  const { isLoading: onAirLoading, datas: onAirDatas } = query.useDataFetch(["Tv", "onAir"], api.getTvOnAirAll);
 
   return (
     <Wrapper>

@@ -1,9 +1,8 @@
-// ----------------------------
-// API
-// ----------------------------
+import { apiDetailPath, apiMoviePath, apiTvPath } from './path';
+
 // Movie api
 export async function getNowPlay(page: number) {
-  return fetch(`${process.env.REACT_APP_BASE_PATH}/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`).then(
+  return fetch(apiMoviePath(page, 'now_playing')).then(
     response => response.json()
   );
 }
@@ -13,7 +12,7 @@ export async function getNowPlayAll() {
 }
 
 export async function getPopular(page: number) {
-  return fetch(`${process.env.REACT_APP_BASE_PATH}/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`).then(
+  return fetch(apiMoviePath(page, 'popular')).then(
     response => response.json()
   );
 }
@@ -23,7 +22,7 @@ export async function getPopularAll() {
 }
 
 export async function getTop(page: number) {
-  return fetch(`${process.env.REACT_APP_BASE_PATH}/movie/top_rated?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`).then(
+  return fetch(apiMoviePath(page, 'top_rated')).then(
     response => response.json()
   );
 }
@@ -32,14 +31,14 @@ export async function getTopAll() {
   return Promise.all([getTop(1), getTop(2), getTop(3)]);
 }
 
-export async function getLatest() {
-  return fetch(`${process.env.REACT_APP_BASE_PATH}/movie/latest?api_key=${process.env.REACT_APP_API_KEY}`).then(
+export async function getLatest(page: number) {
+  return fetch(apiMoviePath(page, 'latest')).then(
     response => response.json()
   );
 }
 
 export async function getUpcoming(page: number) {
-  return fetch(`${process.env.REACT_APP_BASE_PATH}/movie/upcoming?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`).then(
+  return fetch(apiMoviePath(page, 'upcoming')).then(
     response => response.json()
   );
 }
@@ -50,7 +49,7 @@ export async function getUpcomingAll() {
 
 // Tv api
 export async function getTvOnAir(page: number) {
-  return await (await fetch(`${process.env.REACT_APP_BASE_PATH}/tv/on_the_air?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`)).json();
+  return (await fetch(apiTvPath(page, 'on_the_air'))).json();
 }
 
 export async function getTvOnAirAll() {
@@ -59,11 +58,7 @@ export async function getTvOnAirAll() {
 
 // Movie & Tv Detail api
 export async function getDetail(movieId?: string, tvId?: string) {
-  return fetch(`${process.env.REACT_APP_BASE_PATH}/${detailValidate(movieId, tvId)}?api_key=${process.env.REACT_APP_API_KEY}`).then(
+  return fetch(apiDetailPath(movieId, tvId)).then(
     response => response.json()
   );
-}
-
-function detailValidate(movieid?: string, tvid?: string) {
-  return movieid ? `movie/${movieid}` : tvid ? `tv/${tvid}` : '';
 }

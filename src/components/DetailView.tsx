@@ -1,14 +1,13 @@
-import styled from 'styled-components';
+import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence, useViewportScroll, MotionValue } from 'framer-motion';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useQuery } from 'react-query';
 import queryString from 'query-string';
-import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styled from 'styled-components';
 
 import { makeImagePath, publicUrlStr } from '../utils';
-import { IGetDetail, IData } from '../apis/dto';
-import { getDetail } from '../apis/api';
+import { api, dto } from '../apis';
 
 
 const Overlay = styled(motion.div)`
@@ -127,7 +126,7 @@ const BigDetail = styled.div`
 `;
 
 interface IDetailView {
-  data?: IData[];
+  data?: dto.IData[];
   kind: number;
 };
 
@@ -141,7 +140,7 @@ function DetailView({ data, kind }: IDetailView) {
   const locationChk = parsed ? parsed.slider : null;
   const { scrollY } = useViewportScroll();
 
-  const { isLoading, data: detailData } = useQuery<IGetDetail>(["movieAndtv", "detail"], () => getDetail(detailMatch?.params.movieId, detailMatch?.params.tvId));
+  const { isLoading, data: detailData } = useQuery<dto.IGetDetail>(["movieAndtv", "detail"], () => api.getDetail(detailMatch?.params.movieId, detailMatch?.params.tvId));
   
   const closeBigMovie = () => {
     if (detailMatch?.params.movieId) {

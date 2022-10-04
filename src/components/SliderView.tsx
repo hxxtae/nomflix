@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { faPlay, faThumbsDown, faThumbsUp, faPlus, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styled from 'styled-components';
 
-import { boxVariants, infoVariants, slideVariants } from '../constants/animation';
+import { boxVariants, infoVariants, slideVariants } from '../constants';
 import { makeImagePath, publicUrlStr } from '../utils';
-import { IData } from '../apis/dto';
+import { dto } from '../apis';
 import DetailView from './DetailView';
 
 const Slider = styled.div`
@@ -127,7 +127,7 @@ const ButtonGroup = styled.div`
   }
 `;
 interface ISliderData {
-  data?: IData[];
+  data?: dto.IData[];
   kind: number;
 }
 
@@ -150,7 +150,7 @@ function SliderView({ data, kind }: ISliderData) {
     history.push(`${path}/${movieId}?slider=${kind}`);
   };
 
-  const increaFunc = (data: IData[]) => {
+  const increaFunc = (data: dto.IData[]) => {
     const totalMovie = data.length - 1;
     const maxIndex = Math.floor(totalMovie / offset) - 1;
     setDecreChk(false);
@@ -158,7 +158,7 @@ function SliderView({ data, kind }: ISliderData) {
     setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
   }
 
-  const decreaFunc = (data: IData[]) => {
+  const decreaFunc = (data: dto.IData[]) => {
     const totalMovie = data.length - 1;
     const maxIndex = Math.floor(totalMovie / offset) - 1;
     setDecreChk(true);
