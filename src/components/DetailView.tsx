@@ -1,14 +1,88 @@
 import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence, useViewportScroll, MotionValue } from 'framer-motion';
-import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useQuery } from 'react-query';
-import queryString from 'query-string';
 import styled from 'styled-components';
 
 import { makeImagePath, publicUrlStr } from '../utils';
-import { api, dto } from '../apis';
+import { api, dto, query } from '../apis';
+import { queryKey } from '../constants';
 
+interface IDetailView {
+  data: dto.IData;
+  kind: number;
+};
+
+function DetailView({ data, kind }: IDetailView) {
+  const detailMatch = useRouteMatch<{ movieId: string, tvId: string }>([`${publicUrlStr()}/movies/:movieId`, `${publicUrlStr()}/tv/:tvId`]);
+  const { isLoading, data: detailData } = query.useDetailDataFetch(queryKey.detail.all, () => api.getDetail(detailMatch?.params.movieId, detailMatch?.params.tvId));
+  const { scrollY } = useViewportScroll();
+  const history = useHistory();
+
+  const closeBigMovie = () => {
+    if (detailMatch?.params.movieId) {
+      history.push(`${publicUrlStr()}`);
+    } else if (detailMatch?.params.tvId) {
+      history.push(`${publicUrlStr()}/tv`);
+    }
+  };
+  
+  return (
+    <AnimatePresence>
+        <>
+          <Overlay
+            onClick={closeBigMovie}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}>
+          </Overlay>
+          <BigContent
+            layoutId={(detailMatch?.params.movieId || detailMatch?.params.tvId) + kind.toString()}
+            scrolly={scrollY}
+          >
+            <BigCover bgPhoto={makeImagePath(data.backdrop_path)} />
+            <BigWrapper>
+              <BigTitle>{data.title || data.name}</BigTitle>
+              <BigButtonGroup>
+                <button>
+                  <span>재생</span>
+                  <FontAwesomeIcon icon={faPlay} size="1x" />
+                </button>
+                <button>
+                  <FontAwesomeIcon icon={faThumbsUp} size="1x" />
+                </button>
+                <button>
+                  <FontAwesomeIcon icon={faThumbsDown} size="1x" />
+                </button>
+                <button>
+                  <FontAwesomeIcon icon={faPlus} size="1x" />
+                </button>
+              </BigButtonGroup>
+              <BigOverview>{data.overview}</BigOverview>
+              {isLoading ||
+                <>
+                  <BigDetail>
+                    {detailData?.production_companies.map((item, index) => (
+                      <div key={index.toString()}>
+                        <img src={makeImagePath(item.logo_path, 'w500')} alt={item.name} />
+                      </div>
+                    ))}
+                  </BigDetail>
+                  <BigDetail>
+                    {detailData?.production_companies.map((item, index) => (
+                      <span key={index.toString()}>{item.name}</span>
+                    ))}
+                  </BigDetail>
+                </>
+              }
+            </BigWrapper>
+          </BigContent>
+        </>
+    </AnimatePresence > 
+  )
+}
+
+export default DetailView;
 
 const Overlay = styled(motion.div)`
   opacity: 0;
@@ -125,100 +199,7 @@ const BigDetail = styled.div`
   }
 `;
 
-interface IDetailView {
-  data?: dto.IData[];
-  kind: number;
-};
-
-function DetailView({ data, kind }: IDetailView) {
-  console.log("DetailView");
-
-  const history = useHistory();
-  const detailMatch = useRouteMatch<{ movieId: string, tvId: string }>([`${publicUrlStr()}/movies/:movieId`, `${publicUrlStr()}/tv/:tvId`]);
-  const location = useLocation();
-  const parsed = queryString.parse(location.search);
-  const locationChk = parsed ? parsed.slider : null;
-  const { scrollY } = useViewportScroll();
-
-  const { isLoading, data: detailData } = useQuery<dto.IGetDetail>(["movieAndtv", "detail"], () => api.getDetail(detailMatch?.params.movieId, detailMatch?.params.tvId));
-  
-  const closeBigMovie = () => {
-    if (detailMatch?.params.movieId) {
-      history.push(`${publicUrlStr()}/`);
-    } else if (detailMatch?.params.tvId) {
-      history.push(`${publicUrlStr()}/tv`);
-    }
-  };
-
-  const clickDetail = (detailMatch?.params.movieId || detailMatch?.params.tvId) && data?.find((movie) =>
-    movie.id === (+detailMatch.params.movieId || +detailMatch.params.tvId)
-  );
-  // data에 movie id와 route의 movieId가 같으면 true가 되면서 DetailView 컴포넌트가 render 된다.
-  // -> SliderView는 어러 컴포넌트로(재사용) 선언 되었지만,
-  //    DetailView는 하나의 컴포넌트만 선언 되어 호출되므로
-  //    SliderView 컴포넌트들이 하나의 DetailView 컴포넌트를 사용하게 된다.
-  //    그래서 아래 locationChk가 추가로 필요한 이유이다.
-  //  ※ (A)같은 컴포넌트를 여러개 선언하여 render 하는 경우와
-  //     (B)여러 컴포넌트에서 하나의 컴포넌트를 render 하는 경우의 차이
-  //     (컴포넌트의 스코프에 존재하는 값들의 공유 유무의 차이)
-  //     (A : 같은 컴포넌트를 여러개 선언 : 같은 컴포넌트지만 선언된 컴포넌트는 독립적이다.)
-  //     (B : 하나의 컴포넌트를 참조하여 사용되므로 참조된다.)
-  
-  return (
-    <AnimatePresence>
-      {locationChk === kind.toString() && clickDetail &&
-        <>
-          <Overlay
-            onClick={closeBigMovie}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}>
-          </Overlay>
-          <BigContent
-            layoutId={(detailMatch?.params.movieId || detailMatch?.params.tvId) + kind.toString()}
-            scrolly={scrollY}
-          >
-            <BigCover bgPhoto={makeImagePath(clickDetail.backdrop_path)} />
-            <BigWrapper>
-              <BigTitle>{clickDetail.title || clickDetail.name}</BigTitle>
-              <BigButtonGroup>
-                <button>
-                  <span>재생</span>
-                  <FontAwesomeIcon icon={faPlay} size="1x" />
-                </button>
-                <button>
-                  <FontAwesomeIcon icon={faThumbsUp} size="1x" />
-                </button>
-                <button>
-                  <FontAwesomeIcon icon={faThumbsDown} size="1x" />
-                </button>
-                <button>
-                  <FontAwesomeIcon icon={faPlus} size="1x" />
-                </button>
-              </BigButtonGroup>
-              <BigOverview>{clickDetail.overview}</BigOverview>
-              {isLoading ||
-                <>
-                  <BigDetail>
-                    {detailData?.production_companies.map((item, index) => (
-                      <div key={index.toString()}>
-                        <img src={makeImagePath(item.logo_path, 'w500')} alt={item.name} />
-                      </div>
-                    ))}
-                  </BigDetail>
-                  <BigDetail>
-                    {detailData?.production_companies.map((item, index) => (
-                      <span key={index.toString()}>{item.name}</span>
-                    ))}
-                  </BigDetail>
-                </>
-              }
-            </BigWrapper>
-          </BigContent>
-        </>
-      }
-    </AnimatePresence > 
-  )
-}
-
-export default DetailView;
+// NOTE: how to use query string.
+// const location = useLocation();
+// const parsed = queryString.parse(location.search);
+// const locationChk = parsed ? parsed.slider : null;

@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 import { SliderView } from '../components';
-import { SliderCategory } from '../constants';
+import { queryKey, SliderCategory } from '../constants';
 import { makeImagePath } from '../utils';
 import { query, api } from '../apis';
+import { useState } from 'react';
 
 const Wrapper = styled.div`
   
@@ -56,7 +57,12 @@ const SliderTitle = styled.h2`
 function Tv() {
   console.log('Tv');
 
-  const { isLoading: onAirLoading, datas: onAirDatas } = query.useDataFetch(["Tv", "onAir"], api.getTvOnAirAll);
+  const [clicksSlider, setClickSlider] = useState(0);
+  const { isLoading: onAirLoading, datas: onAirDatas } = query.useDataFetch(queryKey.tv.onAir(), api.getTvOnAirAll);
+
+  const onClick = (slideNum: number) => {
+    setClickSlider(slideNum);
+  };
 
   return (
     <Wrapper>
@@ -69,9 +75,9 @@ function Tv() {
             <Title>{ onAirDatas ? onAirDatas[0].name : "" }</Title>
             <Overview>{ onAirDatas ? onAirDatas[0].overview : "" }</Overview>
           </Banner>
-          <SliderWrapper>
+          <SliderWrapper onClick={() => onClick(SliderCategory.onAir)}>
             <SliderTitle>현재 방영중인 시리즈</SliderTitle>
-            <SliderView data={ onAirDatas } kind={SliderCategory.onAir} />
+            <SliderView data={ onAirDatas } kind={SliderCategory.onAir} slider={clicksSlider} />
           </SliderWrapper>
         </>)}
     </Wrapper>

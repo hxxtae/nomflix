@@ -4,13 +4,19 @@ import { api, query } from '../apis';
 import { makeImagePath } from '../utils';
 import { SliderCategory, queryKey } from '../constants';
 import { SliderView, Loading } from '../components';
+import { useState } from 'react';
 
 function Home() {
-  // 서버 데이터 캐싱
+  console.log('Home');
   const { isLoading: nowPlayLoading, datas: nowPlayDatas } = query.useDataFetch(queryKey.movie.nowPlaying(), api.getNowPlayAll);
   const { isLoading: popularLoading, datas: popularDatas } = query.useDataFetch(queryKey.movie.popular(), api.getPopularAll);
   const { isLoading: topLoading, datas: topDatas } = query.useDataFetch(queryKey.movie.top(), api.getTopAll);
   const { isLoading: upcomingLoading, datas: upcomingDatas } = query.useDataFetch(queryKey.movie.upcoming(), api.getUpcomingAll);
+  const [clicksSlider, setClickSlider] = useState(0);
+
+  const onClick = (slideNum: number) => {
+    setClickSlider(slideNum);
+  };
 
   return (
     <Wrapper>
@@ -21,28 +27,28 @@ function Home() {
             <Title>{ nowPlayDatas ? nowPlayDatas[0].title : "" }</Title>
             <Overview>{ nowPlayDatas ? nowPlayDatas[0].overview : "" }</Overview>
           </Banner>
-          <SliderWrapper>
+          <SliderWrapper onClick={() => onClick(SliderCategory.NowPlaying)}>
             <SliderTitle>지금 뜨는 콘텐츠</SliderTitle>
-            <SliderView data={ nowPlayDatas } kind={SliderCategory.NowPlaying} />
+            <SliderView data={ nowPlayDatas } kind={SliderCategory.NowPlaying} slider={clicksSlider} />
           </SliderWrapper>
         </>}
       { popularLoading ? 
         <Loading /> : 
-        <SliderWrapper>
+        <SliderWrapper onClick={() => onClick(SliderCategory.Popular)}>
           <SliderTitle>인기 상승 콘텐츠</SliderTitle>
-          <SliderView data={ popularDatas } kind={SliderCategory.Popular} />
+          <SliderView data={ popularDatas } kind={SliderCategory.Popular} slider={clicksSlider} />
         </SliderWrapper> }
       { topLoading ? 
         <Loading /> : 
-        <SliderWrapper>
+        <SliderWrapper onClick={() => onClick(SliderCategory.Top)}>
           <SliderTitle>베스트 인기 콘텐츠</SliderTitle>
-          <SliderView data={ topDatas } kind={SliderCategory.Top} />
+          <SliderView data={ topDatas } kind={SliderCategory.Top} slider={clicksSlider} />
         </SliderWrapper> }
       { upcomingLoading ? 
         <Loading /> : 
-        <SliderWrapper>
+        <SliderWrapper onClick={() => onClick(SliderCategory.Upcoming)}>
           <SliderTitle>개봉 예정작 콘텐츠</SliderTitle>
-          <SliderView data={ upcomingDatas } kind={SliderCategory.Upcoming} />
+          <SliderView data={ upcomingDatas } kind={SliderCategory.Upcoming} slider={clicksSlider} />
         </SliderWrapper> }
     </Wrapper>
   );

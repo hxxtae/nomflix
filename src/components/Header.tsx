@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import { navVariants } from '../constants/animation';
+import { navVariants } from '../constants';
 import { publicUrlStr } from '../utils';
 
 interface IForm {
@@ -45,18 +45,18 @@ function Header() {
   const { register, handleSubmit } = useForm<IForm>();
   const history = useHistory();
   const onValid = (data: IForm) => {
-    history.push(`/search?keyword=${data.keyword}`);
+    history.push(`${publicUrlStr()}/search?keyword=${data.keyword}`);
   }
 
   return (
     <Nav variants={navVariants} initial="top" animate={navAnimation}>
       <Col>
-        <Logo href={`${publicUrlStr()}/`}>
+        <Logo href={`${publicUrlStr()}`}>
           <img src={`${publicUrlStr()}/assets/svg/netflix_logo.svg`} alt="netflix logo" />
         </Logo>
         <Items>
           <Item>
-            <Link to={`${publicUrlStr()}/`}>Home
+            <Link to={`${publicUrlStr()}`}>Home
               {homeMatch?.isExact && <Circle layoutId="circle" />}
             </Link>
           </Item>

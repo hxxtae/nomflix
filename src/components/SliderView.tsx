@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { faPlay, faThumbsDown, faThumbsUp, faPlus, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +9,144 @@ import { boxVariants, infoVariants, slideVariants } from '../constants';
 import { makeImagePath, publicUrlStr } from '../utils';
 import { dto } from '../apis';
 import DetailView from './DetailView';
+
+interface ISliderData {
+  data?: dto.IData[];
+  kind: number;
+  slider: number;
+}
+
+function SliderView({ data, kind, slider }: ISliderData) {
+  console.log('side')
+  const [leaving, setLeaving] = useState(false);
+  const [slideIndex, setSlideIndex] = useState(0);
+  const [decreChk, setDecreChk] = useState(false);
+  const [detailData, setDetailData] = useState<dto.IData>({
+    backdrop_path: '',
+    first_air_date: '',
+    id: 0,
+    name: '',
+    original_name: '',
+    overview: '',
+    poster_path: '',
+    title: ''
+  });
+  const offset = 6;
+  
+  const history = useHistory();
+  const movieMatch = useRouteMatch<{ movieId: string }>(`${publicUrlStr()}/movies/:movieId`);
+  const tvMatch = useRouteMatch<{ tvId: string }>(`${publicUrlStr()}/tv/:tvId`);
+  
+  const toggleCaraucel = useCallback(() =>
+    setLeaving((prev) => !prev), []);
+
+  const detailClick = useCallback((contentId: string) => {
+    const detailData: dto.IData | undefined = data?.find((item) => {
+      return item.id.toString() === contentId;
+    });
+    setDetailData((prev) => ({
+      ...prev,
+      ...detailData
+    }));
+    const { pathname } = history.location;
+    const moviePath = (pathname === `${publicUrlStr()}`) ? '/movies' : '';
+    history.push(`${pathname}${moviePath}/${contentId}`);
+  }, []);
+
+  const increaFunc = useCallback((data: dto.IData[]) => {
+    const totalMovie = data.length - 1;
+    const maxIndex = Math.floor(totalMovie / offset) - 1;
+    setDecreChk(false);
+    toggleCaraucel();
+    setSlideIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
+  }, []);
+
+  const decreaFunc = useCallback((data: dto.IData[]) => {
+    const totalMovie = data.length - 1;
+    const maxIndex = Math.floor(totalMovie / offset) - 1;
+    setDecreChk(true);
+    toggleCaraucel();
+    setSlideIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
+  }, []);
+
+  const incraseSlider = useCallback(() => {
+    if (leaving) return;
+    if (data) {
+      increaFunc(data);
+    }
+  }, [leaving]);
+
+  const decraseSlider = useCallback(() => {
+    if (leaving) return;
+    if (data) {
+      decreaFunc(data);
+    }
+  }, [leaving]);
+
+  return (
+    <>
+      <Slider>
+        <Increadiv>
+          <NextButton onClick={decraseSlider}>
+            <FontAwesomeIcon icon={faChevronLeft} size={'2x'} />
+          </NextButton>
+        </Increadiv>
+        <AnimatePresence initial={false} onExitComplete={toggleCaraucel} custom={decreChk}>
+          <Row
+            key={slideIndex + kind.toString()}
+            custom={decreChk}
+            variants={slideVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            {data?.slice(1).slice(offset * slideIndex, offset * slideIndex + offset).map(item => (
+              <Box
+                key={item.id + kind.toString()}
+                layoutId={item.id + kind.toString()}
+                onClick={() => detailClick(item.id + "")}
+                bgphoto={makeImagePath(item.backdrop_path, 'w500')}
+                variants={boxVariants}
+                whileHover="hover"
+                transition={{ type: "tween" }}
+              >
+                <BoxImg variants={infoVariants} src={makeImagePath(item.backdrop_path, 'w500')} />
+                <Info variants={infoVariants} >
+                  <ButtonGroup>
+                    <button>
+                      <FontAwesomeIcon icon={faPlay} size="1x" />
+                    </button>
+                    <button>
+                      <FontAwesomeIcon icon={faThumbsUp} size="1x" />
+                    </button>
+                    <button>
+                      <FontAwesomeIcon icon={faThumbsDown} size="1x" />
+                    </button>
+                    <button>
+                      <FontAwesomeIcon icon={faPlus} size="1x" />
+                    </button>
+                  </ButtonGroup>
+                  <span>{item.title || item.name}</span>
+                </Info>
+              </Box>
+            ))}
+          </Row>
+        </AnimatePresence>
+        <Decreadiv>
+          <NextButton onClick={incraseSlider}>
+            <FontAwesomeIcon icon={faChevronRight} size={'2x'} />
+          </NextButton>
+        </Decreadiv>
+      </Slider>
+      
+      {(slider === kind && movieMatch?.isExact || tvMatch?.isExact) && (
+        <DetailView data={detailData} kind={kind}/>
+      )}
+    </>
+  )
+}
+
+export default SliderView;
 
 const Slider = styled.div`
   position: relative;
@@ -126,121 +264,3 @@ const ButtonGroup = styled.div`
     }
   }
 `;
-interface ISliderData {
-  data?: dto.IData[];
-  kind: number;
-}
-
-function SliderView({ data, kind }: ISliderData) {
-  console.log('SliderView');
-
-  const [leaving, setLeaving] = useState(false);
-  const [index, setIndex] = useState(0);
-  const [decreChk, setDecreChk] = useState(false);
-  const offset = 6;
-  
-  const toggleCaraucel = () => setLeaving((prev) => !prev);
-  const movieMatch = useRouteMatch<{ movieId: string }>(`${publicUrlStr()}/movies/:movieId`);
-  const tvMatch = useRouteMatch<{ tvId: string }>(`${publicUrlStr()}/tv/:tvId`);
-  const history = useHistory();
-
-  const detailClick = (movieId: string) => {
-    const { pathname } = history.location;
-    const path = (pathname === `${publicUrlStr()}/`) ? `movies` : pathname;
-    history.push(`${path}/${movieId}?slider=${kind}`);
-  };
-
-  const increaFunc = (data: dto.IData[]) => {
-    const totalMovie = data.length - 1;
-    const maxIndex = Math.floor(totalMovie / offset) - 1;
-    setDecreChk(false);
-    toggleCaraucel();
-    setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
-  }
-
-  const decreaFunc = (data: dto.IData[]) => {
-    const totalMovie = data.length - 1;
-    const maxIndex = Math.floor(totalMovie / offset) - 1;
-    setDecreChk(true);
-    toggleCaraucel();
-    setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
-  }
-
-  const incraseSlider = () => {
-    if (leaving) return;
-    if (data) {
-      increaFunc(data);
-    }
-  };
-
-  const decraseSlider = () => {
-    if (leaving) return;
-    if (data) {
-      decreaFunc(data);
-    }
-  };
-
-  return (
-    <>
-      <Slider>
-        <Increadiv>
-          <NextButton onClick={decraseSlider}>
-            <FontAwesomeIcon icon={faChevronLeft} size={'2x'} />
-          </NextButton>
-        </Increadiv>
-        <AnimatePresence initial={false} onExitComplete={toggleCaraucel} custom={decreChk}>
-          <Row
-            key={index + kind.toString()}
-            custom={decreChk}
-            variants={slideVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-          >
-            {data?.slice(1).slice(offset * index, offset * index + offset).map(item => (
-              <Box
-                key={item.id + kind.toString()}
-                layoutId={item.id + kind.toString()}
-                onClick={() => detailClick(item.id + "")}
-                bgphoto={makeImagePath(item.backdrop_path, 'w500')}
-                variants={boxVariants}
-                whileHover="hover"
-                transition={{ type: "tween" }}
-              >
-                <BoxImg variants={infoVariants} src={makeImagePath(item.backdrop_path, 'w500')} />
-                <Info variants={infoVariants} >
-                  <ButtonGroup>
-                    <button>
-                      <FontAwesomeIcon icon={faPlay} size="1x" />
-                    </button>
-                    <button>
-                      <FontAwesomeIcon icon={faThumbsUp} size="1x" />
-                    </button>
-                    <button>
-                      <FontAwesomeIcon icon={faThumbsDown} size="1x" />
-                    </button>
-                    <button>
-                      <FontAwesomeIcon icon={faPlus} size="1x" />
-                    </button>
-                  </ButtonGroup>
-                  <span>{item.title || item.name}</span>
-                </Info>
-              </Box>
-            ))}
-          </Row>
-        </AnimatePresence>
-        <Decreadiv>
-          <NextButton onClick={incraseSlider}>
-            <FontAwesomeIcon icon={faChevronRight} size={'2x'} />
-          </NextButton>
-        </Decreadiv>
-      </Slider>
-      
-      {(movieMatch || tvMatch) && (
-        <DetailView data={data} kind={kind}/>
-      )}
-    </>
-  )
-}
-
-export default SliderView;

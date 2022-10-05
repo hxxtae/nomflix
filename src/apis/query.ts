@@ -1,9 +1,14 @@
 import { useQuery } from 'react-query';
-import { IGetDataResult, IData } from './dto';
+import { IGetDataResult, IData, IGetDetail } from './dto';
 
 interface IDataFetch {
   isLoading: boolean;
   datas?: IData[];
+}
+
+interface IDetailDataFetch {
+  isLoading: boolean;
+  data?: IGetDetail;
 }
 
 /**
@@ -18,7 +23,7 @@ const dataFetch = ( data?: IGetDataResult[] ): IData[] => {
         ...data[2].results] : [];
 };
 
-// Custom Hook
+// Custom Hook of Slider
 export const useDataFetch = (keyArr: readonly string[], callback: Function): IDataFetch => {
   const { isLoading, data } = useQuery([...keyArr], () => callback(), {
     staleTime: 60000,
@@ -30,4 +35,13 @@ export const useDataFetch = (keyArr: readonly string[], callback: Function): IDa
   });
   
   return { isLoading, datas: data };
+}
+
+// Custom Hook of Detail
+export const useDetailDataFetch = (keyArr: readonly string[], callback: Function): IDetailDataFetch => {
+  const { isLoading, data } = useQuery([...keyArr], () => callback(), {
+    refetchOnWindowFocus: false,
+  });
+
+  return { isLoading, data };
 }

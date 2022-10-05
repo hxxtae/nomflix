@@ -8,14 +8,17 @@ export enum SliderCategory {
 
 export const queryKey = {
   movie: {
-    all: ['movies'] as const,
+    all: ['movie'] as const,
     nowPlaying: () => [...queryKey.movie.all, 'nowPlaying'] as const,
     popular: () => [...queryKey.movie.all, 'popular'] as const,
     top: () => [...queryKey.movie.all, 'top'] as const,
     upcoming: () => [...queryKey.movie.all, 'upcoming'] as const,
   },
   tv: {
-    all: ['Tv'] as const,
+    all: ['tv'] as const,
     onAir: () => [...queryKey.tv.all, 'onAir'] as const,
+  },
+  detail: {
+    all: ['detail'] as const,
   }
 }
