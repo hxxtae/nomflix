@@ -20,8 +20,8 @@ export const loadVariants = {
 // used SliderView.tsx
 // -----------------------------
 export const slideVariants = {
-  hidden: (chk: boolean) => ({
-    x: chk ? -window.innerWidth - 5 : window.innerWidth + 5
+  hidden: (decreChk: boolean) => ({
+    x: decreChk ? -window.innerWidth - 5 : window.innerWidth + 5
   }),
   visible: {
     x: 0,
@@ -30,8 +30,8 @@ export const slideVariants = {
       duration: 1
     }
   },
-  exit: (chk: boolean) => ({
-    x: chk ? window.innerWidth + 5 : -window.innerWidth - 5,
+  exit: (decreChk: boolean) => ({
+    x: decreChk ? window.innerWidth + 5 : -window.innerWidth - 5,
     transition: {
       type: "tween",
       duration: 1

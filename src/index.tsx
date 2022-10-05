@@ -29,7 +29,7 @@ const GlobalStyled = createGlobalStyle`
 const client = new QueryClient();
 
 ReactDOM.render(
-  <React.StrictMode>
+  <>
     <ThemeProvider theme={darkTheme}>
       <QueryClientProvider client={client}>
         <RecoilRoot>
@@ -38,7 +38,7 @@ ReactDOM.render(
         </RecoilRoot>
       </QueryClientProvider>
     </ThemeProvider>
-  </React.StrictMode>,
+  </>,
   document.getElementById('root')
 );
 
