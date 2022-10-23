@@ -42,7 +42,7 @@ function DetailView({ data, kind }: IDetailView) {
           >
             <BigCover bgPhoto={makeImagePath(data.backdrop_path)} />
             <BigWrapper>
-              <BigTitle>{data.title || data.name}</BigTitle>
+              <BigTitle>{data.title || data.original_title}</BigTitle>
               <BigButtonGroup>
                 <button>
                   <span>재생</span>

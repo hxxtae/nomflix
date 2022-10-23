@@ -3,13 +3,22 @@
 // ----------------------------
 // Movie & TV interface
 export interface IData {
+  adult: boolean;
+  genre_ids: [];
   id: number;
+  original_language: string;
+  original_title: string;
   name: string;
-  first_air_date: string;
+  //first_air_date: string;
+  popularity: number;
+  release_data: string;
   backdrop_path: string;
   poster_path: string;
   title: string;
-  original_name: string;
+  video: boolean;
+  bvote_average: number;
+  vote_count: number;
+  //original_name: string;
   overview: string;
 };
 

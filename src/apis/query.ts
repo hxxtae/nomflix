@@ -17,10 +17,18 @@ interface IDetailDataFetch {
  * @returns { IData[] | [] } 
  */
 const dataFetch = ( data?: IGetDataResult[] ): IData[] => {  
-  return data?.length ?
-      [ ...data[0].results,
-        ...data[1].results,
-        ...data[2].results] : [];
+  if (data?.length === 0) {
+    return [];
+  }
+  const totalResultObj: IData[] = data!
+    .map(parentObj => [...parentObj.results])
+    .reduce((prev, curr) => [...prev, ...curr]);
+  return totalResultObj;
+  // [
+  //   ...data[0].results,
+  //   ...data[1].results,
+  //   ...data[2].results,
+  // ]
 };
 
 // Custom Hook of Slider

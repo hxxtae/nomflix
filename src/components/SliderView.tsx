@@ -22,14 +22,21 @@ function SliderView({ data, kind, slider }: ISliderData) {
   const [slideIndex, setSlideIndex] = useState(0);
   const [decreChk, setDecreChk] = useState(false);
   const [detailData, setDetailData] = useState<dto.IData>({
-    backdrop_path: '',
-    first_air_date: '',
+    adult: false,
+    genre_ids: [],
     id: 0,
     name: '',
-    original_name: '',
-    overview: '',
+    original_language: '',
+    original_title: '',
+    popularity: 0,
+    release_data: '',
+    backdrop_path: '',
     poster_path: '',
-    title: ''
+    title: '',
+    video: false,
+    bvote_average: 0,
+    vote_count: 0,
+    overview: '',
   });
   const offset = 6;
   
