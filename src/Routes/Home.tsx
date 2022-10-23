@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
 import { api, query } from '../apis';
@@ -25,6 +27,14 @@ function Home() {
         <>
           <Banner bgphoto={makeImagePath(nowPlayDatas ? nowPlayDatas[0].backdrop_path : "")}>
             <Title>{ nowPlayDatas ? nowPlayDatas[0].title : "" }</Title>
+            <ButtonWrapper>
+              <BannerButton>
+                <FontAwesomeIcon icon={faPlay} /><span>재생</span>
+              </BannerButton>
+              <BannerButton>
+                <FontAwesomeIcon icon={faPlus} /><span>내가 찜한 콘텐츠</span>
+              </BannerButton>
+            </ButtonWrapper>
             <Overview>{ nowPlayDatas ? nowPlayDatas[0].overview : "" }</Overview>
           </Banner>
           <SliderWrapper onClick={() => onClick(SliderCategory.NowPlaying)}>
@@ -77,11 +87,52 @@ const Title = styled.h2`
     background-color: transparent;
   }
 `;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 40px;
+`;
+
+const BannerButton= styled.button`
+  border-radius: 5px;
+  border: none;
+  padding: 0 50px;
+  background-color: rgba(0, 0, 0, .4);
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-right: 20px;
+  transition: box-shadow 200ms ease-in-out;
+
+  span {
+    display: inline-block;
+    padding: 14px 0 14px 10px;
+  }
+
+  :last-child {
+    margin-right: 0;
+  }
+
+  :hover {
+    background-color: #e7e7e7;
+    color: #000000;
+    box-shadow: 0 10px 20px 0 #000000;
+  }
+`;
+
 const Overview = styled.p`
-  font-size: 30px;
-  width: 70%;
+  font-size: 25px;
+  width: 40%;
   letter-spacing: .8px;
   line-height: 50px;
+  /* _line-clamp */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  cursor: default;
   
   &::selection {
     background-color: transparent;
