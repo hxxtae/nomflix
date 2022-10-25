@@ -56,8 +56,10 @@ function SliderView({ data, kind, slider }: ISliderData) {
       ...detailData
     }));
     const { pathname } = history.location;
-    const moviePath = (pathname === `${publicUrlStr()}`) ? '/movies' : '';
-    history.push(`${pathname}${moviePath}/${contentId}`);
+    const moviePath = (pathname === `${publicUrlStr()}` ||
+      `${pathname}` === `${publicUrlStr()}/`) ?
+      'movies' : '';
+    history.push(`${publicUrlStr()}/${moviePath}/${contentId}`);
   }, []);
 
   const increaFunc = useCallback((data: dto.IData[]) => {
