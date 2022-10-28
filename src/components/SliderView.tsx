@@ -17,7 +17,6 @@ interface ISliderData {
 }
 
 function SliderView({ data, kind, slider }: ISliderData) {
-  console.log('side')
   const [leaving, setLeaving] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
   const [decreChk, setDecreChk] = useState(false);
@@ -56,10 +55,14 @@ function SliderView({ data, kind, slider }: ISliderData) {
       ...detailData
     }));
     const { pathname } = history.location;
-    const moviePath = (pathname === `${publicUrlStr()}` ||
-      `${pathname}` === `${publicUrlStr()}/`) ?
-      'movies' : '';
-    history.push(`${publicUrlStr()}/${moviePath}/${contentId}`);
+    let detailPath = '';
+    if (pathname === `${publicUrlStr()}` || pathname === `${publicUrlStr()}/`) {
+      detailPath = 'movies';
+    }
+    if (pathname === `${publicUrlStr()}/tv`) {
+      detailPath = 'tv';
+    }
+    history.push(`${publicUrlStr()}/${detailPath}/${contentId}`);
   }, []);
 
   const increaFunc = useCallback((data: dto.IData[]) => {
@@ -113,7 +116,7 @@ function SliderView({ data, kind, slider }: ISliderData) {
               <Box
                 key={item.id + kind.toString()}
                 layoutId={item.id + kind.toString()}
-                onClick={() => detailClick(item.id + "")}
+                onClick={() => detailClick(item.id.toString())}
                 bgphoto={makeImagePath(item.backdrop_path, 'w500')}
                 variants={boxVariants}
                 whileHover="hover"

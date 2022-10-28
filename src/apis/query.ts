@@ -12,7 +12,9 @@ interface IDetailDataFetch {
 }
 
 /**
- * -- Data select of Custom Hook --
+ * -----------------------------
+ * Data select of Custom Hook
+ * -----------------------------
  * @param { IGetDataResult[] | undefined } data
  * @returns { IData[] | [] } 
  */
