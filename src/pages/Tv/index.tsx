@@ -3,7 +3,7 @@ import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { SliderView } from '../../components';
 import { queryKey, SliderCategory } from '../../constants';
-import { makeImagePath } from '../../utils';
+import { formatImagePath } from '../../utils';
 import { query, api } from '../../apis';
 import { useState } from 'react';
 import * as S from './style';
@@ -22,7 +22,7 @@ function Tv() {
       { onAirLoading ? (
         <S.Loader>Loading...</S.Loader>) :
         (<>
-          <S.Banner bgphoto={makeImagePath(onAirDatas ? onAirDatas[0].backdrop_path : "")}>
+          <S.Banner bgphoto={formatImagePath(onAirDatas ? onAirDatas[0].backdrop_path : "")}>
             <S.Title>{onAirDatas ? onAirDatas[0].name : ""}</S.Title>
             <S.ButtonWrapper>
               <S.BannerButton>

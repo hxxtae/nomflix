@@ -4,7 +4,7 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
-import { makeImagePath, publicUrlStr } from '../utils';
+import { formatImagePath, publicUrlStr } from '../utils';
 import { api, dto, query } from '../apis';
 import { queryKey } from '../constants';
 
@@ -40,7 +40,7 @@ function DetailView({ data, kind }: IDetailView) {
             layoutId={(detailMatch?.params.movieId || detailMatch?.params.tvId) + kind.toString()}
             scrolly={scrollY}
           >
-            <BigCover bgPhoto={makeImagePath(data.backdrop_path)} />
+            <BigCover bgPhoto={formatImagePath(data.backdrop_path)} />
             <BigWrapper>
               <BigTitle>{data.title || data.original_title}</BigTitle>
               <BigButtonGroup>
@@ -64,7 +64,7 @@ function DetailView({ data, kind }: IDetailView) {
                   <BigDetail>
                     {detailData?.production_companies.map((item, index) => (
                       <div key={index.toString()}>
-                        <img src={makeImagePath(item.logo_path, 'w500')} alt={item.name} />
+                        <img src={formatImagePath(item.logo_path, 'w500')} alt={item.name} />
                       </div>
                     ))}
                   </BigDetail>

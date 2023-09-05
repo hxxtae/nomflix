@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback,useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { faPlay, faThumbsDown, faThumbsUp, faPlus, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
 import { boxVariants, infoVariants, slideVariants } from '../constants';
-import { makeImagePath, publicUrlStr } from '../utils';
+import { formatImagePath, publicUrlStr } from '../utils';
 import { dto } from '../apis';
 import DetailView from './DetailView';
 
@@ -117,12 +117,12 @@ function SliderView({ data, kind, slider }: ISliderData) {
                 key={item.id + kind.toString()}
                 layoutId={item.id + kind.toString()}
                 onClick={() => detailClick(item.id.toString())}
-                bgphoto={makeImagePath(item.backdrop_path, 'w500')}
+                bgphoto={formatImagePath(item.backdrop_path, 'w500')}
                 variants={boxVariants}
                 whileHover="hover"
                 transition={{ type: "tween" }}
               >
-                <BoxImg variants={infoVariants} src={makeImagePath(item.backdrop_path, 'w500')} />
+                <BoxImg variants={infoVariants} src={formatImagePath(item.backdrop_path, 'w500')} />
                 <Info variants={infoVariants} >
                   <ButtonGroup>
                     <button>

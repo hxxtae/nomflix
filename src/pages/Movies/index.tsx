@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { api, query } from '../../apis';
-import { makeImagePath } from '../../utils';
+import { formatImagePath } from '../../utils';
 import { SliderCategory, queryKey } from '../../constants';
 import { SliderView, Loading } from '../../components';
 import { useState } from 'react';
@@ -25,7 +25,7 @@ function Movies() {
       { nowPlayLoading ?
         <Loading /> :
         <>
-          <S.Banner bgphoto={makeImagePath(nowPlayDatas ? nowPlayDatas[0].backdrop_path : "")}>
+          <S.Banner bgphoto={formatImagePath(nowPlayDatas ? nowPlayDatas[0].backdrop_path : "")}>
             <S.Title>{ nowPlayDatas ? nowPlayDatas[0].title : "" }</S.Title>
             <S.ButtonWrapper>
               <S.BannerButton>
