@@ -2,9 +2,9 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { publicUrlStr } from './utils'
 import Header from './components/Header';
-import Home from './Routes/Home';
-import Tv from './Routes/Tv';
-import Search from './Routes/Search';
+import Movies from './pages/Movies';
+import Tv from './pages/Tv';
+import Search from './pages/Search';
 import Footer from './components/Footer';
 
 function App() {
@@ -14,8 +14,8 @@ function App() {
     <BrowserRouter>
       <Header />
       <Switch>
-        <Route exact path={[`${publicUrlStr()}`, `${publicUrlStr()}/movies/:movieId`]}>
-          <Home />
+        <Route exact path={[`${publicUrlStr()}`, `${publicUrlStr()}/movies`, `${publicUrlStr()}/movies/:movieId`]}>
+          <Movies />
         </Route>
         <Route exact path={[`${publicUrlStr()}/tv`, `${publicUrlStr()}/tv/:tvId`]}>
           <Tv />
