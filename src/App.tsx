@@ -1,11 +1,10 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { publicUrlStr } from './utils'
-import Header from './components/Header';
+import { Header, Footer } from './components';
 import Movies from './pages/Movies';
 import Tv from './pages/Tv';
 import Search from './pages/Search';
-import Footer from './components/Footer';
 
 function App() {
   console.log('App');

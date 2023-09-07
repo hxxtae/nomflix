@@ -69,11 +69,3 @@ export const infoVariants = {
 // -----------------------------
 // used Header.tsx
 // -----------------------------
-export const navVariants = {
-  top: {
-    backgroundColor: "rgba(20, 20, 20, 0)"
-  },
-  scroll: {
-    backgroundColor: "rgba(20, 20, 20, 1)"
-  }
-};
