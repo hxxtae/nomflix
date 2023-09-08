@@ -4,12 +4,17 @@ import styled from 'styled-components';
 // ---------------
 // Animation
 // ---------------
-export const searchIconAnimation = (state: boolean) => {
-  return {
-    opacity: state ? 0 : 1,
-    transition: {
-      duration: 0
-    }
+export const iconShowAnimation = {
+  opacity: 1,
+  transition: {
+    duration: 0
+  }
+}
+
+export const iconHiddenAnimation = {
+  opacity: 0,
+  transition: {
+    duration: 0
   }
 }
 
@@ -39,6 +44,7 @@ export const Box = styled.form`
 
 export const OutIcon = styled(motion.div)`
   width: 30px;
+  cursor: pointer;
 
   img {
     display: block;

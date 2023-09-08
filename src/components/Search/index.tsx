@@ -13,6 +13,7 @@ interface IForm {
 function Search() {
   const [searchState, setSearchState] = useState(false);
   const dropSearchRef = useRef<HTMLFormElement | null>(null);
+  const iconAnimation = useAnimation();
   const inputAnimation = useAnimation();
   const history = useHistory();
   const { register, handleSubmit } = useForm<IForm>();
@@ -22,17 +23,20 @@ function Search() {
   }
   
   const toggleSearch = useCallback(() => {
-    if (searchState)
+    if (searchState) {
+      iconAnimation.start(S.iconShowAnimation);
       inputAnimation.start(S.searchCloseAnimation);
-    else
+    }
+    else {
+      iconAnimation.start(S.iconHiddenAnimation);
       inputAnimation.start(S.searchOpenAnimation);
+    }
     setSearchState(prev => !prev);
-  }, [searchState, inputAnimation]);
+  }, [searchState, iconAnimation, inputAnimation]);
 
   useEffect(() => {
-    const searchClose = (e: {target: any}) => {
-      if (searchState && !dropSearchRef.current?.contains(e.target)) 
-        toggleSearch();
+    const searchClose = (e: { target: any }) => {
+      if (searchState && !dropSearchRef.current?.contains(e.target)) toggleSearch();
     }
     document.addEventListener('click', searchClose);
     return () => document.removeEventListener('click', searchClose);
@@ -40,7 +44,7 @@ function Search() {
 
   return (
     <S.Box ref={dropSearchRef} onSubmit={handleSubmit(onValid)}>
-      <S.OutIcon onClick={toggleSearch} animate={S.searchIconAnimation(searchState)}>
+      <S.OutIcon initial={{ opacity: 1 }} animate={iconAnimation} onClick={toggleSearch}>
         <img src={`${publicUrlStr()}/assets/svg/search.svg`} alt="search icon"/>
       </S.OutIcon>
       <S.Wrapper initial={{ scaleX: 0 }} animate={inputAnimation}>
@@ -50,10 +54,8 @@ function Search() {
         <S.Input
           {...register("keyword", { required: true })}
           placeholder="Search for movie & tv show"
-          autoComplete='off'
-        />
+          autoComplete='off'/>
       </S.Wrapper>
-      
     </S.Box>
   )
 }
