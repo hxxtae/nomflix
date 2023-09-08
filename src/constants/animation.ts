@@ -1,22 +1,4 @@
 // -----------------------------
-// used Home.tsx
-// -----------------------------
-export const loadVariants = {
-  before: {
-    rotate: 0,
-  },
-  start: {
-    rotate: 360,
-    transition: {
-      type: 'tween',
-      duration: 1,
-      repeat: Infinity,
-    }
-  }
-}
-
-
-// -----------------------------
 // used SliderView.tsx
 // -----------------------------
 export const slideVariants = {
@@ -51,6 +33,12 @@ export const boxVariants = {
       type: "tween",
       delay: 0.5,
       duration: 0.3
+    }
+  },
+  exit: {
+    scale: 1,
+    transition: {
+      type: "tween",
     }
   }
 }
