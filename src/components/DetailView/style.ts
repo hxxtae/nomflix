@@ -1,14 +1,13 @@
 import { motion, MotionValue } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Overlay = styled(motion.div)`
+export const Overlay = styled(motion.section)`
   opacity: 0;
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
-  height: 1000px;
-  overflow: auto;
+  height: 100vh;
+  overflow: hidden;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
 `;
@@ -17,7 +16,7 @@ export const BigContent = styled(motion.div)<{scrolly: MotionValue<number>}>`
   position: absolute;
   width: 42vw;
   height: 90vh;
-  top: ${(props) => props.scrolly.get() + 100}px;
+  top: 100px;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -25,7 +24,7 @@ export const BigContent = styled(motion.div)<{scrolly: MotionValue<number>}>`
   border-radius: 10px;
   overflow: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-  z-index: 2;
+  z-index: 3;
 `;
 
 export const BigCover = styled.div<{bgPhoto: string}>`
