@@ -16,12 +16,13 @@ interface IDetailDataFetch {
  * Data select of Custom Hook
  * -----------------------------
  * @param { IGetDataResult[] | undefined } data
- * @returns { IData[] | [] } 
+ * @returns { IData[] } 
  */
-const dataFetch = ( data?: IGetDataResult[] ): IData[] => {  
-  if (data?.length === 0) {
-    return [];
+const dataFetch = (data: IGetDataResult[]): IData[] => {
+  if (typeof data === "undefined" || !data?.length) {
+    throw new Error('API Fetch: Data is undefined!!');
   }
+
   const totalResultObj: IData[] = data!
     .map(parentObj => [...parentObj.results])
     .reduce((prev, curr) => [...prev, ...curr]);
@@ -39,7 +40,7 @@ export const useDataFetch = (keyArr: readonly string[], callback: Function): IDa
     staleTime: 60000,
     cacheTime: Infinity,
     refetchOnWindowFocus: false,
-    select: (data?: IGetDataResult[]) => {
+    select: (data: IGetDataResult[]) => {
       return dataFetch(data);
     }
   });
