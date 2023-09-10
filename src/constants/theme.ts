@@ -5,5 +5,5 @@ export const darkTheme: DefaultTheme = {
   textColor: "#f5f6fa",
   secondColor: "#192a56",
   accentColor: "#8c7ae6",
-  mainColor: "#FF2A2A"
+  mainColor: "#D81F26"
 }
