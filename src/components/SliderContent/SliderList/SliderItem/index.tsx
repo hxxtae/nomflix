@@ -14,6 +14,27 @@ interface ISliderItem {
 
 function SliderItem({ data, kind, detailClick }: ISliderItem) {
   console.log(`sliderItem: ${kind}`)
+
+  const onPlay = (e: any) => {
+    e.stopPropagation();
+    console.log('Click Play Button');
+  }
+
+  const onRecommend = (e: any) => {
+    e.stopPropagation();
+    console.log('Click Recommend Button');
+  }
+
+  const onNotRecommend = (e: any) => {
+    e.stopPropagation();
+    console.log('Click Not Recommend Button');
+  }
+
+  const onSubscribe = (e: any) => {
+    e.stopPropagation();
+    console.log('Click Subscribe Button');
+  }
+
   return (
     <S.Box
       layoutId={data.id + kind.toString()}
@@ -24,16 +45,16 @@ function SliderItem({ data, kind, detailClick }: ISliderItem) {
       <S.BoxImg src={formatImagePath(data.backdrop_path, 'w500')} />
       <S.Info variants={S.infoHoverVariants}>
         <S.ButtonGroup>
-          <button>
+          <button type='button' onClick={onPlay}>
             <FontAwesomeIcon icon={faPlay} size="1x" />
           </button>
-          <button>
+          <button type='button' onClick={onRecommend}>
             <FontAwesomeIcon icon={faThumbsUp} size="1x" />
           </button>
-          <button>
+          <button type='button' onClick={onNotRecommend}>
             <FontAwesomeIcon icon={faThumbsDown} size="1x" />
           </button>
-          <button>
+          <button type='button' onClick={onSubscribe}>
             <FontAwesomeIcon icon={faPlus} size="1x" />
           </button>
         </S.ButtonGroup>

@@ -5,7 +5,7 @@ export const boxHoverVariants = {
   // Parent Hover
   hover: {
     scale: 1.3,
-    translateY: -50,
+    top: "-50px",
     transition: {
       delay: 0.5,
       duration: 0.3
