@@ -1,7 +1,7 @@
 import { motion, MotionValue } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Overlay = styled(motion.section)`
+export const Overlay = styled(motion.div)`
   opacity: 0;
   position: fixed;
   inset: 0;
@@ -12,8 +12,8 @@ export const Overlay = styled(motion.section)`
   z-index: 2;
 `;
 
-export const BigContent = styled(motion.div)<{scrolly: MotionValue<number>}>`
-  position: absolute;
+export const Section = styled(motion.section)<{scrolly: MotionValue<number>}>`
+  position: fixed;
   width: 42vw;
   height: 90vh;
   top: 100px;
@@ -27,28 +27,28 @@ export const BigContent = styled(motion.div)<{scrolly: MotionValue<number>}>`
   z-index: 3;
 `;
 
-export const BigCover = styled.div<{bgPhoto: string}>`
+export const ContentHeader = styled(motion.div)<{bgphoto: string}>`
   width: 100%;
   height: 450px;
-  background-image: linear-gradient(rgba(20, 20, 20, 0), rgba(20, 20, 20, 1)), url(${(props) => props.bgPhoto});
+  background-image: linear-gradient(rgba(20, 20, 20, 0), rgba(20, 20, 20, 1)), url(${(props) => props.bgphoto});
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 `;
 
-export const BigWrapper = styled.div`
+export const ContentWrapper = styled.div`
   position: relative;
   top: -80px;
   padding: 0 40px;
 `;
 
-export const BigTitle = styled.h3`
+export const Title = styled.h3`
   color: ${(props) => props.theme.textColor};
   padding: 20px;
   font-size: 46px;
 `;
 
-export const BigButtonGroup = styled.div`
+export const ButtonGroup = styled.div`
   display: inline-flex;
   justify-content: flex-start;
   align-items: center;
@@ -85,7 +85,7 @@ export const BigButtonGroup = styled.div`
   }
 `;
 
-export const BigOverview = styled.p`
+export const Overview = styled.p`
   padding: 20px;
   color: ${(props) => props.theme.textColor};
   letter-spacing: 1px;
@@ -93,7 +93,7 @@ export const BigOverview = styled.p`
   margin-bottom: 100px;
 `;
 
-export const BigDetail = styled.div`
+export const Content = styled.div`
   padding: 20px;
   display: flex;
   justify-content: space-between;

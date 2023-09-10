@@ -1,22 +1,30 @@
-export enum SliderCategory {
-  "NowPlaying",
-  "Popular",
-  "Top",
-  "Upcoming",
-  "onAir",
+export const queryKinds = {
+  movie: ['NowPlaying', 'Popular', 'Top', 'Upcoming'],
+  tv: ['OnAir']
+};
+
+export enum MovieCategory {
+  "NowPlaying" = 10,
+  "Popular" = 11,
+  "Top" = 12,
+  "Upcoming" = 13,
+}
+
+export enum TvCategory {
+  "OnAir" = 20,
 }
 
 export const queryKey = {
   movie: {
     all: ['movie'] as const,
-    nowPlaying: () => [...queryKey.movie.all, 'nowPlaying'] as const,
-    popular: () => [...queryKey.movie.all, 'popular'] as const,
-    top: () => [...queryKey.movie.all, 'top'] as const,
-    upcoming: () => [...queryKey.movie.all, 'upcoming'] as const,
+    nowPlaying: () => [...queryKey.movie.all, queryKinds.movie[0]] as const,
+    popular: () => [...queryKey.movie.all, queryKinds.movie[1]] as const,
+    top: () => [...queryKey.movie.all, queryKinds.movie[2]] as const,
+    upcoming: () => [...queryKey.movie.all, queryKinds.movie[3]] as const,
   },
   tv: {
     all: ['tv'] as const,
-    onAir: () => [...queryKey.tv.all, 'onAir'] as const,
+    onAir: () => [...queryKey.tv.all, queryKinds.tv[0]] as const,
   },
   detail: {
     all: ['detail'] as const,

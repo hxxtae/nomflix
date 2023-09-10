@@ -1,10 +1,11 @@
 import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { AnimatePresence, useViewportScroll } from 'framer-motion';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useViewportScroll } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRecoilState } from 'recoil';
 
-import { formatImagePath, publicUrlStr } from '../../utils';
+import { formatImagePath } from '../../utils';
 import { api, dto, query } from '../../apis';
+import { DetailViewState } from '../../global';
 import { queryKey } from '../../constants';
 import * as S from './style';
 
@@ -14,34 +15,28 @@ interface IDetailView {
 };
 
 function DetailView({ data, kind }: IDetailView) {
-  const detailMatch = useRouteMatch<{ movieId: string, tvId: string }>([`${publicUrlStr()}/movies/:movieId`, `${publicUrlStr()}/tv/:tvId`]);
-  const { isLoading, data: detailData } = query.useDetailDataFetch(queryKey.detail.all, () => api.getDetail(detailMatch?.params.movieId, detailMatch?.params.tvId));
+  const [detailState, setDetailState] = useRecoilState(DetailViewState);
+  const { isLoading, data: detailData } = query.useDetailDataFetch(queryKey.detail.all, () => api.getDetail(detailState.id, kind));
   const { scrollY } = useViewportScroll();
-  const history = useHistory();
 
-  const closeBigMovie = () => {
-    if (detailMatch?.params.movieId) {
-      history.push(`${publicUrlStr()}`);
-    } else if (detailMatch?.params.tvId) {
-      history.push(`${publicUrlStr()}/tv`);
-    }
+  const closeView = (e: any) => {
+    setDetailState((prev) => ({
+      ...prev,
+      state: false,
+      id: ''
+    }))
   };
   
   return (
-    <AnimatePresence>
-      <S.Overlay
-          onClick={closeBigMovie}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}>
-        <S.BigContent
-          layoutId={(detailMatch?.params.movieId || detailMatch?.params.tvId) + kind.toString()}
+      <>
+        <S.Section
+          layoutId={detailState.id + kind.toString()}
           scrolly={scrollY}
         >
-          <S.BigCover bgPhoto={formatImagePath(data.backdrop_path)} />
-          <S.BigWrapper>
-            <S.BigTitle>{data.title || data.original_title}</S.BigTitle>
-            <S.BigButtonGroup>
+          <S.ContentHeader bgphoto={formatImagePath(data.backdrop_path)} />
+          <S.ContentWrapper>
+            <S.Title>{data.title || data.original_title}</S.Title>
+            <S.ButtonGroup>
               <button>
                 <span>재생</span>
                 <FontAwesomeIcon icon={faPlay} size="1x" />
@@ -55,28 +50,33 @@ function DetailView({ data, kind }: IDetailView) {
               <button>
                 <FontAwesomeIcon icon={faPlus} size="1x" />
               </button>
-            </S.BigButtonGroup>
-            <S.BigOverview>{data.overview}</S.BigOverview>
+            </S.ButtonGroup>
+            <S.Overview>{data.overview}</S.Overview>
             {isLoading ||
               <>
-                <S.BigDetail>
+                <S.Content>
                   {detailData?.production_companies.map((item, index) => (
                     <div key={index.toString()}>
                       <img src={formatImagePath(item.logo_path, 'w500')} alt={item.name} />
                     </div>
                   ))}
-                </S.BigDetail>
-                <S.BigDetail>
+                </S.Content>
+                <S.Content>
                   {detailData?.production_companies.map((item, index) => (
                     <span key={index.toString()}>{item.name}</span>
                   ))}
-                </S.BigDetail>
+                </S.Content>
               </>
             }
-          </S.BigWrapper>
-        </S.BigContent>
-      </S.Overlay>
-    </AnimatePresence > 
+          </S.ContentWrapper>
+        </S.Section>
+        <S.Overlay
+          onClick={closeView}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}>
+        </S.Overlay>
+      </>
   )
 }
 

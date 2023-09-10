@@ -3,8 +3,8 @@ import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { api, query } from '../../apis';
 import { formatImagePath } from '../../utils';
-import { SliderCategory, queryKey } from '../../constants';
-import { SliderView, Loading } from '../../components';
+import { MovieCategory, queryKey } from '../../constants';
+import { SliderContent, Loading } from '../../components';
 import { useState } from 'react';
 import * as S from './style';
 
@@ -23,7 +23,7 @@ function Movies() {
   return (
     <S.Wrapper>
       { nowPlayLoading ?
-        <Loading /> :
+        <Loading /> : !!nowPlayDatas ? 
         <>
           <S.Banner bgphoto={formatImagePath(nowPlayDatas ? nowPlayDatas[0].backdrop_path : "")}>
             <S.Title>{ nowPlayDatas ? nowPlayDatas[0].title : "" }</S.Title>
@@ -37,29 +37,29 @@ function Movies() {
             </S.ButtonWrapper>
             <S.Overview>{ nowPlayDatas ? nowPlayDatas[0].overview : "" }</S.Overview>
           </S.Banner>
-          <S.SliderWrapper onClick={() => onClick(SliderCategory.NowPlaying)}>
+          <S.SliderWrapper onClick={() => onClick(MovieCategory.NowPlaying)}>
             <S.SliderTitle>지금 뜨는 콘텐츠</S.SliderTitle>
-            <SliderView data={ nowPlayDatas } kind={SliderCategory.NowPlaying} slider={clicksSlider} />
+            <SliderContent key={MovieCategory.NowPlaying} data={ nowPlayDatas } kind={MovieCategory.NowPlaying} slider={clicksSlider} />
           </S.SliderWrapper>
-        </>}
+        </> : <Loading /> }
       { popularLoading ? 
-        <Loading /> : 
-        <S.SliderWrapper onClick={() => onClick(SliderCategory.Popular)}>
+        <Loading /> : !!popularDatas ? 
+        <S.SliderWrapper onClick={() => onClick(MovieCategory.Popular)}>
           <S.SliderTitle>인기 상승 콘텐츠</S.SliderTitle>
-          <SliderView data={ popularDatas } kind={SliderCategory.Popular} slider={clicksSlider} />
-        </S.SliderWrapper> }
+          <SliderContent key={MovieCategory.Popular} data={ popularDatas } kind={MovieCategory.Popular} slider={clicksSlider} />
+        </S.SliderWrapper> : <Loading /> }
       { topLoading ? 
-        <Loading /> : 
-        <S.SliderWrapper onClick={() => onClick(SliderCategory.Top)}>
+        <Loading /> : !!topDatas ? 
+        <S.SliderWrapper onClick={() => onClick(MovieCategory.Top)}>
           <S.SliderTitle>베스트 인기 콘텐츠</S.SliderTitle>
-          <SliderView data={ topDatas } kind={SliderCategory.Top} slider={clicksSlider} />
-        </S.SliderWrapper> }
+          <SliderContent key={MovieCategory.Top} data={ topDatas } kind={MovieCategory.Top} slider={clicksSlider} />
+        </S.SliderWrapper> : <Loading /> }
       { upcomingLoading ? 
-        <Loading /> : 
-        <S.SliderWrapper onClick={() => onClick(SliderCategory.Upcoming)}>
+        <Loading /> : !!upcomingDatas ?
+        <S.SliderWrapper onClick={() => onClick(MovieCategory.Upcoming)}>
           <S.SliderTitle>개봉 예정작 콘텐츠</S.SliderTitle>
-          <SliderView data={ upcomingDatas } kind={SliderCategory.Upcoming} slider={clicksSlider} />
-        </S.SliderWrapper> }
+          <SliderContent key={MovieCategory.Upcoming} data={ upcomingDatas } kind={MovieCategory.Upcoming} slider={clicksSlider} />
+        </S.SliderWrapper> : <Loading /> }
     </S.Wrapper>
   );
 }

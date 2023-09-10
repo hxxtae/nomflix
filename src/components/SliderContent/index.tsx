@@ -1,10 +1,10 @@
+import { useRecoilState } from 'recoil';
 import { useCallback,useState } from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { publicUrlStr } from '../../utils';
 import { dto } from '../../apis';
+import { DetailViewState } from '../../global';
 import DetailView from '../DetailView';
 import SliderList from './SliderList';
 import * as S from './style';
@@ -38,11 +38,8 @@ function SliderContent({ data, kind, slider }: ISliderData) {
   const [slideIndex, setSlideIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState(false);
   const [detailData, setDetailData] = useState<dto.IData>(initDetailData);
+  const [detailState, setDetailState] = useRecoilState(DetailViewState);
   const offset = 6;
-  
-  const history = useHistory();
-  const movieMatch = useRouteMatch<{ movieId: string }>(`${publicUrlStr()}/movies/:movieId`);
-  const tvMatch = useRouteMatch<{ tvId: string }>(`${publicUrlStr()}/tv/:tvId`);
 
   const detailClick = useCallback((contentId: string) => {
     const detailData = data?.find((item) => item.id.toString() === contentId);
@@ -50,24 +47,13 @@ function SliderContent({ data, kind, slider }: ISliderData) {
     setDetailData((prev) => ({
       ...prev,
       ...detailData
-    }));
-
-    const { pathname } = history.location;
-    const publicPath = publicUrlStr();
-    let detailPath = '';
-    if (
-      pathname === publicPath ||
-      pathname === `${publicPath}/` ||
-      pathname === `${publicPath}/movies`
-    ) {
-      detailPath = 'movies';
-    }
-
-    if (pathname === `${publicPath}/tv`) {
-      detailPath = 'tv';
-    }
-    history.push(`${publicPath}/${detailPath}/${contentId}`);
-  }, [data, history]);
+    }))
+    setDetailState((prev) => ({
+      ...prev,
+      state: true,
+      id: contentId
+    }))
+  }, [data, setDetailState]);
 
   const toggleCaraucel = useCallback(() =>
     setLeaving((prev) => !prev), []);
@@ -120,7 +106,7 @@ function SliderContent({ data, kind, slider }: ISliderData) {
         </S.Decreadiv>
       </S.Slider>
       
-      {(slider === kind && (movieMatch?.isExact || tvMatch?.isExact)) && (
+      {(slider === kind && detailState.state ) && (
         <DetailView data={detailData} kind={kind}/>
       )}
     </>

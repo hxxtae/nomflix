@@ -58,8 +58,8 @@ export async function getTvOnAirAll() {
 // --------------------------
 // Movie & Tv Detail api
 // --------------------------
-export async function getDetail(movieId?: string, tvId?: string) {
-  return fetch(apiDetailPath(movieId, tvId)).then(
+export async function getDetail(detailId: string, kind: number) {
+  return fetch(apiDetailPath(detailId, kind)).then(
     response => response.json()
   );
 }

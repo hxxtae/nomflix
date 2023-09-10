@@ -14,7 +14,9 @@ export const apiTvPath = (page: number, subKinds: ITvKinds) => {
   return `${baseURL}/${kind}/${subKinds}?api_key=${apiKEY}&page=${page}`;
 }
 
-export const apiDetailPath = (movieid?: string, tvid?: string) => {
-  const validate = movieid ? `movie/${movieid}` : tvid ? `tv/${tvid}` : '';
+export const apiDetailPath = (detailId: string, kind: number) => {
+  const validate =
+    kind < 20 ? `movie/${detailId}` :
+    kind < 30 ? `tv/${detailId}` : '';
   return `${baseURL}/${validate}?api_key=${apiKEY}`;
 }
