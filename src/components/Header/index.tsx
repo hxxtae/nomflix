@@ -1,23 +1,33 @@
 import { useAnimation, useViewportScroll } from "framer-motion";
-import { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect } from 'react';
 
 import { publicUrlStr } from '../../utils';
 import { Search } from '../../components';
 import * as S from './style';
 
 function Header() {
-  const [ menuState, setMenuState ] = useState({ movies: true, tv: false });
   const menuAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
+  const { pathname } = useLocation();
 
+  const movieClick = (): boolean => {
+    const menuName = pathname.split('/').at(-1);
+    return (menuName === 'movie' || menuName === publicUrlStr().split('/')[1]) ? true : false;
+  }
+
+  const tvClick = (): boolean => {
+    const menuName = pathname.split('/').at(-1);
+    return menuName === 'tv' ? true : false;
+  }
+  
   useEffect(() => {
     scrollY.onChange(() => {
       scrollY.get() > 40 ?
         menuAnimation.start("scroll") :
         menuAnimation.start("top");
     });
-  }, [scrollY, menuAnimation]); // motionValue의 값은 랜더링에 영향을 주지 않는다.
+  }, [scrollY, menuAnimation]); // motionValue의 값은 랜더링에 영향을 주지 않는다.(scrollY)
 
   return (
     <S.Nav variants={S.menuVariants} initial="top" animate={menuAnimation}>
@@ -27,12 +37,12 @@ function Header() {
         </S.Logo>
         <S.List>
           <S.Item>
-            <Link to={`${publicUrlStr()}/`} onClick={() => setMenuState((prev) => ({ ...prev, movies: true, tv: false }))}>Movie</Link>
-            {menuState.movies && <S.Line layoutId="circle" />}
+            <Link to={`${publicUrlStr()}`}>Movie</Link>
+            {movieClick() && <S.Line layoutId="circle" />}
           </S.Item>
           <S.Item>
-            <Link to={`${publicUrlStr()}/tv`} onClick={() => setMenuState((prev) => ({ ...prev, movies: false, tv: true }))}>Series</Link>
-            {menuState.tv && <S.Line layoutId="circle" />}
+            <Link to={`${publicUrlStr()}/tv`} >Series</Link>
+            {tvClick() && <S.Line layoutId="circle" />}
           </S.Item>
         </S.List>
       </S.Col>
