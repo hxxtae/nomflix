@@ -5,13 +5,11 @@ type IMovieKinds = 'now_playing' | 'popular' | 'top_rated' | 'latest' | 'upcomin
 type ITvKinds = 'on_the_air';
 
 export const apiMoviePath = (page: number, subKinds: IMovieKinds) => {
-  const kind = 'movie';
-  return `${baseURL}/${kind}/${subKinds}?api_key=${apiKEY}&page=${page}`;
+  return `${baseURL}/movie/${subKinds}?api_key=${apiKEY}&page=${page}`;
 }
 
 export const apiTvPath = (page: number, subKinds: ITvKinds) => {
-  const kind = 'tv';
-  return `${baseURL}/${kind}/${subKinds}?api_key=${apiKEY}&page=${page}`;
+  return `${baseURL}/tv/${subKinds}?api_key=${apiKEY}&page=${page}`;
 }
 
 export const apiDetailPath = (detailId: string, kind: number) => {
