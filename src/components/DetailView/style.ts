@@ -1,33 +1,36 @@
 import { motion, MotionValue } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Overlay = styled(motion.div)`
-  opacity: 0;
+export const Wrapper = styled.div`
   position: fixed;
   inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+`;
+
+export const Overlay = styled(motion.div)`
+  opacity: 0;
+  position: absolute;
   width: 100%;
   height: 100vh;
-  overflow: hidden;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 2;
 `;
 
 export const Section = styled(motion.section)<{scrolly: MotionValue<number>}>`
-  position: fixed;
+  position: absolute;
+  bottom: 0;
   width: 42vw;
-  height: 90vh;
-  top: 100px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
+  height: 95vh;
   background-color: ${props => props.theme.bgColor};
   border-radius: 10px;
   overflow: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-  z-index: 3;
+  z-index: 1;
 `;
 
-export const ContentHeader = styled(motion.div)<{bgphoto: string}>`
+export const Image = styled(motion.div)<{bgphoto: string}>`
   width: 100%;
   height: 450px;
   background-image: linear-gradient(rgba(20, 20, 20, 0), rgba(20, 20, 20, 1)), url(${(props) => props.bgphoto});
@@ -36,7 +39,7 @@ export const ContentHeader = styled(motion.div)<{bgphoto: string}>`
   background-repeat: no-repeat;
 `;
 
-export const ContentWrapper = styled.div`
+export const Content = styled.div`
   position: relative;
   top: -80px;
   padding: 0 40px;
@@ -93,7 +96,7 @@ export const Overview = styled.p`
   margin-bottom: 100px;
 `;
 
-export const Content = styled.div`
+export const Production = styled.div`
   padding: 20px;
   display: flex;
   justify-content: space-between;

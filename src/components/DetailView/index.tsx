@@ -1,40 +1,32 @@
 import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useViewportScroll } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRecoilState } from 'recoil';
 
 import { formatImagePath } from '../../utils';
 import { api, dto, query } from '../../apis';
-import { DetailViewState } from '../../global';
 import { queryKey } from '../../constants';
 import * as S from './style';
+import { useEffect } from 'react';
 
 interface IDetailView {
   data: dto.IData;
   kind: number;
+  closeDetail: () => void;
 };
 
-function DetailView({ data, kind }: IDetailView) {
-  const [detailState, setDetailState] = useRecoilState(DetailViewState);
-  const { isLoading, data: detailData } = query.useDetailDataFetch(queryKey.detail.all, () => api.getDetail(detailState.id, kind));
+function DetailView({ data, kind, closeDetail }: IDetailView) {
+  const { isLoading, data: detailData } = query.useDetailDataFetch(queryKey.detail.all, () => api.getDetail(data.id + "", kind));
   const { scrollY } = useViewportScroll();
 
-  const closeView = (e: any) => {
-    setDetailState((prev) => ({
-      ...prev,
-      state: false,
-      id: ''
-    }))
-  };
+  // layoutId Bug Issue Link : https://github.com/framer/motion/issues/1580
   
   return (
-      <>
+    <S.Wrapper>
         <S.Section
-          layoutId={detailState.id + kind.toString()}
-          scrolly={scrollY}
-        >
-          <S.ContentHeader bgphoto={formatImagePath(data.backdrop_path)} />
-          <S.ContentWrapper>
+          layoutId={data.id + kind.toString()}
+          scrolly={scrollY}>
+          <S.Image bgphoto={formatImagePath(data.backdrop_path)} />
+          <S.Content>
             <S.Title>{data.title || data.original_title}</S.Title>
             <S.ButtonGroup>
               <button>
@@ -54,29 +46,29 @@ function DetailView({ data, kind }: IDetailView) {
             <S.Overview>{data.overview}</S.Overview>
             {isLoading ||
               <>
-                <S.Content>
+                <S.Production>
                   {detailData?.production_companies.map((item, index) => (
                     <div key={index.toString()}>
                       <img src={formatImagePath(item.logo_path, 'w500')} alt={item.name} />
                     </div>
                   ))}
-                </S.Content>
-                <S.Content>
+                </S.Production>
+                <S.Production>
                   {detailData?.production_companies.map((item, index) => (
                     <span key={index.toString()}>{item.name}</span>
                   ))}
-                </S.Content>
+                </S.Production>
               </>
             }
-          </S.ContentWrapper>
+          </S.Content>
         </S.Section>
         <S.Overlay
-          onClick={closeView}
+          onClick={closeDetail}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}>
         </S.Overlay>
-      </>
+      </S.Wrapper>
   )
 }
 
