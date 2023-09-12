@@ -1,13 +1,12 @@
-import { useRecoilState } from 'recoil';
 import { useCallback,useState } from 'react';
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { dto } from '../../apis';
-import { DetailViewState } from '../../global';
 import DetailView from '../DetailView';
 import SliderList from './SliderList';
 import * as S from './style';
+import PortalModal from '../PortalModal';
 
 const initDetailData: dto.IData = {
   adult: false,
@@ -38,22 +37,23 @@ function SliderContent({ data, kind, slider }: ISliderData) {
   const [slideIndex, setSlideIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState(false);
   const [detailData, setDetailData] = useState<dto.IData>(initDetailData);
-  const [detailState, setDetailState] = useRecoilState(DetailViewState);
   const offset = 6;
 
-  const detailClick = useCallback((contentId: string) => {
+  const openDetail = useCallback((contentId: string) => {
     const detailData = data?.find((item) => item.id.toString() === contentId);
     if (!detailData) return;
     setDetailData((prev) => ({
       ...prev,
       ...detailData
     }))
-    setDetailState((prev) => ({
+  }, [data]);
+
+  const closeDetail = useCallback(() => {
+    setDetailData((prev) => ({
       ...prev,
-      state: true,
-      id: contentId
-    }))
-  }, [data, setDetailState]);
+      ...initDetailData
+    }));
+  }, []);
 
   const toggleCaraucel = useCallback(() =>
     setLeaving((prev) => !prev), []);
@@ -97,7 +97,7 @@ function SliderContent({ data, kind, slider }: ISliderData) {
           kind={kind}
           data={data}
           toggleCaraucel={toggleCaraucel}
-          detailClick={detailClick}
+          detailClick={openDetail}
         />
         <S.Decreadiv>
           <S.NextButton onClick={incraseSlider}>
@@ -106,8 +106,10 @@ function SliderContent({ data, kind, slider }: ISliderData) {
         </S.Decreadiv>
       </S.Slider>
       
-      {(slider === kind && detailState.state ) && (
-        <DetailView data={detailData} kind={kind}/>
+      {(slider === kind && !!detailData.id ) && (
+        <PortalModal>
+          <DetailView data={detailData} kind={kind} closeDetail={closeDetail} />
+        </PortalModal>
       )}
     </>
   )
