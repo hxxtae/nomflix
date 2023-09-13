@@ -41,19 +41,19 @@ export const Logo = styled.a`
   }
 `;
 
-export const List = styled.ul`
+export const List = styled(motion.ul)`
   display: flex;
   align-items: center;
 `;
 
-export const Item = styled.li`
-  margin-right: 20px;
-  transition: color 0.3s ease-in-out;
-  color: ${(props) => props.theme.textColor};
+export const Item = styled(motion.li)`
   position: relative;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  margin-right: 25px;
+  transition: color 0.3s ease-in-out;
+  color: ${(props) => props.theme.textColor};
   &:hover {
     color: ${(props) => props.theme.textColor};
   }
@@ -67,6 +67,5 @@ export const Line = styled(motion.span)`
   bottom: -5px;
   left: 0;
   right: 0;
-  margin: 0 auto;
   background-color: ${(props) => props.theme.mainColor};
 `;

@@ -1,33 +1,39 @@
-import { useAnimation, useViewportScroll } from "framer-motion";
+import { useAnimation, useScroll, useMotionValueEvent } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
-import { useEffect } from 'react';
+import { useState } from 'react';
 
 import { publicUrlStr } from '../../utils';
 import { Search } from '../../components';
 import * as S from './style';
 
+const menus = [
+  { name: 'movie', nicName: '영화' },
+  { name: 'tv', nicName: '시리즈' }
+];
+const initSelect = (pathname: string) => {
+  const [path1, path2] = [menus[0].name, menus[1].name];
+  const paths = pathname.split('/');
+  return paths.includes(path1) ? path1 :
+    paths.includes(path2) ? path2 : path1;
+}
+
 function Header() {
   const menuAnimation = useAnimation();
-  const { scrollY } = useViewportScroll();
   const { pathname } = useLocation();
+  const { scrollY } = useScroll();
+  const [selected, setSelected] = useState<string>(initSelect(pathname));
 
-  const movieClick = (): boolean => {
-    const menuName = pathname.split('/').at(-1);
-    return (menuName === 'movie' || menuName === publicUrlStr().split('/')[1]) ? true : false;
-  }
-
-  const tvClick = (): boolean => {
-    const menuName = pathname.split('/').at(-1);
-    return menuName === 'tv' ? true : false;
-  }
+  useMotionValueEvent(scrollY, 'change', (getY) => {
+    getY > 40 ?
+      menuAnimation.start("scroll") :
+      menuAnimation.start("top");
+  });
   
-  useEffect(() => {
-    scrollY.onChange(() => {
-      scrollY.get() > 40 ?
-        menuAnimation.start("scroll") :
-        menuAnimation.start("top");
-    });
-  }, [scrollY, menuAnimation]); // motionValue의 값은 랜더링에 영향을 주지 않는다.(scrollY)
+  const onSelect = (name: string) => {
+    setSelected(name);
+  };
+
+  // 🐞[Bug]: layoutId Bug Issue Link : https://github.com/framer/motion/issues/1580
 
   return (
     <S.Nav variants={S.menuVariants} initial="top" animate={menuAnimation}>
@@ -36,14 +42,12 @@ function Header() {
           <img src={`${publicUrlStr()}/assets/svg/netflix_logo.svg`} alt="netflix logo" />
         </S.Logo>
         <S.List>
-          <S.Item>
-            <Link to={`${publicUrlStr()}`}>Movie</Link>
-            {movieClick() && <S.Line layoutId="circle" />}
-          </S.Item>
-          <S.Item>
-            <Link to={`${publicUrlStr()}/tv`} >Series</Link>
-            {tvClick() && <S.Line layoutId="circle" />}
-          </S.Item>
+          {menus.map((menu) => (
+            <S.Item key={menu.name} onClick={() => onSelect(menu.name)}>
+              <Link to={`${publicUrlStr()}${menu.name === 'movie' ? '' : '/'+menu.name}`}>{menu.nicName}</Link>
+              {selected === menu.name ? <S.Line layoutId="circle" /> : null}
+            </S.Item    >
+          ))}
         </S.List>
       </S.Col>
       <S.Col>
@@ -60,10 +64,3 @@ export default Header;
 // - 애니메이션 효과를 조건에 따라 동적으로 효과를 변경할 수 있다.
 
 // -> https://www.framer.com/docs/animation/#component-animation-controls
-
-// [ useViewportScroll() ]
-// 두 가지의 Return을 반환 하는데
-// 1. Progress: x, y 에 대한 스크롤 진행도를 0에서 부터 1사이의 값으로 알 수 있다.
-// 2.
-
-// -> https://www.framer.com/docs/motionvalue/##useviewportscroll
