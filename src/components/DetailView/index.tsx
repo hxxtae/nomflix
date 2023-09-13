@@ -1,12 +1,10 @@
 import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useViewportScroll } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { formatImagePath } from '../../utils';
 import { api, dto, query } from '../../apis';
 import { queryKey } from '../../constants';
 import * as S from './style';
-import { useEffect } from 'react';
 
 interface IDetailView {
   data: dto.IData;
@@ -16,15 +14,11 @@ interface IDetailView {
 
 function DetailView({ data, kind, closeDetail }: IDetailView) {
   const { isLoading, data: detailData } = query.useDetailDataFetch(queryKey.detail.all, () => api.getDetail(data.id + "", kind));
-  const { scrollY } = useViewportScroll();
-
-  // layoutId Bug Issue Link : https://github.com/framer/motion/issues/1580
   
   return (
     <S.Wrapper>
         <S.Section
-          layoutId={data.id + kind.toString()}
-          scrolly={scrollY}>
+          layoutId={data.id + kind.toString()}>
           <S.Image bgphoto={formatImagePath(data.backdrop_path)} />
           <S.Content>
             <S.Title>{data.title || data.original_title}</S.Title>

@@ -1,4 +1,4 @@
-import { motion, MotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -18,7 +18,7 @@ export const Overlay = styled(motion.div)`
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
-export const Section = styled(motion.section)<{scrolly: MotionValue<number>}>`
+export const Section = styled(motion.section)`
   position: absolute;
   bottom: 0;
   width: 42vw;
