@@ -1,12 +1,12 @@
-import { useCallback,useState } from 'react';
+import { useCallback, useState } from 'react';
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { dto } from '../../apis';
 import DetailView from '../DetailView';
 import SliderList from './SliderList';
-import * as S from './style';
 import PortalModal from '../PortalModal';
+import * as S from './style';
 
 const initDetailData: dto.IData = {
   adult: false,
@@ -59,34 +59,28 @@ function SliderContent({ data, kind, slider }: ISliderData) {
     setLeaving((prev) => !prev), []);
 
   const increaFunc = useCallback((data: dto.IData[]) => {
+    if (leaving || !data?.length) return;
     const totalMovie = data.length - 1;
     const maxIndex = Math.floor(totalMovie / offset) - 1;
-    setSlideDirection(false);
     toggleCaraucel();
+    setSlideDirection(false);
     setSlideIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
-  }, [toggleCaraucel]);
+  }, [toggleCaraucel, leaving]);
 
   const decreaFunc = useCallback((data: dto.IData[]) => {
+    if (leaving || !data?.length) return;
     const totalMovie = data.length - 1;
     const maxIndex = Math.floor(totalMovie / offset) - 1;
-    setSlideDirection(true);
     toggleCaraucel();
+    setSlideDirection(true);
     setSlideIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
-  }, [toggleCaraucel]);
-
-  const incraseSlider = () => {
-    if (!leaving && data?.length) increaFunc(data);
-  };
-
-  const decraseSlider = () => {
-    if (!leaving && data?.length) decreaFunc(data);
-  };
+  }, [toggleCaraucel, leaving]);
 
   return (
     <>
       <S.Slider>
         <S.Increadiv>
-          <S.NextButton onClick={decraseSlider}>
+          <S.NextButton onClick={() => decreaFunc(data)}>
             <FontAwesomeIcon icon={faChevronLeft} size={'2x'} />
           </S.NextButton>
         </S.Increadiv>
@@ -100,7 +94,7 @@ function SliderContent({ data, kind, slider }: ISliderData) {
           detailClick={openDetail}
         />
         <S.Decreadiv>
-          <S.NextButton onClick={incraseSlider}>
+          <S.NextButton onClick={() => increaFunc(data)}>
             <FontAwesomeIcon icon={faChevronRight} size={'2x'} />
           </S.NextButton>
         </S.Decreadiv>
@@ -110,7 +104,7 @@ function SliderContent({ data, kind, slider }: ISliderData) {
         <PortalModal>
           <DetailView data={detailData} kind={kind} closeDetail={closeDetail} />
         </PortalModal>
-      )}
+        )}
     </>
   )
 }
