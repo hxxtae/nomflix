@@ -16,7 +16,7 @@ interface ISliderList {
 }
 
 function SliderList({ slideIndex, slideDirection, offset, kind, data, toggleCaraucel, detailClick }: ISliderList) {
-  console.log('sliderList')
+  console.log('SliderList')
 
   const sliderDataFilter = useCallback((list: dto.IData[]) => {
     const [start, end] = [offset * slideIndex, offset * slideIndex + offset];
@@ -26,12 +26,12 @@ function SliderList({ slideIndex, slideDirection, offset, kind, data, toggleCara
   return (
     <AnimatePresence initial={false} onExitComplete={toggleCaraucel} custom={slideDirection}>
       <S.Row
-        key={slideIndex + kind.toString()}
+        key={kind.toString() + slideIndex}
         custom={slideDirection}
         variants={S.slideVariants}
         initial="hidden"
         animate="visible"
-        exit="exit">
+        exit="exit" >
         {sliderDataFilter(data).map(item => (
           <SliderItem
             key={item.id + kind.toString()}

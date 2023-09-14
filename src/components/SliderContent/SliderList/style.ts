@@ -13,7 +13,7 @@ export const slideVariants = {
     }
   },
   exit: (direction: boolean) => ({
-    x: direction ? window.innerWidth + 5 : -window.innerWidth - 5,
+    x: !direction ? -window.innerWidth - 5 : window.innerWidth + 5,
     transition: {
       type: "tween",
       duration: 1
