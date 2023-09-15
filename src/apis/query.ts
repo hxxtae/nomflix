@@ -37,9 +37,10 @@ const dataFetch = (data: IGetDataResult[]): IData[] => {
 // Custom Hook of Slider
 export const useDataFetch = (keyArr: readonly string[], callback: Function): IDataFetch => {
   const { isLoading, data } = useQuery([...keyArr], () => callback(), {
-    staleTime: 60000,
+    staleTime: 1000 * 60 * 20,
     cacheTime: Infinity,
     refetchOnWindowFocus: false,
+    retry: 0,
     select: (data: IGetDataResult[]) => {
       return dataFetch(data);
     }
