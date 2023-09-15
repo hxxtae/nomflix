@@ -7,7 +7,7 @@ import Tv from './pages/Tv';
 import Search from './pages/Search';
 
 function App() {
-  console.log('App');
+  // console.log('App');
   
   return (
     <BrowserRouter>

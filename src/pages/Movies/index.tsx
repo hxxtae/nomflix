@@ -1,15 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 
 import { api, query } from '../../apis';
 import { formatImagePath } from '../../utils';
 import { MovieCategory, queryKey } from '../../constants';
 import { SliderContent, Loading } from '../../components';
-import { useState } from 'react';
 import * as S from './style';
 
 function Movies() {
-  console.log('Home');
   const { isLoading: nowPlayLoading, datas: nowPlayDatas } = query.useDataFetch(queryKey.movie.nowPlaying(), api.getNowPlayAll);
   const { isLoading: popularLoading, datas: popularDatas } = query.useDataFetch(queryKey.movie.popular(), api.getPopularAll);
   const { isLoading: topLoading, datas: topDatas } = query.useDataFetch(queryKey.movie.top(), api.getTopAll);

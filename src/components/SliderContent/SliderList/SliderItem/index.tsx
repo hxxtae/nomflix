@@ -13,7 +13,7 @@ interface ISliderItem {
 }
 
 function SliderItem({ data, kind, detailClick }: ISliderItem) {
-  console.log(`sliderItem: ${kind}`)
+  // console.log(`sliderItem: ${kind}`)
 
   const onPlay = (e: any) => {
     e.stopPropagation();
