@@ -19,11 +19,7 @@ interface IDetailDataFetch {
  * @returns { IData[] } 
  */
 const dataFetch = (data: IGetDataResult[]): IData[] => {
-  if (typeof data === "undefined" || !data?.length) {
-    throw new Error('API Fetch: Data is undefined!!');
-  }
-
-  const totalResultObj: IData[] = data!
+  const totalResultObj: IData[] = data
     .map(parentObj => [...parentObj.results])
     .reduce((prev, curr) => [...prev, ...curr]);
   return totalResultObj;
