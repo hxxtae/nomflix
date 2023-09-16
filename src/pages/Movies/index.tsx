@@ -31,7 +31,7 @@ function Movies() {
                 <FontAwesomeIcon icon={faPlay} /><span>재생</span>
               </S.BannerButton>
               <S.BannerButton>
-                <FontAwesomeIcon icon={faPlus} /><span>내가 찜한 콘텐츠</span>
+                <FontAwesomeIcon icon={faPlus} /><span>상세 정보</span>
               </S.BannerButton>
             </S.ButtonWrapper>
             <S.Overview>{ nowPlayDatas ? nowPlayDatas[0].overview : "" }</S.Overview>
