@@ -21,10 +21,10 @@ export const slideVariants = {
   })
 }
 
-export const Row = styled(motion.ul)`
+export const Row = styled(motion.ul)<{offset: number}>`
   display: grid;
   gap: 10px;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: ${({ offset }) => `repeat(${offset}, 1fr)`};
   margin-bottom: 5px;
   position: absolute;
   width: 100%;

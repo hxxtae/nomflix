@@ -27,6 +27,7 @@ function SliderList({ slideIndex, slideDirection, offset, kind, data, toggleCara
     <AnimatePresence initial={false} onExitComplete={toggleCaraucel} custom={slideDirection}>
       <S.Row
         key={kind.toString() + slideIndex}
+        offset={offset}
         custom={slideDirection}
         variants={S.slideVariants}
         initial="hidden"
