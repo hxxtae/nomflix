@@ -42,7 +42,7 @@ function SliderItem({ data, kind, detailClick }: ISliderItem) {
       variants={S.boxHoverVariants}
       whileHover="hover"
       transition={{ type: "tween" }}>
-      <S.BoxImg src={formatImagePath(data.backdrop_path, 'w500')} />
+      <S.BoxImg variants={S.imageHoverVariants} src={formatImagePath(data.backdrop_path, 'w500')} />
       <S.Info variants={S.infoHoverVariants}>
         <S.ButtonGroup>
           <button type='button' onClick={onPlay}>

@@ -13,6 +13,18 @@ export const boxHoverVariants = {
   }
 }
 
+export const imageHoverVariants = {
+  // Child Hover
+  hover: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    transition: {
+      delay: 0.5,
+      duration: 0.3
+    }
+  },
+}
+
 export const infoHoverVariants = {
   // Child Hover
   hover: {
@@ -50,6 +62,11 @@ export const BoxImg = styled(motion.img)`
   width: 100%;
   height: 100%;
   object-fit: cover;
+
+  /* &:hover {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  } */
 `;
 
 export const Info = styled(motion.div)`
