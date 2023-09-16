@@ -1,5 +1,7 @@
 import { apiDetailPath, apiMoviePath, apiTvPath } from './path';
 
+// const apiAccessToken = process.env.REACT_APP_API_ACCESS_TOKEN;
+
 // --------------------------
 // Movie api
 // --------------------------
@@ -21,7 +23,7 @@ export async function getPopular(page: number) {
 export async function getPopularAll() {
   return Promise.all([getPopular(1), getPopular(2), getPopular(3)]);
 }
-// (3) Top
+// (3) Top Rated
 export async function getTop(page: number) {
   return fetch(apiMoviePath(page, 'top_rated')).then(
     response => response.json()
@@ -45,9 +47,11 @@ export async function getUpcoming(page: number) {
 export async function getUpcomingAll() {
   return Promise.all([getUpcoming(2), getUpcoming(3)]);
 }
+
 // --------------------------
 // Tv api
 // --------------------------
+// (1) On The Air 
 export async function getTvOnAir(page: number) {
   return (await fetch(apiTvPath(page, 'on_the_air'))).json();
 }
@@ -55,6 +59,34 @@ export async function getTvOnAir(page: number) {
 export async function getTvOnAirAll() {
   return Promise.all([getTvOnAir(1), getTvOnAir(2), getTvOnAir(3)]);
 }
+
+// (2) Popular
+export async function getTvPopular(page: number) {
+  return (await fetch(apiTvPath(page, 'popular'))).json();
+}
+
+export async function getTvPopularAll() {
+  return Promise.all([getTvPopular(1), getTvPopular(2), getTvPopular(3)]);
+}
+
+// (3) Top rated
+export async function getTvTop(page: number) {
+  return (await fetch(apiTvPath(page, 'top_rated'))).json();
+}
+
+export async function getTvTopAll() {
+  return Promise.all([getTvTop(1), getTvTop(2), getTvTop(3)]);
+}
+
+// (4) Airing Today
+export async function getTvAiringToday(page: number) {
+  return (await fetch(apiTvPath(page, 'airing_today'))).json();
+}
+
+export async function getTvAiringTodayAll() {
+  return Promise.all([getTvAiringToday(1), getTvAiringToday(2), getTvAiringToday(3)]);
+}
+
 // --------------------------
 // Movie & Tv Detail api
 // --------------------------
