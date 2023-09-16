@@ -18,6 +18,8 @@ export const Banner = styled.div<{bgphoto: string}>`
   padding: 60px;
   background-image: linear-gradient(rgba(20, 20, 20, 0), rgba(20, 20, 20, 1)), url(${(props) => props.bgphoto});
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 export const Title = styled.h2`
