@@ -53,7 +53,7 @@ function Search() {
         </S.InnerIcon>
         <S.Input
           {...register("keyword", { required: true })}
-          placeholder="Search for movie & tv show"
+          placeholder="title, movie, series..."
           autoComplete='off'/>
       </S.Wrapper>
     </S.Box>

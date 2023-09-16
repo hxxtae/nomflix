@@ -77,7 +77,7 @@ export const InnerIcon = styled(motion.div)`
 `;
 
 export const Input = styled(motion.input)`
-  max-width: 230px;
+  width: 270px;
   height: 42px;
   padding-left: 40px;
   padding-right: 10px;
