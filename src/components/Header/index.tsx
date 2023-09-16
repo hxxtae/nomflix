@@ -7,8 +7,8 @@ import { Search } from '../../components';
 import * as S from './style';
 
 const menus = [
-  { name: 'movie', nicName: '영화' },
-  { name: 'tv', nicName: '시리즈' }
+  { name: 'movie', nicName: 'Movie' },
+  { name: 'tv', nicName: 'Series' }
 ];
 const initSelect = (pathname: string) => {
   const [path1, path2] = [menus[0].name, menus[1].name];
