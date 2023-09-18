@@ -5,6 +5,7 @@ import { memo } from 'react';
 import { formatImagePath } from '../../../../utils';
 import { dto } from '../../../../apis';
 import * as S from './style';
+import { useMediaQuery } from '../../../../hooks/useMediaQuery';
 
 interface ISliderItem {
   data: dto.IData;
@@ -13,7 +14,7 @@ interface ISliderItem {
 }
 
 function SliderItem({ data, kind, detailClick }: ISliderItem) {
-  // console.log(`sliderItem: ${kind}`)
+  const tablet = useMediaQuery("(max-width: 1180px)");
 
   const onPlay = (e: any) => {
     e.stopPropagation();
@@ -39,11 +40,11 @@ function SliderItem({ data, kind, detailClick }: ISliderItem) {
     <S.Box
       layoutId={data.id + kind.toString()}
       onClick={() => detailClick(data.id.toString())}
-      variants={S.boxHoverVariants}
+      variants={S.boxHoverVariants(tablet)}
       whileHover="hover"
       transition={{ type: "tween" }}>
-      <S.BoxImg variants={S.imageHoverVariants} src={formatImagePath(data.backdrop_path, 'w500')} />
-      <S.Info variants={S.infoHoverVariants}>
+      <S.BoxImg variants={S.imageHoverVariants(tablet)} src={formatImagePath(data.backdrop_path, 'w500')} />
+      <S.Info variants={S.infoHoverVariants(tablet)}>
         <S.ButtonGroup>
           <button type='button' onClick={onPlay}>
             <FontAwesomeIcon icon={faPlay} size="1x" />

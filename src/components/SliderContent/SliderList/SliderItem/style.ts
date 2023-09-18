@@ -1,40 +1,40 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-export const boxHoverVariants = {
+export const boxHoverVariants = (match: boolean) => ({
   // Parent Hover
   hover: {
-    scale: 1.3,
-    top: "-50px",
+    scale: match ? 1 : 1.3,
+    top: match ? "0" : "-50px",
     transition: {
       delay: 0.5,
       duration: 0.3
     }
   }
-}
+})
 
-export const imageHoverVariants = {
+export const imageHoverVariants = (match: boolean) => ({
   // Child Hover
   hover: {
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
+    borderBottomLeftRadius: match ? 0 : "6px",
+    borderBottomRightRadius: match ? 0 : "6px",
     transition: {
       delay: 0.5,
       duration: 0.3
     }
   },
-}
+})
 
-export const infoHoverVariants = {
+export const infoHoverVariants = (match: boolean) => ({
   // Child Hover
   hover: {
-    opacity: 1,
+    opacity: match ? 0 : 1,
     transition: {
       delay: 0.5,
       duration: 0.3
     }
   },
-}
+})
 
 export const Box = styled(motion.li)`
   position: relative;
@@ -62,11 +62,6 @@ export const BoxImg = styled(motion.img)`
   width: 100%;
   height: 100%;
   object-fit: cover;
-
-  /* &:hover {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  } */
 `;
 
 export const Info = styled(motion.div)`
