@@ -16,8 +16,8 @@ export const boxHoverVariants = (match: boolean) => ({
 export const imageHoverVariants = (match: boolean) => ({
   // Child Hover
   hover: {
-    borderBottomLeftRadius: match ? 0 : "6px",
-    borderBottomRightRadius: match ? 0 : "6px",
+    borderBottomLeftRadius: match ? "6px" : 0,
+    borderBottomRightRadius: match ? "6px" : 0,
     transition: {
       delay: 0.5,
       duration: 0.3
@@ -41,7 +41,6 @@ export const Box = styled(motion.li)`
   flex-direction: column;
   color: red;
   font-size: 30px;
-  border-radius: 6px;
   height: 162px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 1);
   cursor: pointer;
