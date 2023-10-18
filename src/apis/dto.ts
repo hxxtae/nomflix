@@ -8,6 +8,7 @@ export interface IData {
   id: number;
   original_language: string;
   original_title: string;
+  original_name: string;
   name: string;
   //first_air_date: string;
   popularity: number;
