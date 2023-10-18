@@ -21,7 +21,7 @@ function DetailView({ data, kind, closeDetail }: IDetailView) {
           layoutId={data.id + kind.toString()}>
           <S.Image bgphoto={formatImagePath(data.backdrop_path)} />
           <S.Content>
-            <S.Title>{data.name}</S.Title>
+            <S.Title>{data.title || data.name}</S.Title>
             <S.ButtonGroup>
               <button>
                 <span>재생</span>
