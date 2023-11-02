@@ -5,7 +5,7 @@ export function useMediaQuery(query: string) {
 
   useEffect(() => {
     const media = window.matchMedia(query);
-    console.log('Media')
+    // console.log('Media')
 
     if (media.matches !== matche) {
       setMatche(media.matches);
@@ -28,3 +28,10 @@ export function useMediaQuery(query: string) {
 
   return matche;
 }
+
+// NOTE: https://samuelkraft.com/blog/responsive-animation-framer-motion
+
+// 노트북 & 태블릿 가로 : 1024px ~ 1279px
+// 태블릿 가로 : 768px ~ 1023px
+// 모바일 가로 & 태블릿 세로 : 480px ~ 767px
+// 모바일 : ~479px

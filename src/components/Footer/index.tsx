@@ -1,7 +1,7 @@
 import * as S from './style';
 
 function Footer() {
-  console.log('Footer');
+  // console.log('Footer');
 
   return (
     <S.FooterWrapper>

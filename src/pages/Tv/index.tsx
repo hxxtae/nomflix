@@ -9,7 +9,7 @@ import { useState } from 'react';
 import * as S from './style';
 
 function Tv() {
-  console.log('Tv');
+  // console.log('Tv');
   const { isLoading: onAirLoading, datas: onAirDatas } = query.useDataFetch(queryKey.tv.onAir(), api.getTvOnAirAll);
   const { isLoading: popularLoading, datas: popularDatas } = query.useDataFetch(queryKey.tv.popular(), api.getTvPopularAll);
   const { isLoading: topLoading, datas: topDatas } = query.useDataFetch(queryKey.tv.top(), api.getTvTopAll);

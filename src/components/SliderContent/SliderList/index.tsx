@@ -16,7 +16,7 @@ interface ISliderList {
 }
 
 function SliderList({ slideIndex, slideDirection, offset, kind, data, toggleCaraucel, detailClick }: ISliderList) {
-  console.log('SliderList')
+  // console.log('SliderList')
 
   const sliderDataFilter = useCallback((list: dto.IData[]) => {
     const [start, end] = [offset * slideIndex, offset * slideIndex + offset];
