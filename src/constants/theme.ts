@@ -4,6 +4,7 @@ export const darkTheme: DefaultTheme = {
   bgColor: "rgba(20, 20, 20, 1)",
   textColor: "#f5f6fa",
   secondColor: "#192a56",
+  thirdColor: "#777777",
   accentColor: "#8c7ae6",
   mainColor: "#D81F26"
 }
