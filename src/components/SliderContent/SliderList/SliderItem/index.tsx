@@ -2,19 +2,20 @@ import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-soli
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { memo } from 'react';
 
+import { useMediaQuery } from '../../../../hooks/useMediaQuery';
 import { formatImagePath } from '../../../../utils';
 import { dto } from '../../../../apis';
+import { mediaScreenSize } from '../../../../constants';
 import * as S from './style';
-import { useMediaQuery } from '../../../../hooks/useMediaQuery';
 
 interface ISliderItem {
-  data: dto.IData;
+  data: dto.IContentData;
   kind: number;
   detailClick: (contentId: string) => void;
 }
 
 function SliderItem({ data, kind, detailClick }: ISliderItem) {
-  const tablet = useMediaQuery("(max-width: 1180px)");
+  const tablet = useMediaQuery(`(max-width: ${mediaScreenSize.tablet.MAX}px)`);
 
   const onPlay = (e: any) => {
     e.stopPropagation();
@@ -51,9 +52,6 @@ function SliderItem({ data, kind, detailClick }: ISliderItem) {
           </button>
           <button type='button' onClick={onRecommend}>
             <FontAwesomeIcon icon={faThumbsUp} size="1x" />
-          </button>
-          <button type='button' onClick={onNotRecommend}>
-            <FontAwesomeIcon icon={faThumbsDown} size="1x" />
           </button>
           <button type='button' onClick={onSubscribe}>
             <FontAwesomeIcon icon={faPlus} size="1x" />
