@@ -1,33 +1,36 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { mediaScreenSize } from '../../constants';
 import { dto } from '../../apis';
 import DetailView from '../DetailView';
 import SliderList from './SliderList';
 import PortalModal from '../PortalModal';
 import * as S from './style';
 
-const initDetailData: dto.IData = {
+const initContentData: dto.IContentData = {
   adult: false,
   genre_ids: [],
   id: 0,
   name: '',
   original_language: '',
   original_title: '',
+  original_name: '',
   popularity: 0,
   release_data: '',
   backdrop_path: '',
   poster_path: '',
   title: '',
   video: false,
-  bvote_average: 0,
+  vote_average: 0,
   vote_count: 0,
   overview: '',
 }
 
 interface ISliderData {
-  data: dto.IData[];
+  data: dto.IContentData[];
   kind: number;
   slider: number;
 }
@@ -36,45 +39,46 @@ function SliderContent({ data, kind, slider }: ISliderData) {
   const [leaving, setLeaving] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState(false);
-  const [detailData, setDetailData] = useState<dto.IData>(initDetailData);
-  const offset = 6;
+  const [thisContent, setThisContent] = useState<dto.IContentData>(initContentData);
+  const [offset, setOffset] = useState(6);
+  const medium = useMediaQuery(`(max-width: ${mediaScreenSize.tablet.MAX}px)`);
 
   const openDetail = useCallback((contentId: string) => {
     const detailData = data?.find((item) => item.id.toString() === contentId);
     if (!detailData) return;
-    setDetailData((prev) => ({
+    setThisContent((prev) => ({
       ...prev,
       ...detailData
     }))
   }, [data]);
 
   const closeDetail = useCallback(() => {
-    setDetailData((prev) => ({
+    setThisContent((prev) => ({
       ...prev,
-      ...initDetailData
+      ...initContentData
     }));
   }, []);
 
   const toggleCaraucel = useCallback(() =>
     setLeaving((prev) => !prev), []);
 
-  const increaFunc = useCallback((data: dto.IData[]) => {
+  const increaFunc = useCallback((data: dto.IContentData[]) => {
     if (leaving || !data?.length) return;
     const totalMovie = data.length - 1;
     const maxIndex = Math.floor(totalMovie / offset) - 1;
     toggleCaraucel();
     setSlideDirection(false);
     setSlideIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
-  }, [toggleCaraucel, leaving]);
+  }, [toggleCaraucel, leaving, offset]);
 
-  const decreaFunc = useCallback((data: dto.IData[]) => {
+  const decreaFunc = useCallback((data: dto.IContentData[]) => {
     if (leaving || !data?.length) return;
     const totalMovie = data.length - 1;
     const maxIndex = Math.floor(totalMovie / offset) - 1;
     toggleCaraucel();
     setSlideDirection(true);
     setSlideIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
-  }, [toggleCaraucel, leaving]);
+  }, [toggleCaraucel, leaving, offset]);
 
   return (
     <>
@@ -100,9 +104,9 @@ function SliderContent({ data, kind, slider }: ISliderData) {
         </S.Decreadiv>
       </S.Slider>
       
-      {(slider === kind && !!detailData.id ) && (
+      {(slider === kind && !!thisContent.id ) && (
         <PortalModal>
-          <DetailView data={detailData} kind={kind} closeDetail={closeDetail} />
+          <DetailView data={thisContent} kind={kind} closeDetail={closeDetail} />
         </PortalModal>
         )}
     </>
