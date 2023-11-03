@@ -9,10 +9,10 @@ import { SliderContent, Loading } from '../../components';
 import * as S from './style';
 
 function Movies() {
-  const { isLoading: nowPlayLoading, datas: nowPlayDatas } = query.useDataFetch(queryKey.movie.nowPlaying(), api.getNowPlayAll);
-  const { isLoading: popularLoading, datas: popularDatas } = query.useDataFetch(queryKey.movie.popular(), api.getPopularAll);
-  const { isLoading: topLoading, datas: topDatas } = query.useDataFetch(queryKey.movie.top(), api.getTopAll);
-  const { isLoading: upcomingLoading, datas: upcomingDatas } = query.useDataFetch(queryKey.movie.upcoming(), api.getUpcomingAll);
+  const { isLoading: nowPlayLoading, datas: nowPlayDatas } = query.useContentFetch(queryKey.movie.nowPlaying(), api.getNowPlayAll);
+  const { isLoading: popularLoading, datas: popularDatas } = query.useContentFetch(queryKey.movie.popular(), api.getPopularAll);
+  const { isLoading: topLoading, datas: topDatas } = query.useContentFetch(queryKey.movie.top(), api.getTopAll);
+  const { isLoading: upcomingLoading, datas: upcomingDatas } = query.useContentFetch(queryKey.movie.upcoming(), api.getUpcomingAll);
   const [clicksSlider, setClickSlider] = useState(0);
 
   const onClick = (slideNum: number) => {

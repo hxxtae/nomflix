@@ -10,10 +10,10 @@ import * as S from './style';
 
 function Tv() {
   // console.log('Tv');
-  const { isLoading: onAirLoading, datas: onAirDatas } = query.useDataFetch(queryKey.tv.onAir(), api.getTvOnAirAll);
-  const { isLoading: popularLoading, datas: popularDatas } = query.useDataFetch(queryKey.tv.popular(), api.getTvPopularAll);
-  const { isLoading: topLoading, datas: topDatas } = query.useDataFetch(queryKey.tv.top(), api.getTvTopAll);
-  const { isLoading: airingTodayLoading, datas: airingTodayDatas } = query.useDataFetch(queryKey.tv.airingToday(), api.getTvAiringTodayAll);
+  const { isLoading: onAirLoading, datas: onAirDatas } = query.useContentFetch(queryKey.tv.onAir(), api.getTvOnAirAll);
+  const { isLoading: popularLoading, datas: popularDatas } = query.useContentFetch(queryKey.tv.popular(), api.getTvPopularAll);
+  const { isLoading: topLoading, datas: topDatas } = query.useContentFetch(queryKey.tv.top(), api.getTvTopAll);
+  const { isLoading: airingTodayLoading, datas: airingTodayDatas } = query.useContentFetch(queryKey.tv.airingToday(), api.getTvAiringTodayAll);
   const [clicksSlider, setClickSlider] = useState(0);
 
   const onClick = (slideNum: number) => {
