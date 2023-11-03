@@ -36,3 +36,21 @@ export const queryKey = {
     all: ['detail'] as const,
   }
 }
+
+// - 노트북 & 태블릿 가로 : 1181px~
+// - 태블릿 가로 : 768px ~ 1180px
+// - 모바일 가로 & 태블릿 세로 : ~767px
+export const mediaScreenSize = {
+  pc: {
+    MAX: Infinity,
+    MIN: 1181
+  },
+  tablet: {
+    MAX: 1180,
+    MIN: 768
+  },
+  mobile: {
+    MAX: 767,
+    MIN: 0
+  }
+}
