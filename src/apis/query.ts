@@ -1,43 +1,47 @@
 import { useQuery } from 'react-query';
-import { IGetDataResult, IData, IGetDetail } from './dto';
+import { IContentsData, IContentData, IContentDetailsData } from './dto';
 
-interface IDataFetch {
+interface IContentResponse {
   isLoading: boolean;
-  datas?: IData[];
+  datas?: IContentData[];
 }
 
-interface IDetailDataFetch {
+interface IContentDetailResponse {
   isLoading: boolean;
-  data?: IGetDetail;
+  data?: IContentDetailsData;
 }
 
 /**
  * -----------------------------
- * Data select of Custom Hook
+ * Data Combine of Content Fetch
  * -----------------------------
- * @param { IGetDataResult[] | undefined } data
- * @returns { IData[] } 
+ * @param { IContentsData[] | undefined } data
+ * @returns { IContentData[] } 
  */
-const dataFetch = (data: IGetDataResult[]): IData[] => {
-  const totalResultObj: IData[] = data
+const dataFetch = (data: IContentsData[]): IContentData[] => {
+  const totalResultObj: IContentData[] = data
     .map(parentObj => [...parentObj.results])
     .reduce((prev, curr) => [...prev, ...curr]);
+  
   return totalResultObj;
-  // [
-  //   ...data[0].results,
-  //   ...data[1].results,
-  //   ...data[2].results,
-  // ]
 };
+// data example...
+// [
+//   ...data[0].results,
+//   ...data[1].results,
+//   ...data[2].results,
+// ]
 
-// Custom Hook of Slider
-export const useDataFetch = (keyArr: readonly string[], callback: Function): IDataFetch => {
+// -----------------------------
+// Custom Hook of Content Fetch
+// -----------------------------
+export const useContentFetch = (keyArr: readonly string[], callback: Function): IContentResponse => {
   const { isLoading, data } = useQuery([...keyArr], () => callback(), {
     staleTime: 1000 * 60 * 20,
     cacheTime: Infinity,
     refetchOnWindowFocus: false,
     retry: 0,
-    select: (data: IGetDataResult[]) => {
+    select: (data: IContentsData[]) => {
       return dataFetch(data);
     }
   });
@@ -45,10 +49,13 @@ export const useDataFetch = (keyArr: readonly string[], callback: Function): IDa
   return { isLoading, datas: data };
 }
 
-// Custom Hook of Detail
-export const useDetailDataFetch = (keyArr: readonly string[], callback: Function): IDetailDataFetch => {
+// -----------------------------
+// Custom Hook of Content-Detail Fetch
+// -----------------------------
+export const useContentDetailFetch = (keyArr: readonly string[], callback: Function): IContentDetailResponse => {
   const { isLoading, data } = useQuery([...keyArr], () => callback(), {
     refetchOnWindowFocus: false,
+    retry: 0,
   });
 
   return { isLoading, data };
