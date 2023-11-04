@@ -19,7 +19,7 @@ const initContentData: dto.IContentData = {
   original_title: '',
   original_name: '',
   popularity: 0,
-  release_data: '',
+  release_date: '',
   backdrop_path: '',
   poster_path: '',
   title: '',

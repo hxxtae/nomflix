@@ -10,7 +10,7 @@ export interface IContentData {
   original_name: string;
   name: string;
   popularity: number;
-  release_data: string;
+  release_date: string;
   backdrop_path: string;
   poster_path: string;
   title: string;
