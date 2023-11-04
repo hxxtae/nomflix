@@ -4,7 +4,7 @@ import { apiDetailPath, apiMoviePath, apiTvPath } from './path';
 // const apiAccessToken = process.env.REACT_APP_API_ACCESS_TOKEN;
 
 // --------------------------
-// Movie Content api
+// Movie Content api (main)
 // --------------------------
 // (1) Now Play
 export async function getNowPlay(page: number): Promise<IContentsData> {
@@ -50,7 +50,7 @@ export async function getUpcomingAll() {
 }
 
 // --------------------------
-// Tv Content api
+// Tv Content api (main)
 // --------------------------
 // (1) On The Air 
 export async function getTvOnAir(page: number): Promise<IContentsData> {
@@ -89,10 +89,40 @@ export async function getTvAiringTodayAll() {
 }
 
 // --------------------------
+// Movie Content api (sub)
+// --------------------------
+// (1) Similar
+export async function getMovieSimilar(page: number, movie_id: string): Promise<IContentsData> {
+  return fetch(apiMoviePath(page, 'similar', {
+    request_id: movie_id,
+  })).then(
+    response => response.json()
+  );
+}
+
+export async function getMovieSimilarAll(movie_id: string) {
+  return Promise.all([getMovieSimilar(1, movie_id)]);
+}
+
+// --------------------------
+// Tv Content api (sub)
+// --------------------------
+// (1) Similar
+export async function getTvSimilar(page: number, tv_id: string): Promise<IContentsData> {
+  return (await fetch(apiTvPath(page, 'similar', {
+    request_id: tv_id,
+  }))).json();
+}
+
+export async function getTvSimilarAll(tv_id: string) {
+  return Promise.all([getTvSimilar(1, tv_id)]);
+}
+
+// --------------------------
 // Movie & Tv Content Detail api
 // --------------------------
-export async function getDetail(detailId: string, kind: number): Promise<IContentDetailsData> {
-  return fetch(apiDetailPath(detailId, kind)).then(
+export async function getDetail(detail_id: string, kind: number): Promise<IContentDetailsData> {
+  return fetch(apiDetailPath(detail_id, kind)).then(
     response => response.json()
   );
 }
