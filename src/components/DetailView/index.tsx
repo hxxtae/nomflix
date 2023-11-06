@@ -1,6 +1,7 @@
-import { formatImagePath } from '../../utils';
-import { api, dto, query } from '../../apis';
+import { api, dto } from '../../apis';
 import { queryKey } from '../../constants';
+import { formatImagePath } from '../../utils';
+import { useContentFetch, useContentDetailFetch } from '../../hooks';
 import DetailViewContent from './DetailViewContent';
 import * as S from './style';
 
@@ -11,14 +12,14 @@ interface IDetailView {
 };
 
 function DetailView({ data, kind, closeDetail }: IDetailView) {
-  const { isLoading: isDetailLoading, data: detailData } = query.useContentDetailFetch(queryKey.detail.all, () => api.getDetail(data.id.toString(), kind));
+  const { isLoading: isDetailLoading, data: detailData } = useContentDetailFetch(queryKey.detail.all, () => api.getDetail(data.id.toString(), kind));
   const queryKeyStata = kind < 20 ?
     queryKey.movie.similar(data.id.toString()) :
     queryKey.tv.similar(data.id.toString());
   const queryFuncState = kind < 20 ?
     () => api.getMovieSimilarAll(data.id.toString()) :
     () => api.getTvSimilarAll(data.id.toString());
-  const { isLoading: isSimilarLoading, datas: similarData } = query.useContentFetch(queryKeyStata, queryFuncState);
+  const { isLoading: isSimilarLoading, datas: similarData } = useContentFetch(queryKeyStata, queryFuncState);
 
   const isLoading = isDetailLoading || isSimilarLoading;
   

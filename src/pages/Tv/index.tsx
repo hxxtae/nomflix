@@ -1,19 +1,20 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 
 import { Loading, SliderContent } from '../../components';
 import { queryKey, TvCategory } from '../../constants';
 import { formatImagePath } from '../../utils';
-import { query, api } from '../../apis';
-import { useState } from 'react';
+import { useContentFetch } from '../../hooks';
+import { api } from '../../apis';
 import * as S from './style';
 
 function Tv() {
   // console.log('Tv');
-  const { isLoading: onAirLoading, datas: onAirDatas } = query.useContentFetch(queryKey.tv.onAir(), api.getTvOnAirAll);
-  const { isLoading: popularLoading, datas: popularDatas } = query.useContentFetch(queryKey.tv.popular(), api.getTvPopularAll);
-  const { isLoading: topLoading, datas: topDatas } = query.useContentFetch(queryKey.tv.top(), api.getTvTopAll);
-  const { isLoading: airingTodayLoading, datas: airingTodayDatas } = query.useContentFetch(queryKey.tv.airingToday(), api.getTvAiringTodayAll);
+  const { isLoading: onAirLoading, datas: onAirDatas } = useContentFetch(queryKey.tv.onAir(), api.getTvOnAirAll);
+  const { isLoading: popularLoading, datas: popularDatas } = useContentFetch(queryKey.tv.popular(), api.getTvPopularAll);
+  const { isLoading: topLoading, datas: topDatas } = useContentFetch(queryKey.tv.top(), api.getTvTopAll);
+  const { isLoading: airingTodayLoading, datas: airingTodayDatas } = useContentFetch(queryKey.tv.airingToday(), api.getTvAiringTodayAll);
   const [clicksSlider, setClickSlider] = useState(0);
 
   const onClick = (slideNum: number) => {

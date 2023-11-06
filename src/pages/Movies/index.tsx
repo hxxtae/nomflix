@@ -2,17 +2,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
-import { api, query } from '../../apis';
+import { Loading, SliderContent } from '../../components';
+import { queryKey, MovieCategory } from '../../constants';
 import { formatImagePath } from '../../utils';
-import { MovieCategory, queryKey } from '../../constants';
-import { SliderContent, Loading } from '../../components';
+import { useContentFetch } from '../../hooks';
+import { api } from '../../apis';
 import * as S from './style';
 
 function Movies() {
-  const { isLoading: nowPlayLoading, datas: nowPlayDatas } = query.useContentFetch(queryKey.movie.nowPlaying(), api.getNowPlayAll);
-  const { isLoading: popularLoading, datas: popularDatas } = query.useContentFetch(queryKey.movie.popular(), api.getPopularAll);
-  const { isLoading: topLoading, datas: topDatas } = query.useContentFetch(queryKey.movie.top(), api.getTopAll);
-  const { isLoading: upcomingLoading, datas: upcomingDatas } = query.useContentFetch(queryKey.movie.upcoming(), api.getUpcomingAll);
+  const { isLoading: nowPlayLoading, datas: nowPlayDatas } = useContentFetch(queryKey.movie.nowPlaying(), api.getNowPlayAll);
+  const { isLoading: popularLoading, datas: popularDatas } = useContentFetch(queryKey.movie.popular(), api.getPopularAll);
+  const { isLoading: topLoading, datas: topDatas } = useContentFetch(queryKey.movie.top(), api.getTopAll);
+  const { isLoading: upcomingLoading, datas: upcomingDatas } = useContentFetch(queryKey.movie.upcoming(), api.getUpcomingAll);
   const [clicksSlider, setClickSlider] = useState(0);
 
   const onClick = (slideNum: number) => {

@@ -2,7 +2,7 @@ import { useCallback, useState, useEffect } from 'react';
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { useMediaQuery } from '../../hooks';
 import { mediaScreenSize } from '../../constants';
 import { dto } from '../../apis';
 import DetailView from '../DetailView';

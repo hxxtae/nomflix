@@ -1,8 +1,8 @@
-import { faPlay, faThumbsDown, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { memo } from 'react';
 
-import { useMediaQuery } from '../../../../hooks/useMediaQuery';
+import { useMediaQuery } from '../../../../hooks';
 import { formatImagePath } from '../../../../utils';
 import { dto } from '../../../../apis';
 import { mediaScreenSize } from '../../../../constants';
@@ -25,11 +25,6 @@ function SliderItem({ data, kind, detailClick }: ISliderItem) {
   const onRecommend = (e: any) => {
     e.stopPropagation();
     console.log('Click Recommend Button');
-  }
-
-  const onNotRecommend = (e: any) => {
-    e.stopPropagation();
-    console.log('Click Not Recommend Button');
   }
 
   const onSubscribe = (e: any) => {
