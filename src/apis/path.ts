@@ -11,21 +11,29 @@ interface IOptions {
 }
 
 // -------------------------------------
-// USE TO "API KEY" & "API ACCESS TOKEN"
+// USE TO Movie Content Path
 // --------------------------------------
 export const apiMoviePath = (page: number, subKinds: IMovieKinds, options: IOptions = {}) => {
   const { request_id: movieId = '' } = options;
   return `${baseURL}/movie/${movieId}/${subKinds}?api_key=${apiKEY}&page=${page}`;
 }
 
+// -------------------------------------
+// USE TO Tv Content Path
+// --------------------------------------
 export const apiTvPath = (page: number, subKinds: ITvKinds, options: IOptions = {}) => {
   const { request_id: tvId = '' } = options;
   return `${baseURL}/tv/${tvId}/${subKinds}?api_key=${apiKEY}&page=${page}`;
 }
 
+// -------------------------------------
+// USE TO Movie & Tv Content-Detail Path
+// --------------------------------------
+// - kind: 11 ~ 20 -> movie content
+// - kind: 21 ~ 30 -> tv content
 export const apiDetailPath = (detailId: string, kind: number) => {
   const validate =
-    kind < 20 ? `movie/${detailId}` :
-    kind < 30 ? `tv/${detailId}` : '';
+    kind <= 20 ? `movie/${detailId}` :
+    kind <= 30 ? `tv/${detailId}` : '';
   return `${baseURL}/${validate}?api_key=${apiKEY}`;
 }

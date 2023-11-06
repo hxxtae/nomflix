@@ -1,15 +1,15 @@
 export enum MovieCategory {
-  "NowPlaying" = 10,
-  "Popular" = 11,
-  "Top" = 12,
-  "Upcoming" = 13,
+  "NowPlaying" = 11,
+  "Popular" = 12,
+  "Top" = 13,
+  "Upcoming" = 14,
 }
 
 export enum TvCategory {
-  "OnAir" = 20,
-  "Popular" = 21,
-  "Top" = 22,
-  "AiringToday" = 23,
+  "OnAir" = 21,
+  "Popular" = 22,
+  "Top" = 23,
+  "AiringToday" = 24,
 }
 
 export const queryKinds = {
