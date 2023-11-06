@@ -1,4 +1,4 @@
-import { IContentDetailsData, IContentsData } from '../dto';
+import { IContentDetailsData, IContentsData } from './dto';
 import { apiDetailPath, apiMoviePath, apiTvPath } from './path';
 
 // const apiAccessToken = process.env.REACT_APP_API_ACCESS_TOKEN;

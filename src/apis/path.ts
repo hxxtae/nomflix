@@ -13,13 +13,13 @@ interface IOptions {
 // -------------------------------------
 // USE TO "API KEY" & "API ACCESS TOKEN"
 // --------------------------------------
-export const apiMoviePath = (page: number, subKinds: IMovieKinds, options?: IOptions) => {
-  const movieId = options?.request_id ?? '';
+export const apiMoviePath = (page: number, subKinds: IMovieKinds, options: IOptions = {}) => {
+  const { request_id: movieId = '' } = options;
   return `${baseURL}/movie/${movieId}/${subKinds}?api_key=${apiKEY}&page=${page}`;
 }
 
-export const apiTvPath = (page: number, subKinds: ITvKinds, options?: IOptions) => {
-  const tvId = options?.request_id ?? '';
+export const apiTvPath = (page: number, subKinds: ITvKinds, options: IOptions = {}) => {
+  const { request_id: tvId = '' } = options;
   return `${baseURL}/tv/${tvId}/${subKinds}?api_key=${apiKEY}&page=${page}`;
 }
 
