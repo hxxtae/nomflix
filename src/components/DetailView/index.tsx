@@ -11,6 +11,12 @@ interface IDetailView {
   closeDetail: () => void;
 };
 
+const popularSorting = (datas?: dto.IContentData[]) => {
+  return datas
+    ?.sort(({ popularity: a }, { popularity: b }) => Math.floor(b) - Math.floor(a))
+    .slice(0, 9);
+}
+
 function DetailView({ data, kind, closeDetail }: IDetailView) {
   const { isLoading: isDetailLoading, data: detailData } = useContentDetailFetch(queryKey.detail.all, () => api.getDetail(data.id.toString(), kind));
   const queryKeyStata = kind < 20 ?
@@ -28,7 +34,7 @@ function DetailView({ data, kind, closeDetail }: IDetailView) {
       <S.Section
         layoutId={data.id + kind.toString()}>
         <S.Image bgphoto={formatImagePath(data.backdrop_path)} />
-        {isLoading || <DetailViewContent detailData={detailData} similarData={similarData} />}
+        {isLoading || <DetailViewContent detailData={detailData} similarData={popularSorting(similarData)} />}
       </S.Section>
       
       <S.Overlay

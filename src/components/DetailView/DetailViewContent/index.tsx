@@ -36,7 +36,7 @@ function DetailViewContent({ detailData, similarData }: IDetailViewContent) {
 
       <S.SubTitle>Similar Contents</S.SubTitle>
       <S.ImageBox>
-        {similarData?.slice(0, 9).map(data => (
+        {similarData?.map(data => (
           data.poster_path ?
           <img key={data.id} src={formatImagePath(data.poster_path, 'w200')} alt={data.poster_path} /> : null
         ))}
