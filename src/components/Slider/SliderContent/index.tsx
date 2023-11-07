@@ -2,13 +2,13 @@ import { useCallback, useState, useEffect } from 'react';
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useMediaQuery } from '../../hooks';
-import { mediaScreenSize } from '../../constants';
-import { dto } from '../../apis';
-import DetailView from '../DetailView';
-import SliderList from './SliderList';
-import PortalModal from '../PortalModal';
+import { useMediaQuery } from '../../../hooks';
+import { mediaScreenSize } from '../../../constants';
+import { dto } from '../../../apis';
 import * as S from './style';
+import DetailView from '../../DetailView';
+import SliderList from './SliderList';
+import PortalModal from '../../PortalModal';
 
 const initContentData: dto.IContentData = {
   adult: false,

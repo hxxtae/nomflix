@@ -2,10 +2,10 @@ import { faPlay, faThumbsUp, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { memo } from 'react';
 
-import { useMediaQuery } from '../../../../hooks';
-import { formatImagePath } from '../../../../utils';
-import { dto } from '../../../../apis';
-import { mediaScreenSize } from '../../../../constants';
+import { useMediaQuery } from '../../../../../hooks';
+import { formatImagePath } from '../../../../../utils';
+import { dto } from '../../../../../apis';
+import { mediaScreenSize } from '../../../../../constants';
 import * as S from './style';
 
 interface ISliderItem {

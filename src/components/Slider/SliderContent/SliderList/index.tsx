@@ -1,9 +1,9 @@
 import { AnimatePresence } from 'framer-motion';
 import { useCallback } from 'react';
 
-import { dto } from '../../../apis';
-import SliderItem from './SliderItem';
+import { dto } from '../../../../apis';
 import * as S from './style';
+import SliderItem from './SliderItem';
 
 interface ISliderList {
   slideIndex: number
@@ -16,8 +16,6 @@ interface ISliderList {
 }
 
 function SliderList({ slideIndex, slideDirection, offset, kind, data, toggleCaraucel, detailClick }: ISliderList) {
-  // console.log('SliderList')
-
   const sliderDataFilter = useCallback((list: dto.IContentData[]) => {
     const [start, end] = [offset * slideIndex, offset * slideIndex + offset];
     return list.slice(1).slice(start, end);
