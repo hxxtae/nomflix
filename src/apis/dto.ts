@@ -3,7 +3,7 @@
 // ----------------------------
 export interface IContentData {
   adult: boolean;
-  genre_ids: [];
+  genre_ids: number[];
   id: number;
   original_language: string;
   original_title: string;
