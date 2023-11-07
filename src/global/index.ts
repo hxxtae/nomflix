@@ -1,2 +1,2 @@
 export { GlobalStyled } from './globalStyle';
-export { DetailViewState } from './globalState';
+export { DetailViewState, atomOfContentData } from './globalState';
