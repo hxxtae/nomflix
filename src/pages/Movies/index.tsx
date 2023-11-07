@@ -1,65 +1,71 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
-import { Loading, SliderContent } from '../../components';
+import { Banner, Slider } from '../../components';
 import { queryKey, MovieCategory } from '../../constants';
-import { formatImagePath } from '../../utils';
-import { useContentFetch } from '../../hooks';
 import { api } from '../../apis';
 import * as S from './style';
 
 function Movies() {
-  const { isLoading: nowPlayLoading, datas: nowPlayDatas } = useContentFetch(queryKey.movie.nowPlaying(), api.getNowPlayAll);
-  const { isLoading: popularLoading, datas: popularDatas } = useContentFetch(queryKey.movie.popular(), api.getPopularAll);
-  const { isLoading: topLoading, datas: topDatas } = useContentFetch(queryKey.movie.top(), api.getTopAll);
-  const { isLoading: upcomingLoading, datas: upcomingDatas } = useContentFetch(queryKey.movie.upcoming(), api.getUpcomingAll);
   const [clicksSlider, setClickSlider] = useState(0);
 
-  const onClick = (slideNum: number) => {
-    setClickSlider(slideNum);
-  };
+  const setSliderKind = useCallback((sliderNum: number) => {
+    setClickSlider(sliderNum);
+  }, []);
+
+  const getQueryFunction = useCallback((kind: number) => {
+    if (kind === MovieCategory.NowPlaying) return api.getNowPlayAll;
+    if (kind === MovieCategory.Popular) return api.getPopularAll;
+    if (kind === MovieCategory.Top) return api.getTopAll;
+    return api.getUpcomingAll;
+  }, []);
+
+  const getQueryKey = useCallback((kind: number) => {
+    if (kind === MovieCategory.NowPlaying) return queryKey.movie.nowPlaying;
+    if (kind === MovieCategory.Popular) return queryKey.movie.popular;
+    if (kind === MovieCategory.Top) return queryKey.movie.top;
+    return queryKey.movie.upcoming;
+  }, []);
 
   return (
     <S.Wrapper>
-      { nowPlayLoading ?
-        <Loading /> : !!nowPlayDatas ? 
-        <>
-          <S.Banner bgphoto={formatImagePath(nowPlayDatas ? nowPlayDatas[0].backdrop_path : "")}>
-            <S.Title>{ nowPlayDatas ? nowPlayDatas[0].title : "" }</S.Title>
-            <S.ButtonWrapper>
-              <S.BannerButton>
-                <FontAwesomeIcon icon={faPlay} /><span>재생</span>
-              </S.BannerButton>
-              <S.BannerButton>
-                <FontAwesomeIcon icon={faPlus} /><span>상세 정보</span>
-              </S.BannerButton>
-            </S.ButtonWrapper>
-            <S.Overview>{ nowPlayDatas ? nowPlayDatas[0].overview : "" }</S.Overview>
-          </S.Banner>
-          <S.SliderWrapper onClick={() => onClick(MovieCategory.NowPlaying)}>
-            <S.SliderTitle>지금 뜨는 콘텐츠</S.SliderTitle>
-            <SliderContent key={MovieCategory.NowPlaying} data={ nowPlayDatas } kind={MovieCategory.NowPlaying} slider={clicksSlider} />
-          </S.SliderWrapper>
-        </> : <Loading /> }
-      { popularLoading ? 
-        <Loading /> : !!popularDatas ? 
-        <S.SliderWrapper onClick={() => onClick(MovieCategory.Popular)}>
-          <S.SliderTitle>인기 상승 콘텐츠</S.SliderTitle>
-          <SliderContent key={MovieCategory.Popular} data={ popularDatas } kind={MovieCategory.Popular} slider={clicksSlider} />
-        </S.SliderWrapper> : <Loading /> }
-      { topLoading ? 
-        <Loading /> : !!topDatas ? 
-        <S.SliderWrapper onClick={() => onClick(MovieCategory.Top)}>
-          <S.SliderTitle>베스트 인기 콘텐츠</S.SliderTitle>
-          <SliderContent key={MovieCategory.Top} data={ topDatas } kind={MovieCategory.Top} slider={clicksSlider} />
-        </S.SliderWrapper> : <Loading /> }
-      { upcomingLoading ? 
-        <Loading /> : !!upcomingDatas ?
-        <S.SliderWrapper onClick={() => onClick(MovieCategory.Upcoming)}>
-          <S.SliderTitle>개봉 예정작 콘텐츠</S.SliderTitle>
-          <SliderContent key={MovieCategory.Upcoming} data={ upcomingDatas } kind={MovieCategory.Upcoming} slider={clicksSlider} />
-        </S.SliderWrapper> : <Loading /> }
+      <Banner kind={MovieCategory.NowPlaying} />
+      <Slider
+        key={MovieCategory.NowPlaying}
+        kind={MovieCategory.NowPlaying}
+        title='지금 뜨는 콘텐츠'
+        getSlider={clicksSlider === MovieCategory.NowPlaying ? clicksSlider : 0}
+        setSliderKind={setSliderKind}
+        queryKey={getQueryKey(MovieCategory.NowPlaying)}
+        queryFn={getQueryFunction(MovieCategory.NowPlaying)}
+      />
+      <Slider
+        key={MovieCategory.Popular}
+        kind={MovieCategory.Popular}
+        title='인기 상승 콘텐츠'
+        getSlider={clicksSlider === MovieCategory.Popular ? clicksSlider : 0}
+        setSliderKind={setSliderKind}
+        queryKey={getQueryKey(MovieCategory.Popular)}
+        queryFn={getQueryFunction(MovieCategory.Popular)}
+      />
+      <Slider
+        key={MovieCategory.Top}
+        kind={MovieCategory.Top}
+        title='베스트 인기 콘텐츠'
+        getSlider={clicksSlider === MovieCategory.Top ? clicksSlider : 0}
+        setSliderKind={setSliderKind}
+        queryKey={getQueryKey(MovieCategory.Top)}
+        queryFn={getQueryFunction(MovieCategory.Top)}
+      />
+      
+      <Slider
+        key={MovieCategory.Upcoming}
+        kind={MovieCategory.Upcoming}
+        title='개봉 예정작 콘텐츠'
+        getSlider={clicksSlider === MovieCategory.Upcoming ? clicksSlider : 0}
+        setSliderKind={setSliderKind}
+        queryKey={getQueryKey(MovieCategory.Upcoming)}
+        queryFn={getQueryFunction(MovieCategory.Upcoming)}
+      />
     </S.Wrapper>
   );
 }

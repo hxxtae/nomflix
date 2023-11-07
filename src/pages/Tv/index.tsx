@@ -1,66 +1,70 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
-import { Loading, SliderContent } from '../../components';
+import { Banner, Slider } from '../../components';
 import { queryKey, TvCategory } from '../../constants';
-import { formatImagePath } from '../../utils';
-import { useContentFetch } from '../../hooks';
 import { api } from '../../apis';
 import * as S from './style';
 
 function Tv() {
-  // console.log('Tv');
-  const { isLoading: onAirLoading, datas: onAirDatas } = useContentFetch(queryKey.tv.onAir(), api.getTvOnAirAll);
-  const { isLoading: popularLoading, datas: popularDatas } = useContentFetch(queryKey.tv.popular(), api.getTvPopularAll);
-  const { isLoading: topLoading, datas: topDatas } = useContentFetch(queryKey.tv.top(), api.getTvTopAll);
-  const { isLoading: airingTodayLoading, datas: airingTodayDatas } = useContentFetch(queryKey.tv.airingToday(), api.getTvAiringTodayAll);
   const [clicksSlider, setClickSlider] = useState(0);
 
-  const onClick = (slideNum: number) => {
-    setClickSlider(slideNum);
-  };
+  const setSliderKind = useCallback((sliderNum: number) => {
+    setClickSlider(sliderNum);
+  }, []);
+
+  const getQueryFunction = useCallback((kind: number) => {
+    if (kind === TvCategory.OnAir) return api.getTvOnAirAll;
+    if (kind === TvCategory.Popular) return api.getTvPopularAll;
+    if (kind === TvCategory.Top) return api.getTvTopAll;
+    return api.getTvAiringTodayAll;
+  }, []);
+
+  const getQueryKey = useCallback((kind: number) => {
+    if (kind === TvCategory.OnAir) return queryKey.tv.onAir;
+    if (kind === TvCategory.Popular) return queryKey.tv.popular;
+    if (kind === TvCategory.Top) return queryKey.tv.top;
+    return queryKey.tv.airingToday;
+  }, []);
 
   return (
     <S.Wrapper>
-      { onAirLoading ? 
-        <Loading/> : !!onAirDatas ?
-        <>
-          <S.Banner bgphoto={formatImagePath(onAirDatas ? onAirDatas[0].backdrop_path : "")}>
-            <S.Title>{onAirDatas ? onAirDatas[0].name : ""}</S.Title>
-            <S.ButtonWrapper>
-              <S.BannerButton>
-                <FontAwesomeIcon icon={faPlay} /><span>재생</span>
-              </S.BannerButton>
-              <S.BannerButton>
-                <FontAwesomeIcon icon={faPlus} /><span>상세 정보</span>
-              </S.BannerButton>
-            </S.ButtonWrapper>
-            <S.Overview>{ onAirDatas ? onAirDatas[0].overview : "" }</S.Overview>
-          </S.Banner>
-          <S.SliderWrapper onClick={() => onClick(TvCategory.OnAir)}>
-            <S.SliderTitle>현재 방영중인 시리즈</S.SliderTitle>
-            <SliderContent key={TvCategory.OnAir} data={ onAirDatas } kind={TvCategory.OnAir} slider={clicksSlider} />
-          </S.SliderWrapper>
-          </> : <Loading />}
-      {popularLoading ? <Loading/> :
-        !!popularDatas ? 
-        <S.SliderWrapper onClick={() => onClick(TvCategory.Popular)}>
-          <S.SliderTitle>인기 상승 시리즈</S.SliderTitle>
-          <SliderContent key={TvCategory.Popular} data={ popularDatas } kind={TvCategory.Popular} slider={clicksSlider} />
-          </S.SliderWrapper> : <Loading />}
-      {topLoading ? <Loading/> :
-        !!topDatas ? 
-        <S.SliderWrapper onClick={() => onClick(TvCategory.Top)}>
-          <S.SliderTitle>베스트 인기 시리즈</S.SliderTitle>
-          <SliderContent key={TvCategory.Top} data={ topDatas } kind={TvCategory.Top} slider={clicksSlider} />
-          </S.SliderWrapper> : <Loading />}
-      {airingTodayLoading ? <Loading/> :
-        !!airingTodayDatas ? 
-        <S.SliderWrapper onClick={() => onClick(TvCategory.AiringToday)}>
-          <S.SliderTitle>오늘 관심도 높은 시리즈</S.SliderTitle>
-          <SliderContent key={TvCategory.AiringToday} data={ airingTodayDatas } kind={TvCategory.AiringToday} slider={clicksSlider} />
-          </S.SliderWrapper> : <Loading />}
+      <Banner kind={TvCategory.OnAir} />
+      <Slider
+        key={TvCategory.OnAir}
+        kind={TvCategory.OnAir}
+        title='현재 방영중인 시리즈'
+        getSlider={clicksSlider === TvCategory.OnAir ? clicksSlider : 0}
+        setSliderKind={setSliderKind}
+        queryKey={getQueryKey(TvCategory.OnAir)}
+        queryFn={getQueryFunction(TvCategory.OnAir)}
+      />
+      <Slider
+        key={TvCategory.Popular}
+        kind={TvCategory.Popular}
+        title='인기 상승 시리즈'
+        getSlider={clicksSlider === TvCategory.Popular ? clicksSlider : 0}
+        setSliderKind={setSliderKind}
+        queryKey={getQueryKey(TvCategory.Popular)}
+        queryFn={getQueryFunction(TvCategory.Popular)}
+      />
+      <Slider
+        key={TvCategory.Top}
+        kind={TvCategory.Top}
+        title='베스트 인기 시리즈'
+        getSlider={clicksSlider === TvCategory.Top ? clicksSlider : 0}
+        setSliderKind={setSliderKind}
+        queryKey={getQueryKey(TvCategory.Top)}
+        queryFn={getQueryFunction(TvCategory.Top)}
+      />
+      <Slider
+        key={TvCategory.AiringToday}
+        kind={TvCategory.AiringToday}
+        title='오늘 관심도 높은 시리즈'
+        getSlider={clicksSlider === TvCategory.AiringToday ? clicksSlider : 0}
+        setSliderKind={setSliderKind}
+        queryKey={getQueryKey(TvCategory.AiringToday)}
+        queryFn={getQueryFunction(TvCategory.AiringToday)}
+      />
     </S.Wrapper>
   );
 }
