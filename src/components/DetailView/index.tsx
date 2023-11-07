@@ -2,8 +2,8 @@ import { api, dto } from '../../apis';
 import { queryKey } from '../../constants';
 import { formatImagePath } from '../../utils';
 import { useContentFetch, useContentDetailFetch } from '../../hooks';
-import DetailViewContent from './DetailViewContent';
 import * as S from './style';
+import DetailViewContent from './DetailViewContent';
 
 interface IDetailView {
   data: dto.IContentData;
