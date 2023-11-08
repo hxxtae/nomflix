@@ -2,13 +2,16 @@ import { dto } from '../../../apis';
 import { formatImagePath, toTime } from '../../../utils';
 import * as S from './style';
 import DetailViewBtn from './DetailViewBtn';
+import Skeleton from '../../Skeleton';
+import SkeletonPost from '../../SkeletonPost';
 
 interface IDetailViewContent {
+  loading: boolean;
   detailData?: dto.IContentDetailsData;
   similarData?: dto.IContentData[];
 }
 
-function DetailViewContent({ detailData, similarData }: IDetailViewContent) {
+function DetailViewContent({ loading, detailData, similarData }: IDetailViewContent) {
   const formatOfNum = (num: number = 0) => {
     return parseInt(num.toString(), 10);
   }
@@ -30,20 +33,26 @@ function DetailViewContent({ detailData, similarData }: IDetailViewContent) {
 
   return (
     <S.Content>
-      <S.Title>{detailData?.title || detailData?.name}</S.Title>
-      <DetailViewBtn popularity={formatOfNum(detailData?.popularity)} />
-      <S.Overview>{formatOfStr(detailData?.overview)}</S.Overview>
+      {/* Section - 1 */}
+      <S.Title>{!loading ? (detailData?.title ?? detailData?.name) : <Skeleton classes='title-1 width-50' />}</S.Title>
+      {!loading ? <DetailViewBtn popularity={formatOfNum(detailData?.popularity)} /> : <Skeleton classes='title-1 width-25' />}
+      <S.Overview>{!loading ? formatOfStr(detailData?.overview) : <SkeletonPost />}</S.Overview>
 
+      {/* Section - 2 */}
       <S.SubTitle>Similar Contents</S.SubTitle>
       <S.ImageBox>
-        {similarData?.map(data => (
+        {!loading ? (similarData?.map(data => (
           data.poster_path ?
-          <img key={data.id} src={formatImagePath(data.poster_path, 'w200')} alt={data.poster_path} /> : null
-        ))}
+            <img key={data.id} src={formatImagePath(data.poster_path, 'w200')} alt={data.poster_path} /> :
+            null
+        ))) :
+          Array.from({ length: 9 }, (_, i) => <Skeleton key={i + 1} classes='grid' />)}
       </S.ImageBox>
 
+      {/* Section - 3 */}
       <S.SubTitle>{formatOfStr(detailData?.title ?? detailData?.name)} Information</S.SubTitle>
-      <S.Info>
+      {!loading ? <>
+        <S.Info>
         <strong>Productions: </strong>
         {formatOfArr(detailData?.production_companies)}
       </S.Info>
@@ -66,7 +75,7 @@ function DetailViewContent({ detailData, similarData }: IDetailViewContent) {
       <S.Info>
         <strong>Status: </strong>
         <span>{formatOfStr(detailData?.status)}</span>
-      </S.Info>
+      </S.Info></> : <SkeletonPost />}
     </S.Content>
   )
 }

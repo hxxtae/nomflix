@@ -13,7 +13,7 @@ export const Title = styled.h1`
   font-size: 46px;
 `;
 
-export const Overview = styled.p`
+export const Overview = styled.div`
   padding: 20px 0px;
   color: ${({ theme }) => theme.textColor};
   letter-spacing: 1px;
