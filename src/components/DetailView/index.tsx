@@ -34,7 +34,10 @@ function DetailView({ data, kind, closeDetail }: IDetailView) {
       <S.Section
         layoutId={data.id + kind.toString()}>
         <S.Image bgphoto={formatImagePath(data.backdrop_path)} />
-        {isLoading || <DetailViewContent detailData={detailData} similarData={popularSorting(similarData)} />}
+        <DetailViewContent
+          loading={isLoading}
+          detailData={detailData}
+          similarData={popularSorting(similarData)} /> :
       </S.Section>
       
       <S.Overlay
