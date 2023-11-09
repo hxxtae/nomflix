@@ -45,6 +45,16 @@ export interface IGenres {
   name: string;
 }
 
+export interface IVideos {
+  id: string;
+  key: string;
+  name: string;
+  official: boolean;
+  site: string;
+  size: number;
+  type: string;
+}
+
 export interface IContentDetailsData {
   first_air_date: string; // only tv
   genres: IGenres[];
@@ -62,4 +72,7 @@ export interface IContentDetailsData {
   status: string;
   title: string; // only movie
   name: string;  // only tv
+  videos: {
+    results: IVideos[];
+  }
 }

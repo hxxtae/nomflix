@@ -35,5 +35,5 @@ export const apiDetailPath = (detailId: string, kind: number) => {
   const validate =
     kind <= 20 ? `movie/${detailId}` :
     kind <= 30 ? `tv/${detailId}` : '';
-  return `${baseURL}/${validate}?api_key=${apiKEY}`;
+  return `${baseURL}/${validate}?api_key=${apiKEY}&language=en-US&append_to_response=videos`;
 }
