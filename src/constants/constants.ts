@@ -36,6 +36,7 @@ export const queryKey = {
   },
   detail: {
     all: ['detail'] as const,
+    content: (detail_id: string) => [...queryKey.detail.all, detail_id] as const,
   }
 }
 
