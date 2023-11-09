@@ -7,4 +7,5 @@ export { default as Banner } from './Banner';
 export { default as Slider } from './Slider';
 export { default as DetailView } from './DetailView';
 export { default as Search } from './Search';
+export { default as VideoPlayer } from './VideoPlayer';
 
