@@ -3,6 +3,24 @@ import { motion } from 'framer-motion';
 
 import { media } from '../../utils';
 
+export const bannerStyle = {
+  hidden: {
+    scale: .7,
+    opacity: .5
+  },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      type: "tween",
+      duration: .2
+    }
+  },
+  exit: {
+    scale: 0,
+  }
+}
+
 export const Wrapper = styled.div`
   position: fixed;
   inset: 0;
@@ -10,14 +28,6 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 20;
-`;
-
-export const Overlay = styled(motion.div)`
-  opacity: 0;
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 export const Section = styled(motion.section)`
@@ -35,6 +45,23 @@ export const Section = styled(motion.section)`
   ${media('mobile')} {
     max-width: 616px;
   }
+
+  &.onBanner {
+    
+  }
+`;
+
+export const Close = styled.div`
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  padding: 8px 12px;
+  border-radius: 7px;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.textColor};
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 2;
 `;
 
 export const Image = styled(motion.div)<{bgphoto: string}>`
@@ -44,4 +71,12 @@ export const Image = styled(motion.div)<{bgphoto: string}>`
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+`;
+
+export const Overlay = styled(motion.div)`
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
 `;

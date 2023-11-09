@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { dto } from '../../../apis';
 import { formatImagePath, toTime } from '../../../utils';
 import * as S from './style';
@@ -9,9 +11,12 @@ interface IDetailViewContent {
   loading: boolean;
   detailData?: dto.IContentDetailsData;
   similarData?: dto.IContentData[];
+  showSimilarContent: (data: dto.IContentData) => void;
+  showVideoHandle: () => void;
+  videoShowState: boolean;
 }
 
-function DetailViewContent({ loading, detailData, similarData }: IDetailViewContent) {
+function DetailViewContent({ loading, detailData, similarData, showSimilarContent, showVideoHandle, videoShowState }: IDetailViewContent) {
   const formatOfNum = (num: number = 0) => {
     return parseInt(num.toString(), 10);
   }
@@ -31,11 +36,17 @@ function DetailViewContent({ loading, detailData, similarData }: IDetailViewCont
     return '-';
   }
 
+  useEffect(() => {
+    const $detail = document.querySelector('.detail');
+    if (!$detail) return;
+    $detail.scrollTo(0, 0);
+  }, [detailData]);
+
   return (
-    <S.Content>
+    <S.Content videoShow={videoShowState}>
       {/* Section - 1 */}
       <S.Title>{!loading ? (detailData?.title ?? detailData?.name) : <Skeleton classes='title-1 width-50' />}</S.Title>
-      {!loading ? <DetailViewBtn popularity={formatOfNum(detailData?.popularity)} /> : <Skeleton classes='title-1 width-25' />}
+      {!loading ? <DetailViewBtn popularity={formatOfNum(detailData?.popularity)} showVideoHandle={showVideoHandle} /> : <Skeleton classes='title-1 width-25' />}
       <S.Overview>{!loading ? formatOfStr(detailData?.overview) : <SkeletonPost />}</S.Overview>
 
       {/* Section - 2 */}
@@ -43,15 +54,19 @@ function DetailViewContent({ loading, detailData, similarData }: IDetailViewCont
       <S.ImageBox>
         {!loading ? (similarData?.map(data => (
           data.poster_path ?
-            <img key={data.id} src={formatImagePath(data.poster_path, 'w200')} alt={data.poster_path} /> :
+            <img
+              key={data.id}
+              src={formatImagePath(data.poster_path, 'w200')}
+              onClick={() => showSimilarContent(data)}
+              alt={data.title || data.name} /> :
             null
         ))) :
           Array.from({ length: 9 }, (_, i) => <Skeleton key={i + 1} classes='grid' />)}
       </S.ImageBox>
 
       {/* Section - 3 */}
-      <S.SubTitle>{formatOfStr(detailData?.title ?? detailData?.name)} Information</S.SubTitle>
-      {!loading ? <>
+      <S.SubTitle>{detailData?.title ?? detailData?.name} Information</S.SubTitle>
+      {!loading ? <S.InfoBox>
         <S.Info>
         <strong>Productions: </strong>
         {formatOfArr(detailData?.production_companies)}
@@ -75,7 +90,7 @@ function DetailViewContent({ loading, detailData, similarData }: IDetailViewCont
       <S.Info>
         <strong>Status: </strong>
         <span>{formatOfStr(detailData?.status)}</span>
-      </S.Info></> : <SkeletonPost />}
+      </S.Info></S.InfoBox> : <SkeletonPost />}
     </S.Content>
   )
 }

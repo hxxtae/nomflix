@@ -5,13 +5,14 @@ import * as S from './style';
 
 interface IDetailViewBtn {
   popularity: number;
+  showVideoHandle: () => void;
 }
 
-function DetailViewBtn({ popularity }: IDetailViewBtn) {
+function DetailViewBtn({ popularity, showVideoHandle }: IDetailViewBtn) {
 
   return (
     <S.ButtonGroup>
-      <button type='button'>
+      <button type='button' onClick={showVideoHandle}>
         <span>재생</span>
         <FontAwesomeIcon icon={faPlay} size="1x" />
       </button>

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from '../../utils';
 
 export const Banner = styled.div<{bgphoto: string}>`
   height: 100vh;
@@ -20,6 +21,14 @@ export const Title = styled.h2`
 
   &::selection {
     background-color: transparent;
+  }
+
+  ${media('tablet')} {
+    font-size: 3.5rem;
+  }
+
+  ${media('mobile')} {
+    font-size: 3rem;
   }
 `;
 
@@ -60,7 +69,8 @@ export const BannerButton= styled.button`
 
 export const Overview = styled.p`
   font-size: 25px;
-  width: 40%;
+  width: 50%;
+  min-width: 350px;
   letter-spacing: .8px;
   line-height: 50px;
   /* _line-clamp */
@@ -72,5 +82,9 @@ export const Overview = styled.p`
 
   &::selection {
     background-color: transparent;
+  }
+
+  ${media('mobile')} {
+    font-size: 1.4rem;
   }
 `;

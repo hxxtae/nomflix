@@ -1,22 +1,27 @@
 import styled from 'styled-components';
 import { media } from '../../../utils';
 
-export const Content = styled.div`
+const TOP_DISTANCE = 80;
+
+export const Content = styled.div<{ videoShow: boolean }>`
   position: relative;
-  top: -80px;
+  top: -${TOP_DISTANCE}px;
   padding: 0 50px;
+  transition: transform 1s ease-in-out;
+  transform: ${({ videoShow }) => (videoShow ? `translateY(${TOP_DISTANCE}px);` : 'translateY(0);')};
 `;
 
 export const Title = styled.h1`
   color: ${({ theme }) => theme.textColor};
   padding: 20px 0px;
   font-size: 46px;
+  line-height: 1.4;
 `;
 
 export const Overview = styled.div`
   padding: 20px 0px;
   color: ${({ theme }) => theme.textColor};
-  letter-spacing: 1px;
+  font-size: 1.12rem;
   line-height: 30px;
   margin-bottom: 60px;
 `;
@@ -26,6 +31,7 @@ export const SubTitle = styled.h2`
   padding: 20px 0px;
   margin-bottom: 20px;
   font-size: 26px;
+  line-height: 1.4;
 `;
 
 export const ImageBox = styled.div`
@@ -38,6 +44,12 @@ export const ImageBox = styled.div`
 
   img {
     border-radius: 7px;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+    }
   }
   
   ${media('mobile')} {
@@ -48,9 +60,13 @@ export const ImageBox = styled.div`
   }
 `;
 
-export const Info = styled.div`
+export const InfoBox = styled.ul`
+  margin-bottom: 30px;
+`;
+
+export const Info = styled.li`
   margin-bottom: 8px;
-  line-height: 1.3em;
+  line-height: 1.3;
 
   strong {
     color: ${({ theme }) => theme.thirdColor};

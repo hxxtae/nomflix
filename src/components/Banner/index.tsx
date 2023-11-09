@@ -48,7 +48,7 @@ function Banner({ kind }: IBanner) {
       
       {detailState && 
         <PortalModal>
-          <DetailView kind={kind} data={contentData} closeDetail={closeDetail} />
+          <DetailView kind={kind} data={contentData} closeDetail={closeDetail} onBanner={true} />
         </PortalModal>}
     </>
   )

@@ -5,6 +5,7 @@ export const Slider = styled.div`
   transform: translateY(-100px);
   height: 162px;
   margin-bottom: 100px;
+  z-index: 1;
 `;
 export const Increadiv = styled.div`
   position: absolute;
