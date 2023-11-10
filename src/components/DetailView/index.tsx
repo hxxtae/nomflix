@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faLeftLong } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 
 import { api, dto } from '../../apis';
@@ -9,7 +9,6 @@ import { useContentFetch, useContentDetailFetch } from '../../hooks';
 import * as S from './style';
 import DetailViewContent from './DetailViewContent';
 import VideoPlayer from '../VideoPlayer';
-import { IVideos } from '../../apis/dto';
 
 interface IDetailView {
   data: dto.IContentData;
@@ -26,13 +25,18 @@ const popularContentSorting = (datas?: dto.IContentData[]) => {
 }
 
 // Videos 필터링 함수
-const videosKeySorting = (datas: IVideos[]) => {
-  return datas[datas.length - 1].key;
+const videosKeySorting = (datas?: dto.IVideos[]) => {
+  if (!datas?.length) return;
+
+  const videos = datas.filter(item => item.type === "Trailer");
+  if (!videos.length) return datas[datas.length - 1].key;
+  return videos[videos.length - 1].key;
 }
 
 function DetailView({ data, kind, closeDetail, onBanner }: IDetailView) {
   const [contentData, setContentData] = useState<dto.IContentData>(data);
   const [videoShowState, setVideoShowState] = useState(false);
+  const [contentHistory, setContentHistory] = useState<dto.IContentData[]>([]);
 
   // Content-Detail Fetch
   const queryKeyOfDetail = queryKey.detail.content(contentData.id.toString());
@@ -52,10 +56,26 @@ function DetailView({ data, kind, closeDetail, onBanner }: IDetailView) {
 
   const showSimilarContent = (data: dto.IContentData) => {
     setVideoShowState(false);
-    setContentData((prev) => ({
-      ...prev,
+    setContentData(() => ({
       ...data
     }));
+    setContentHistory((prev) => {
+      prev.push(contentData);
+      return prev;
+    });
+  }
+
+  const onPrevClick = () => {
+    if (contentHistory.length === 0) return;
+    const prevData = contentHistory[contentHistory.length - 1];
+    setVideoShowState(false);
+    setContentData(() => ({
+      ...prevData
+    }));
+    setContentHistory((prev) => {
+      prev.pop();
+      return prev;
+    });
   }
 
   const showVideoHandle = () => {
@@ -68,7 +88,7 @@ function DetailView({ data, kind, closeDetail, onBanner }: IDetailView) {
 
   const onForBannerStyle = (state?: boolean) => {
     const styles = state ? {
-      variants: S.bannerStyle,
+      variants: S.onBannerVariants,
       initial: "hidden",
       animate: "visible",
       exit: "exit"
@@ -94,8 +114,9 @@ function DetailView({ data, kind, closeDetail, onBanner }: IDetailView) {
         layoutId={contentData.id + kind.toString()}
         {...onForBannerStyle(onBanner)}>
         <S.Close onClick={closeDetail}><FontAwesomeIcon icon={faClose} /></S.Close>
+        {contentHistory.length ? <S.Prev onClick={onPrevClick}><FontAwesomeIcon icon={faLeftLong} /></S.Prev> : null}
         <S.Image bgphoto={formatImagePath(contentData.backdrop_path)} />
-        {(videoShowState && !!detailData?.videos.results?.length) ? <VideoPlayer videoKey={videosKeySorting(detailData.videos.results)} /> : null}
+        {videoShowState ? <VideoPlayer videoKey={videosKeySorting(detailData?.videos.results)} /> : null}
         <DetailViewContent
           loading={isLoading}
           detailData={detailData}

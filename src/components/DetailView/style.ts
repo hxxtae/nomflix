@@ -2,8 +2,11 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 import { media } from '../../utils';
+import { DETAILVIEW_IMAGE_SIZE_MB, DETAILVIEW_IMAGE_SIZE_PC } from '../../global';
 
-export const bannerStyle = {
+const BTN_SIZE = 38;
+
+export const onBannerVariants = {
   hidden: {
     scale: .7,
     opacity: .5
@@ -45,17 +48,18 @@ export const Section = styled(motion.section)`
   ${media('mobile')} {
     max-width: 616px;
   }
-
-  &.onBanner {
-    
-  }
 `;
 
-export const Close = styled.div`
+export const Close = styled.button`
   position: absolute;
   top: 30px;
   right: 30px;
-  padding: 8px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: ${BTN_SIZE}px;
+  height: ${BTN_SIZE}px;
+  border: none;
   border-radius: 7px;
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.textColor};
@@ -64,13 +68,35 @@ export const Close = styled.div`
   z-index: 2;
 `;
 
+export const Prev = styled.button`
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: ${BTN_SIZE}px;
+  height: ${BTN_SIZE}px;
+  border: none;
+  border-radius: 7px;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.textColor};
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 2;
+`
+
 export const Image = styled(motion.div)<{bgphoto: string}>`
   width: 100%;
-  height: 450px;
+  height: ${DETAILVIEW_IMAGE_SIZE_PC}px;
   background-image: linear-gradient(rgba(20, 20, 20, 0), rgba(20, 20, 20, 1)), url(${(props) => props.bgphoto});
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+
+  ${media('mobile')} {
+    height: ${DETAILVIEW_IMAGE_SIZE_MB}px;
+  }
 `;
 
 export const Overlay = styled(motion.div)`
