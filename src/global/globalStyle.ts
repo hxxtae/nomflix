@@ -18,3 +18,6 @@ export const GlobalStyled = createGlobalStyle`
     color: inherit;
   }
 `;
+
+export const DETAILVIEW_IMAGE_SIZE_PC = 450;
+export const DETAILVIEW_IMAGE_SIZE_MB = 400;
