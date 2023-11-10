@@ -3,10 +3,12 @@ import ReactPlayer from 'react-player';
 import * as S from './style';
 
 interface IVideoPlayer {
-  videoKey: string;
+  videoKey?: string;
 }
 
-function VideoPlayer({ videoKey }: IVideoPlayer) {
+const DEFAULT_VIDEO = 'GV3HUDMQ-F8';
+
+function VideoPlayer({ videoKey = DEFAULT_VIDEO }: IVideoPlayer) {
 
   return (
     <S.Wrapper>
