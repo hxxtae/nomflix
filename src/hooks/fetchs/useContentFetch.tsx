@@ -34,7 +34,7 @@ const dataFetch = (data: dto.IContentsData[]): dto.IContentData[] => {
 export const useContentFetch = (keyArr: readonly string[], callback: Function): IContentResponse => {
   const { isLoading, data } = useQuery([...keyArr], () => callback(), {
     staleTime: 1000 * 60 * 20,
-    cacheTime: Infinity,
+    cacheTime: 1000 * 60 * 20,
     refetchOnWindowFocus: false,
     retry: 0,
     select: (data: dto.IContentsData[]) => {
