@@ -3,31 +3,12 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useMediaQuery } from '../../../hooks';
-import { mediaScreenSize } from '../../../constants';
+import { initContentData, mediaScreenSize } from '../../../constants';
 import { dto } from '../../../apis';
 import * as S from './style';
 import DetailView from '../../DetailView';
 import SliderList from './SliderList';
 import PortalModal from '../../PortalModal';
-
-const initContentData: dto.IContentData = {
-  adult: false,
-  genre_ids: [],
-  id: 0,
-  name: '',
-  original_language: '',
-  original_title: '',
-  original_name: '',
-  popularity: 0,
-  release_date: '',
-  backdrop_path: '',
-  poster_path: '',
-  title: '',
-  video: false,
-  vote_average: 0,
-  vote_count: 0,
-  overview: '',
-}
 
 interface ISliderData {
   data: dto.IContentData[];
@@ -43,14 +24,13 @@ function SliderContent({ data, kind, slider }: ISliderData) {
   const [offset, setOffset] = useState(6);
   const medium = useMediaQuery(`(max-width: ${mediaScreenSize.tablet.MAX}px)`);
 
-  const openDetail = useCallback((contentId: string) => {
-    const detailData = data?.find((item) => item.id.toString() === contentId);
-    if (!detailData) return;
+  const openDetail = useCallback((content: dto.IContentData) => {
+    if (!content?.id) return;
     setThisContent((prev) => ({
       ...prev,
-      ...detailData
-    }))
-  }, [data]);
+      ...content
+    }));
+  }, []);
 
   const closeDetail = useCallback(() => {
     setThisContent((prev) => ({
