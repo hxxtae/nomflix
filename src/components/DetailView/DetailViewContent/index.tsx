@@ -2,10 +2,9 @@ import { useEffect } from 'react';
 
 import { dto } from '../../../apis';
 import { formatImagePath, toTime } from '../../../utils';
+import { Skeleton, SkeletonPost } from '../../../components';
 import * as S from './style';
 import DetailViewBtn from './DetailViewBtn';
-import Skeleton from '../../Skeleton';
-import SkeletonPost from '../../SkeletonPost';
 
 interface IDetailViewContent {
   loading: boolean;
@@ -65,7 +64,7 @@ function DetailViewContent({ loading, detailData, similarData, showSimilarConten
       </S.ImageBox>
 
       {/* Section - 3 */}
-      <S.SubTitle>{detailData?.title ?? detailData?.name} Information</S.SubTitle>
+      <S.SubTitle>About {detailData?.title ?? detailData?.name}</S.SubTitle>
       {!loading ? <S.InfoBox>
         <S.Info>
         <strong>Productions: </strong>

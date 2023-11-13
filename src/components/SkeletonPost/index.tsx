@@ -1,4 +1,4 @@
-import Skeleton from '../Skeleton';
+import { Skeleton } from '../../components';
 import * as S from './style';
 
 function SkeletonPost() {

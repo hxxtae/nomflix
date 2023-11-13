@@ -3,13 +3,11 @@ import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilValue } from 'recoil';
 import { useState, memo } from 'react'
 
+import { Loading, PortalModal, DetailView } from '../../components';
+import { MovieCategory, TvCategory } from '../../constants';
 import { atomOfContentData } from '../../global'
 import { formatImagePath } from '../../utils';
 import * as S from './style';
-import Loading from '../Loading';
-import PortalModal from '../PortalModal';
-import DetailView from '../DetailView';
-import { MovieCategory, TvCategory } from '../../constants';
 
 interface IBanner {
   kind: MovieCategory | TvCategory;

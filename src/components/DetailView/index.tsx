@@ -5,10 +5,10 @@ import { useState, useEffect } from 'react';
 import { api, dto } from '../../apis';
 import { queryKey } from '../../constants';
 import { formatImagePath } from '../../utils';
+import { VideoPlayer } from '../../components';
 import { useContentFetch, useContentDetailFetch } from '../../hooks';
 import * as S from './style';
 import DetailViewContent from './DetailViewContent';
-import VideoPlayer from '../VideoPlayer';
 
 interface IDetailView {
   data: dto.IContentData;

@@ -4,8 +4,8 @@ import { useSetRecoilState } from 'recoil';
 import { MovieCategory, TvCategory } from '../../constants';
 import { atomOfContentData } from '../../global';
 import { useContentFetch } from '../../hooks';
+import { Loading } from '../../components';
 import * as S from './style';
-import Loading from '../Loading';
 import SliderContent from './SliderContent';
 
 interface ISlider {
