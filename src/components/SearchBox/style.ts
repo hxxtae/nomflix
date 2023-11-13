@@ -35,7 +35,7 @@ export const searchOpenAnimation = {
 // ---------------
 // Style
 // ---------------
-export const Box = styled.form`
+export const Form = styled.form`
   position: relative;
   display: flex;
   align-items: center;

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useState } from 'react';
 
 import { publicUrlStr } from '../../utils';
-import { Search } from '../../components';
+import { SearchBox } from '../../components';
 import * as S from './style';
 
 const menus = [
@@ -51,7 +51,7 @@ function Header() {
         </S.List>
       </S.Col>
       <S.Col>
-        <Search />
+        <SearchBox />
       </S.Col>
     </S.Nav>
   );

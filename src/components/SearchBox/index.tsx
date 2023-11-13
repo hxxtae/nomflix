@@ -1,6 +1,6 @@
-import { useAnimation } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useAnimation } from "framer-motion";
+import { useHistory, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import { publicUrlStr } from '../../utils';
@@ -10,12 +10,14 @@ interface IForm {
   keyword: string;
 }
 
-function Search() {
+function SearchBox() {
   const [searchState, setSearchState] = useState(false);
   const dropSearchRef = useRef<HTMLFormElement | null>(null);
   const iconAnimation = useAnimation();
   const inputAnimation = useAnimation();
   const history = useHistory();
+  const location = useLocation();
+  const keyword = new URLSearchParams(location.search).get("keyword");
   const { register, handleSubmit } = useForm<IForm>();
 
   const onValid = (search: IForm) => {
@@ -36,14 +38,14 @@ function Search() {
 
   useEffect(() => {
     const searchClose = (e: { target: any }) => {
-      if (searchState && !dropSearchRef.current?.contains(e.target)) toggleSearch();
+      if (!keyword && searchState && !dropSearchRef.current?.contains(e.target)) toggleSearch();
     }
     document.addEventListener('click', searchClose);
     return () => document.removeEventListener('click', searchClose);
-  }, [searchState, toggleSearch])
+  }, [keyword, searchState, toggleSearch])
 
   return (
-    <S.Box ref={dropSearchRef} onSubmit={handleSubmit(onValid)}>
+    <S.Form ref={dropSearchRef} onSubmit={handleSubmit(onValid)}>
       <S.OutIcon initial={{ opacity: 1 }} animate={iconAnimation} onClick={toggleSearch}>
         <img src={`${publicUrlStr()}/assets/svg/search.svg`} alt="search icon"/>
       </S.OutIcon>
@@ -56,9 +58,9 @@ function Search() {
           placeholder="title, movie, series..."
           autoComplete='off'/>
       </S.Wrapper>
-    </S.Box>
+    </S.Form>
   )
 }
 
-export default Search;
+export default SearchBox;
 
