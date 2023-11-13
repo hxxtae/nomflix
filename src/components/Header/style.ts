@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import styled from 'styled-components';
 
+import { HEADER_HEIGHT } from '../../global';
+
 export const menuVariants = {
   top: {
     backgroundColor: "rgba(20, 20, 20, 0)"
@@ -15,11 +17,12 @@ export const Nav = styled(motion.menu)`
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  width: 100%;
   top: 0;
+  width: 100%;
+  height: ${HEADER_HEIGHT}px;
   background-color: ${props => props.theme.bgColor};
   font-size: 14px;
-  padding: 20px 60px;
+  padding: 0px 60px;
   color: white;
   z-index: 10;
 `;
