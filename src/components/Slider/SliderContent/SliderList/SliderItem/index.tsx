@@ -11,7 +11,7 @@ import * as S from './style';
 interface ISliderItem {
   data: dto.IContentData;
   kind: number;
-  detailClick: (contentId: string) => void;
+  detailClick: (content: dto.IContentData) => void;
 }
 
 function SliderItem({ data, kind, detailClick }: ISliderItem) {
@@ -35,7 +35,7 @@ function SliderItem({ data, kind, detailClick }: ISliderItem) {
   return (
     <S.Box
       layoutId={data.id + kind.toString()}
-      onClick={() => detailClick(data.id.toString())}
+      onClick={() => detailClick(data)}
       variants={S.boxHoverVariants(tablet)}
       whileHover="hover"
       transition={{ type: "tween" }}>

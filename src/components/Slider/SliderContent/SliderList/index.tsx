@@ -12,7 +12,7 @@ interface ISliderList {
   kind: number
   data: dto.IContentData[]
   toggleCaraucel: () => void
-  detailClick: (contentId: string) => void
+  detailClick: (content: dto.IContentData) => void
 }
 
 function SliderList({ slideIndex, slideDirection, offset, kind, data, toggleCaraucel, detailClick }: ISliderList) {

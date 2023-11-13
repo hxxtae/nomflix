@@ -3,6 +3,8 @@ export enum MovieCategory {
   "Popular" = 12,
   "Top" = 13,
   "Upcoming" = 14,
+  "Similar" = 15,
+  "Search" = 16,
 }
 
 export enum TvCategory {
@@ -10,11 +12,13 @@ export enum TvCategory {
   "Popular" = 22,
   "Top" = 23,
   "AiringToday" = 24,
+  "Similar" = 25,
+  "Search" = 26,
 }
 
 export const queryKinds = {
-  movie: ['NowPlaying', 'Popular', 'Top', 'Upcoming, Similar, Credits'],
-  tv: ['OnAir', 'Popular', 'Top', 'AiringToday, Similar, Credits']
+  movie: ['NowPlaying', 'Popular', 'Top', 'Upcoming', 'Similar', 'Search', 'Credits'],
+  tv: ['OnAir', 'Popular', 'Top', 'AiringToday', 'Similar', 'Search', 'Credits']
 };
 
 export const queryKey = {
@@ -25,6 +29,7 @@ export const queryKey = {
     top: () => [...queryKey.movie.all, queryKinds.movie[2]] as const,
     upcoming: () => [...queryKey.movie.all, queryKinds.movie[3]] as const,
     similar: (movie_id: string) => [...queryKey.movie.all, queryKinds.movie[4], movie_id] as const,
+    search: (query: string) => [...queryKey.movie.all, query] as const,
   },
   tv: {
     all: ['tv'] as const,
@@ -33,6 +38,7 @@ export const queryKey = {
     top: () => [...queryKey.tv.all, queryKinds.tv[2]] as const,
     airingToday: () => [...queryKey.tv.all, queryKinds.tv[3]] as const,
     similar: (tv_id: string) => [...queryKey.tv.all, queryKinds.tv[4], tv_id] as const,
+    search: (query: string) => [...queryKey.tv.all, query] as const,
   },
   detail: {
     all: ['detail'] as const,
