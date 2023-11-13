@@ -1,29 +1,23 @@
-const baseURL = process.env.REACT_APP_BASE_PATH;
-const apiKEY = process.env.REACT_APP_API_KEY;
-
-type ISubKinds = 'similar' | 'credits';
-type IMovieKinds = 'now_playing' | 'popular' | 'top_rated' | 'latest' | 'upcoming' | ISubKinds;
-type ITvKinds = 'on_the_air' | 'popular' | 'top_rated' | 'airing_today' | ISubKinds;
+type IMainKinds = 'movie' | 'tv';
+type ISubKinds = 'now_playing' | 'popular' | 'top_rated' | 'latest' | 'upcoming' | 'on_the_air' | 'airing_today' | 'similar' | 'credits';
 type IRequestKind = 'api_key' | 'token';
+type ILanguage = 'en-US' | 'kr';
+
+const BASE_URL = process.env.REACT_APP_BASE_PATH;
+const API_KEY = process.env.REACT_APP_API_KEY;
+const LANGUAGE: ILanguage = 'en-US';
+
 interface IOptions {
   request_id?: string;
   request_kind?: IRequestKind;
 }
 
 // -------------------------------------
-// USE TO Movie Content Path
+// USE TO Movie & Tv Content Path
 // --------------------------------------
-export const apiMoviePath = (page: number, subKinds: IMovieKinds, options: IOptions = {}) => {
-  const { request_id: movieId = '' } = options;
-  return `${baseURL}/movie/${movieId}/${subKinds}?api_key=${apiKEY}&page=${page}`;
-}
-
-// -------------------------------------
-// USE TO Tv Content Path
-// --------------------------------------
-export const apiTvPath = (page: number, subKinds: ITvKinds, options: IOptions = {}) => {
-  const { request_id: tvId = '' } = options;
-  return `${baseURL}/tv/${tvId}/${subKinds}?api_key=${apiKEY}&page=${page}`;
+export const apiContentPath = (page: number, mainKind: IMainKinds, subKind: ISubKinds, options: IOptions = {}) => {
+  const { request_id: content_Id = '' } = options;
+  return `${BASE_URL}/${mainKind}/${content_Id}/${subKind}?api_key=${API_KEY}&page=${page}`;
 }
 
 // -------------------------------------
@@ -35,5 +29,12 @@ export const apiDetailPath = (detailId: string, kind: number) => {
   const validate =
     kind <= 20 ? `movie/${detailId}` :
     kind <= 30 ? `tv/${detailId}` : '';
-  return `${baseURL}/${validate}?api_key=${apiKEY}&language=en-US&append_to_response=videos`;
+  return `${BASE_URL}/${validate}?api_key=${API_KEY}&language=${LANGUAGE}&append_to_response=videos`;
+}
+
+// -------------------------------------
+// USE TO Movie & Tv Content Search Path
+// -------------------------------------
+export const apiSearchPath = (page: number, mainKind: IMainKinds, query: string, include_adult: boolean = true) => {
+  return `${BASE_URL}/search/${mainKind}?api_key=${API_KEY}&query=${query}&language=${LANGUAGE}&page=${page}&include_adult=${include_adult}`;
 }

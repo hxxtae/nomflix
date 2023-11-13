@@ -1,14 +1,19 @@
 import { IContentDetailsData, IContentsData } from './dto';
-import { apiDetailPath, apiMoviePath, apiTvPath } from './path';
+import { apiContentPath, apiDetailPath, apiSearchPath } from './path';
 
 // const apiAccessToken = process.env.REACT_APP_API_ACCESS_TOKEN;
 
 // --------------------------
-// Movie Content api (main)
+// Movie Content api 
+// --------------------------
+// - now_playing
+// - popular
+// - top_rated
+// - upcoming
 // --------------------------
 // (1) Now Play
 export async function getNowPlay(page: number): Promise<IContentsData> {
-  return fetch(apiMoviePath(page, 'now_playing')).then(
+  return fetch(apiContentPath(page, 'movie', 'now_playing')).then(
     response => response.json()
   );
 }
@@ -17,7 +22,7 @@ export async function getNowPlayAll() {
 }
 // (2) Popular
 export async function getPopular(page: number): Promise<IContentsData> {
-  return fetch(apiMoviePath(page, 'popular')).then(
+  return fetch(apiContentPath(page, 'movie', 'popular')).then(
     response => response.json()
   );
 }
@@ -26,7 +31,7 @@ export async function getPopularAll() {
 }
 // (3) Top Rated
 export async function getTop(page: number): Promise<IContentsData> {
-  return fetch(apiMoviePath(page, 'top_rated')).then(
+  return fetch(apiContentPath(page, 'movie', 'top_rated')).then(
     response => response.json()
   );
 }
@@ -35,13 +40,13 @@ export async function getTopAll() {
 }
 // (4) Latest (disabled)
 export async function getLatest(page: number) {
-  return fetch(apiMoviePath(page, 'latest')).then(
+  return fetch(apiContentPath(page, 'movie', 'latest')).then(
     response => response.json()
   );
 }
 // (5) Upcoming
 export async function getUpcoming(page: number): Promise<IContentsData> {
-  return fetch(apiMoviePath(page, 'upcoming')).then(
+  return fetch(apiContentPath(page, 'movie', 'upcoming')).then(
     response => response.json()
   );
 }
@@ -50,11 +55,16 @@ export async function getUpcomingAll() {
 }
 
 // --------------------------
-// Tv Content api (main)
+// Tv Content api
+// --------------------------
+// - on_the_air
+// - popular
+// - top_rated
+// - airing_today
 // --------------------------
 // (1) On The Air 
 export async function getTvOnAir(page: number): Promise<IContentsData> {
-  return (await fetch(apiTvPath(page, 'on_the_air'))).json();
+  return (await fetch(apiContentPath(page, 'tv', 'on_the_air'))).json();
 }
 
 export async function getTvOnAirAll() {
@@ -63,7 +73,7 @@ export async function getTvOnAirAll() {
 
 // (2) Popular
 export async function getTvPopular(page: number): Promise<IContentsData> {
-  return (await fetch(apiTvPath(page, 'popular'))).json();
+  return (await fetch(apiContentPath(page, 'tv', 'popular'))).json();
 }
 
 export async function getTvPopularAll() {
@@ -72,7 +82,7 @@ export async function getTvPopularAll() {
 
 // (3) Top rated
 export async function getTvTop(page: number): Promise<IContentsData> {
-  return (await fetch(apiTvPath(page, 'top_rated'))).json();
+  return (await fetch(apiContentPath(page, 'tv', 'top_rated'))).json();
 }
 
 export async function getTvTopAll() {
@@ -81,7 +91,7 @@ export async function getTvTopAll() {
 
 // (4) Airing Today
 export async function getTvAiringToday(page: number): Promise<IContentsData> {
-  return (await fetch(apiTvPath(page, 'airing_today'))).json();
+  return (await fetch(apiContentPath(page, 'tv', 'airing_today'))).json();
 }
 
 export async function getTvAiringTodayAll() {
@@ -89,11 +99,13 @@ export async function getTvAiringTodayAll() {
 }
 
 // --------------------------
-// Movie Content api (sub)
+// Movie Content api
+// --------------------------
+// - similar
 // --------------------------
 // (1) Similar
 export async function getMovieSimilar(page: number, movie_id: string): Promise<IContentsData> {
-  return fetch(apiMoviePath(page, 'similar', {
+  return fetch(apiContentPath(page, 'movie', 'similar', {
     request_id: movie_id,
   })).then(
     response => response.json()
@@ -105,11 +117,13 @@ export async function getMovieSimilarAll(movie_id: string) {
 }
 
 // --------------------------
-// Tv Content api (sub)
+// Tv Content api
+// --------------------------
+// - similar
 // --------------------------
 // (1) Similar
 export async function getTvSimilar(page: number, tv_id: string): Promise<IContentsData> {
-  return (await fetch(apiTvPath(page, 'similar', {
+  return (await fetch(apiContentPath(page, 'tv', 'similar', {
     request_id: tv_id,
   }))).json();
 }
@@ -126,3 +140,25 @@ export async function getDetail(detail_id: string, kind: number): Promise<IConte
     response => response.json()
   );
 }
+
+// --------------------------
+// Movie & Tv Content Search api
+// --------------------------
+export async function getMovieSearch(page: number, query: string): Promise<IContentsData> {
+  return (await fetch(apiSearchPath(page, 'movie', query))).json();
+}
+
+export async function getMovieSearchAll(query: string) {
+  return Promise.all([getMovieSearch(1, query), getMovieSearch(2, query)]);
+}
+
+export async function getTvSearch(page: number, query: string): Promise<IContentsData> {
+  return (await fetch(apiSearchPath(page, 'tv', query))).json();
+}
+
+export async function getTvSearchAll(query: string) {
+  return Promise.all([getTvSearch(1, query), getTvSearch(2, query)]);
+}
+
+
+
