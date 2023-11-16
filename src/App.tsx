@@ -4,6 +4,7 @@ import { publicUrlStr } from './utils'
 import { Header, Footer } from './components';
 import Movies from './pages/Movies';
 import Tv from './pages/Tv';
+import MyList from './pages/MyList';
 import Search from './pages/Search';
 
 function App() {
@@ -18,6 +19,9 @@ function App() {
         </Route>
         <Route exact path={[`${publicUrlStr()}/tv`, `${publicUrlStr()}/tv/:tvId`]}>
           <Tv />
+        </Route>
+        <Route exact path={`${publicUrlStr()}/mylist`}>
+          <MyList />
         </Route>
         <Route exact path={`${publicUrlStr()}/search`}>
           <Search />
