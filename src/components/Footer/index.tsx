@@ -9,7 +9,7 @@ function Footer() {
         <span>© 2022 - Hee Tae Kim & ReactMasterClass in NomardCode.</span>
       </div>
       <S.FooterBox>
-        <a title="깃 허브" href="https://github.com/hxxtae" target='_blank' rel="noopener noreferrer" >
+        <a title="깃 허브" href="https://github.com/hxxtae/react-masterclass-nomflix" target='_blank' rel="noopener noreferrer" >
           <i className="fab fa-github"></i>
         </a>
         <a title="노마드코더" href="https://nomadcoders.co/" target="_blank" rel="noopener noreferrer" >
