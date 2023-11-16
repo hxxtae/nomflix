@@ -5,6 +5,7 @@ export interface IContentData {
   adult: boolean;
   genre_ids: number[];
   id: number;
+  kind?: number;
   original_language: string;
   original_title: string;
   original_name: string;

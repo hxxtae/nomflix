@@ -5,6 +5,7 @@ export const initContentData: dto.IContentData = {
   backdrop_path: '',
   genre_ids: [],
   id: 0,
+  kind: 0,
   overview: '',
   name: '',
   original_language: '',
