@@ -22,6 +22,7 @@ function SliderList({ slideIndex, slideDirection, offset, kind, data, toggleCara
   }, [offset, slideIndex]);
 
   return (
+    // NOTE: ✨ <AnimatePresence> 효과를 적용하려면 자식 컴포넌트인 motion 컴포넌트 바로 위에 위치해야 한다.
     <AnimatePresence initial={false} onExitComplete={toggleCaraucel} custom={slideDirection}>
       <S.Row
         key={kind.toString() + slideIndex}
