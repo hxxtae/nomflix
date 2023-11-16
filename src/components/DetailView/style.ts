@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 import { media } from '../../utils';
-import { DETAILVIEW_IMAGE_SIZE_MB, DETAILVIEW_IMAGE_SIZE_PC } from '../../global';
 
 const BTN_SIZE = 38;
 
@@ -88,15 +87,12 @@ export const Prev = styled.button`
 
 export const Image = styled(motion.div)<{bgphoto: string}>`
   width: 100%;
-  height: ${DETAILVIEW_IMAGE_SIZE_PC}px;
+  min-height: 300px;
+  aspect-ratio: 16 / 9;
   background-image: linear-gradient(rgba(20, 20, 20, 0), rgba(20, 20, 20, 1)), url(${(props) => props.bgphoto});
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-
-  ${media('mobile')} {
-    height: ${DETAILVIEW_IMAGE_SIZE_MB}px;
-  }
 `;
 
 export const Overlay = styled(motion.div)`

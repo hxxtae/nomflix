@@ -21,4 +21,4 @@ export const GlobalStyled = createGlobalStyle`
 
 export const HEADER_HEIGHT = 70;
 export const DETAILVIEW_IMAGE_SIZE_PC = 450;
-export const DETAILVIEW_IMAGE_SIZE_MB = 400;
+export const DETAILVIEW_IMAGE_SIZE_MB = 350;
