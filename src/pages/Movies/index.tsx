@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import { Banner, Slider } from '../../components';
 import { queryKey, MovieCategory } from '../../constants';
@@ -24,6 +24,10 @@ function Movies() {
     if (kind === MovieCategory.Popular) return queryKey.movie.popular;
     if (kind === MovieCategory.Top) return queryKey.movie.top;
     return queryKey.movie.upcoming;
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
   }, []);
 
   return (

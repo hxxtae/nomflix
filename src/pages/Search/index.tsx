@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 
@@ -51,6 +51,10 @@ function Search() {
     }));
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <AnimatePresence>
       <>
@@ -60,7 +64,11 @@ function Search() {
             {isMovieLoading ?
               <Loading /> :
               movieDatas?.map(item => item.backdrop_path ?
-                <SliderItem key={item.id} data={item} kind={MovieCategory.Search} detailClick={openMovieDetail} /> :
+                <SliderItem
+                  key={item.id}
+                  data={item}
+                  kind={MovieCategory.Search}
+                  detailClick={openMovieDetail} /> :
                 null)}
           </S.List>
 
@@ -69,7 +77,11 @@ function Search() {
             {isTvLoading ?
               <Loading /> :
               tvDatas?.map(item => item.backdrop_path ?
-                <SliderItem key={item.id} data={item} kind={TvCategory.Search} detailClick={openTvDetail} /> :
+                <SliderItem
+                  key={item.id}
+                  data={item}
+                  kind={TvCategory.Search}
+                  detailClick={openTvDetail} /> :
                 null)}
           </S.List>
         </S.Wrapper>

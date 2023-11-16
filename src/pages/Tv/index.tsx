@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import { Banner, Slider } from '../../components';
 import { queryKey, TvCategory } from '../../constants';
@@ -24,6 +24,10 @@ function Tv() {
     if (kind === TvCategory.Popular) return queryKey.tv.popular;
     if (kind === TvCategory.Top) return queryKey.tv.top;
     return queryKey.tv.airingToday;
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
   }, []);
 
   return (
