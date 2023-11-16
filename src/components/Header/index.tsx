@@ -1,20 +1,24 @@
 import { useAnimation, useScroll, useMotionValueEvent } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { publicUrlStr } from '../../utils';
 import { SearchBox } from '../../components';
 import * as S from './style';
 
 const menus = [
-  { name: 'movie', nicName: 'Movie' },
-  { name: 'tv', nicName: 'Series' }
+  { name: 'movie', nicName: 'Movie', path: '' },
+  { name: 'tv', nicName: 'Series', path: '/tv' },
+  { name: 'mylist', nicName: 'My List', path: '/mylist' }
 ];
+
 const initSelect = (pathname: string) => {
-  const [path1, path2] = [menus[0].name, menus[1].name];
+  const [path1, path2, path3] = menus.map(item => item.name);
   const paths = pathname.split('/');
-  return paths.includes(path1) ? path1 :
-    paths.includes(path2) ? path2 : path1;
+  if (paths.includes(path1)) return path1;
+  if (paths.includes(path2)) return path2;
+  if (paths.includes(path3)) return path3;
+  return path1;
 }
 
 function Header() {
@@ -33,6 +37,11 @@ function Header() {
     setSelected(name);
   };
 
+  useEffect(() => {
+    const search = pathname.split('/').includes('search');
+    if (search) onSelect('search');
+  }, [pathname]);
+
   // 🐞[Bug]: layoutId Bug Issue Link : https://github.com/framer/motion/issues/1580
 
   return (
@@ -43,10 +52,10 @@ function Header() {
         </S.Logo>
         <S.List>
           {menus.map((menu) => (
-            <S.Item key={menu.name} onClick={() => onSelect(menu.name)}>
-              <Link to={`${publicUrlStr()}${menu.name === 'movie' ? '' : '/'+menu.name}`}>{menu.nicName}</Link>
+            <S.Item className={selected === menu.name ? 'select' : ''} key={menu.name} onClick={() => onSelect(menu.name)}>
+              <Link to={`${publicUrlStr()}${menu.path}`}>{menu.nicName}</Link>
               {selected === menu.name ? <S.Line layoutId="circle" /> : null}
-            </S.Item    >
+            </S.Item>
           ))}
         </S.List>
       </S.Col>

@@ -57,8 +57,13 @@ export const Item = styled(motion.li)`
   margin-right: 25px;
   transition: color 0.3s ease-in-out;
   color: ${(props) => props.theme.textColor};
+
   &:hover {
-    color: ${(props) => props.theme.textColor};
+    color: #b3b3b3;
+  }
+
+  &.select {
+    font-weight: 600;
   }
 `;
 
