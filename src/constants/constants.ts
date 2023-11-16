@@ -5,6 +5,7 @@ export enum MovieCategory {
   "Upcoming" = 14,
   "Similar" = 15,
   "Search" = 16,
+  "Mylist" = 17,
 }
 
 export enum TvCategory {
@@ -14,6 +15,7 @@ export enum TvCategory {
   "AiringToday" = 24,
   "Similar" = 25,
   "Search" = 26,
+  "Mylist" = 27,
 }
 
 export const queryKinds = {
