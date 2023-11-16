@@ -1,11 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose, faLeftLong } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
 
 import { api, dto } from '../../apis';
-import { queryKey } from '../../constants';
-import { formatImagePath } from '../../utils';
+import { MovieCategory, TvCategory, queryKey } from '../../constants';
+import { addContentStorage, deleteContentStorage, formatImagePath } from '../../utils';
 import { VideoPlayer } from '../../components';
+import { atomOfMylistData } from '../../global';
 import { useContentFetch, useContentDetailFetch } from '../../hooks';
 import * as S from './style';
 import DetailViewContent from './DetailViewContent';
@@ -37,6 +39,7 @@ function DetailView({ data, kind, closeDetail, onBanner }: IDetailView) {
   const [contentData, setContentData] = useState<dto.IContentData>(data);
   const [videoShowState, setVideoShowState] = useState(false);
   const [contentHistory, setContentHistory] = useState<dto.IContentData[]>([]);
+  const setMylistDatas = useSetRecoilState(atomOfMylistData);
 
   // Content-Detail Fetch
   const queryKeyOfDetail = queryKey.detail.content(contentData.id.toString());
@@ -86,6 +89,20 @@ function DetailView({ data, kind, closeDetail, onBanner }: IDetailView) {
     setVideoShowState(true);
   }
 
+  const onFavorit = () => {
+    setMylistDatas((prev) => {
+      if (prev.get(data.id)) {
+        // [Delete]: 스토리지에 해당 콘텐츠 삭제
+        return deleteContentStorage('mylist', data.id);
+      }
+      // [Add]: 스토리지에 해당 콘텐츠 추가
+      let setKind;
+      if (kind < 20) setKind = MovieCategory.Mylist;
+      else if (kind < 30) setKind = TvCategory.Mylist;
+      return addContentStorage('mylist', { ...data, kind: setKind });
+    })
+  }
+
   const onForBannerStyle = (state?: boolean) => {
     const styles = state ? {
       variants: S.onBannerVariants,
@@ -122,6 +139,7 @@ function DetailView({ data, kind, closeDetail, onBanner }: IDetailView) {
           detailData={detailData}
           similarData={popularContentSorting(similarData)}
           showSimilarContent={showSimilarContent}
+          onFavorit={onFavorit}
           showVideoHandle={showVideoHandle}
           videoShowState={videoShowState}
         />

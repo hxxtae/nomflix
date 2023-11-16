@@ -36,6 +36,21 @@ export const infoHoverVariants = (match: boolean) => ({
   },
 })
 
+export const iconAniProps = {
+  initial: {
+    scale: 0,
+    opacity: 0,
+  },
+  animate: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      type: "tween",
+      duration: 0.3
+    }
+  }
+}
+
 export const Box = styled(motion.li)`
   position: relative;
   flex-direction: column;
@@ -85,7 +100,7 @@ export const Info = styled(motion.div)`
   }
 `;
 
-export const ButtonGroup = styled.div`
+export const ButtonGroup = styled(motion.div)`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -101,18 +116,19 @@ export const ButtonGroup = styled.div`
     flex: 1;
     border: 2px solid rgba(80, 80, 80, 1);
     border-radius: 50%;
+    font-size: 1rem;
     color: rgba(255, 255, 255, .8);
     background-color: ${props => props.theme.bgColor};
     cursor: pointer;
 
     &:first-child {
-      background-color: rgba(210, 210, 210, 1);
-      border: 2px solid rgba(210, 210, 210, 1);
-      color: rgba(0, 0, 0, .8);
+      background-color: rgba(255, 255, 255, 1);
+      border: 2px solid rgba(255, 255, 255, 1);
+      color: rgba(0, 0, 0, 1);
     }
 
     &:hover {
-      border: 2px solid rgba(210, 210, 210, 1);
+      border: 2px solid rgba(255, 255, 255, 1);
     }
   }
 `;

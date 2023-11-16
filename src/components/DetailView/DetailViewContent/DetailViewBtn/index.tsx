@@ -1,30 +1,45 @@
+import { faPlay, faThumbsUp, faPlus, faHeart, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faThumbsUp, faPlus, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilValue } from 'recoil';
+import { motion } from 'framer-motion';
 
+import { atomOfMylistData } from '../../../../global';
+import { dto } from '../../../../apis';
 import * as S from './style';
 
 interface IDetailViewBtn {
-  popularity: number;
+  detailData?: dto.IContentDetailsData;
+  onFavorit: () => void;
   showVideoHandle: () => void;
 }
 
-function DetailViewBtn({ popularity, showVideoHandle }: IDetailViewBtn) {
+function DetailViewBtn({ detailData, onFavorit, showVideoHandle }: IDetailViewBtn) {
+  const mylistDatas = useRecoilValue(atomOfMylistData);
+
+  const formatOfNum = (num: number = 0) => {
+    return parseInt(num.toString(), 10);
+  }
 
   return (
     <S.ButtonGroup>
-      <button type='button' onClick={showVideoHandle}>
-        <span>재생</span>
+      <S.Play type='button' onClick={showVideoHandle}>
         <FontAwesomeIcon icon={faPlay} size="1x" />
-      </button>
-      <button type='button'>
+        <span>Play</span>
+      </S.Play>
+
+      <S.Favorit type='button' onClick={onFavorit}>
+        <motion.i key={mylistDatas.get(formatOfNum(detailData?.id)) ? 1 : 2} { ...S.iconAniProps }>
+          <FontAwesomeIcon icon={mylistDatas.get(formatOfNum(detailData?.id)) ? faCheck : faPlus} size="1x" />
+        </motion.i>
+      </S.Favorit>
+
+      <S.Like type='button'>
         <FontAwesomeIcon icon={faThumbsUp} size="1x" />
-      </button>
-      <button type='button'>
-        <FontAwesomeIcon icon={faPlus} size="1x" />
-      </button>
+      </S.Like>
+
       <S.Popular>
         <FontAwesomeIcon icon={faHeart} size='1x'/>
-        <span>{popularity}</span>
+        <span>{formatOfNum(detailData?.popularity)}</span>
       </S.Popular>
     </S.ButtonGroup>
   )

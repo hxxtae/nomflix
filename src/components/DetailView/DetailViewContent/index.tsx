@@ -11,15 +11,12 @@ interface IDetailViewContent {
   detailData?: dto.IContentDetailsData;
   similarData?: dto.IContentData[];
   showSimilarContent: (data: dto.IContentData) => void;
+  onFavorit: () => void;
   showVideoHandle: () => void;
   videoShowState: boolean;
 }
 
-function DetailViewContent({ loading, detailData, similarData, showSimilarContent, showVideoHandle, videoShowState }: IDetailViewContent) {
-  const formatOfNum = (num: number = 0) => {
-    return parseInt(num.toString(), 10);
-  }
-
+function DetailViewContent({ loading, detailData, similarData, showSimilarContent, onFavorit, showVideoHandle, videoShowState }: IDetailViewContent) {
   const formatOfStr = (data: unknown): string => {
     if (typeof data === 'string' && data) return data;
     if (typeof data === 'number') return data.toString();
@@ -45,7 +42,12 @@ function DetailViewContent({ loading, detailData, similarData, showSimilarConten
     <S.Content videoShow={videoShowState}>
       {/* Section - 1 */}
       <S.Title>{!loading ? (detailData?.title ?? detailData?.name) : <Skeleton classes='title-1 width-50' />}</S.Title>
-      {!loading ? <DetailViewBtn popularity={formatOfNum(detailData?.popularity)} showVideoHandle={showVideoHandle} /> : <Skeleton classes='title-1 width-25' />}
+      {!loading ?
+        <DetailViewBtn
+          detailData={detailData}
+          onFavorit={onFavorit}
+          showVideoHandle={showVideoHandle} /> :
+        <Skeleton classes='title-1 width-25' />}
       <S.Overview>{!loading ? formatOfStr(detailData?.overview) : <SkeletonPost />}</S.Overview>
 
       {/* Section - 2 */}
