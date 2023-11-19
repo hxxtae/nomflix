@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
-import { media } from '../../utils';
-
-export const Wrapper = styled.section`
+export const Wrapper = styled.section<{ inset: boolean }>`
   position: absolute;
-  inset: 0;
+  ${({ inset }) => inset ? 'inset: 0' : ''};
   width: 100%;
   min-height: 300px;
   aspect-ratio: 16 / 9;

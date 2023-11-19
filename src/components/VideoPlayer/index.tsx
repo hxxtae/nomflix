@@ -4,14 +4,15 @@ import * as S from './style';
 
 interface IVideoPlayer {
   videoKey?: string;
+  inset?: boolean;
 }
 
 const DEFAULT_VIDEO = 'GV3HUDMQ-F8';
 
-function VideoPlayer({ videoKey = DEFAULT_VIDEO }: IVideoPlayer) {
+function VideoPlayer({ videoKey = DEFAULT_VIDEO, inset = true }: IVideoPlayer) {
 
   return (
-    <S.Wrapper>
+    <S.Wrapper inset={inset}>
       <ReactPlayer
         url={`https://www.youtube.com/watch?v=${videoKey}`}
         playing={true}
