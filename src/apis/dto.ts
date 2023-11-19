@@ -73,6 +73,8 @@ export interface IContentDetailsData {
   status: string;
   title: string; // only movie
   name: string;  // only tv
+  vote_average: number;
+  vote_count: number;
   videos: {
     results: IVideos[];
   }
