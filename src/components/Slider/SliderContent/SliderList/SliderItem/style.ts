@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const boxHoverVariants = (match: boolean) => ({
@@ -51,6 +51,31 @@ export const iconAniProps = {
   }
 }
 
+const Button = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 34px;
+  height: 34px;
+  flex: 1;
+  border: 2px solid rgba(80, 80, 80, 1);
+  border-radius: 50%;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, .8);
+  background-color: ${props => props.theme.bgColor};
+  cursor: pointer;
+
+  &:first-child {
+    background-color: rgba(255, 255, 255, 1);
+    border: 2px solid rgba(255, 255, 255, 1);
+    color: rgba(0, 0, 0, 1);
+  }
+
+  &:hover {
+    border: 2px solid rgba(255, 255, 255, 1);
+  }
+`;
+
 export const Box = styled(motion.li)`
   position: relative;
   flex-direction: column;
@@ -80,24 +105,21 @@ export const BoxImg = styled(motion.img)`
 
 export const Info = styled(motion.div)`
   position: absolute;
-  bottom: -100px;
+  bottom: -110px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  gap: 8px;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
-  padding: 15px;
+  padding: 10px 15px 10px;
   width: 100%;
-  height: 100px;
+  height: 110px;
   background-color: ${props => props.theme.bgColor};
   box-shadow: 0 0 10px rgba(0, 0, 0, 1);
   opacity: 0;
-
-  span {
-    font-size: 14px;
-    color: ${props => props.theme.textColor};
-  }
+  overflow: hidden;
 `;
 
 export const ButtonGroup = styled(motion.div)`
@@ -105,30 +127,58 @@ export const ButtonGroup = styled(motion.div)`
   justify-content: flex-start;
   align-items: center;
   gap: 5px;
-  margin-bottom: 10px;
+`;
 
-  button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 34px;
-    height: 34px;
-    flex: 1;
-    border: 2px solid rgba(80, 80, 80, 1);
-    border-radius: 50%;
-    font-size: 1rem;
-    color: rgba(255, 255, 255, .8);
-    background-color: ${props => props.theme.bgColor};
-    cursor: pointer;
+export const Play = styled.button`
+  ${Button};
 
-    &:first-child {
-      background-color: rgba(255, 255, 255, 1);
-      border: 2px solid rgba(255, 255, 255, 1);
-      color: rgba(0, 0, 0, 1);
-    }
+  &:hover {
+    opacity: .8;
+  }
+`;
 
-    &:hover {
-      border: 2px solid rgba(255, 255, 255, 1);
-    }
+export const Favorit = styled.button`
+  ${Button};
+
+  i {
+    width: 1rem;
+    height: 1rem;
+  }
+`;
+
+export const Like = styled.button`
+  ${Button};
+`;
+
+export const Title = styled.span`
+  /* text truncate */
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 1.1rem;
+  font-size: 14px;
+  color: ${({ theme }) => theme.textColor};
+`;
+
+export const VoteAndGenre = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 1.1rem;
+  font-size: 12px;
+  font-weight: 600;
+
+  strong {
+    color: #46d369;
+  }
+
+  p {
+    color: ${({ theme }) => theme.textColor};
   }
 `;
