@@ -18,6 +18,36 @@ export const Title = styled.h1`
   line-height: 1.4;
 `;
 
+export const VoteYearGenre = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+
+  width: 100%;
+  line-height: 1.1rem;
+  font-weight: 600;
+
+  ${media('mobile')} {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    
+  }
+
+  strong {
+    color: #46d369;
+  }
+
+  span {
+    color: ${({ theme }) => theme.thirdColor};
+  }
+
+  p {
+    color: ${({ theme }) => theme.textColor};
+  }
+`;
+
 export const Overview = styled.div`
   padding: 20px 0px;
   color: ${({ theme }) => theme.textColor};
@@ -74,13 +104,5 @@ export const Info = styled.li`
 
   span {
     margin-bottom: 20px;
-  }
-
-  span:after {
-    content: ', '
-  }
-
-  span:last-child:after {
-    content: ''
   }
 `;

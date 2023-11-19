@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { dto } from '../../../apis';
-import { formatImagePath, toTime } from '../../../utils';
+import { formatImagePath, formatOfStr, toTime } from '../../../utils';
 import { Skeleton, SkeletonPost } from '../../../components';
 import * as S from './style';
 import DetailViewBtn from './DetailViewBtn';
@@ -17,18 +17,22 @@ interface IDetailViewContent {
 }
 
 function DetailViewContent({ loading, detailData, similarData, showSimilarContent, onFavorit, showVideoHandle, videoShowState }: IDetailViewContent) {
-  const formatOfStr = (data: unknown): string => {
-    if (typeof data === 'string' && data) return data;
-    if (typeof data === 'number') return data.toString();
-
+  const arrayToStr = <T extends dto.ICompany | dto.IGenres>(arr?: T[], division?: string) => {
+    if (Array.isArray(arr) && arr.length > 0) {
+      return arr.map(item => item.name).join(division);
+    };
     return '-';
   }
 
-  const formatOfArr = <T extends dto.ICompany | dto.IGenres>(arr?: T[]) => {
-    if (Array.isArray(arr) && arr.length > 0) {
-      return arr.map(item => (<span key={item.id}>{item.name}</span>))
-    };
+  const formatOfPercent = (num?: string | number) => {
+    if (typeof num === 'number' || typeof num === 'string') {
+      return parseInt((+num * 10).toString(), 10);
+    }
+    return '-';
+  }
 
+  const formatOfData = (date?: string, division: number = 1) => {
+    if (typeof date === 'string') return date.split('-').slice(0, division).join(' ');
     return '-';
   }
 
@@ -48,6 +52,11 @@ function DetailViewContent({ loading, detailData, similarData, showSimilarConten
           onFavorit={onFavorit}
           showVideoHandle={showVideoHandle} /> :
         <Skeleton classes='title-1 width-25' />}
+      <S.VoteYearGenre>
+        <strong>{formatOfPercent(detailData?.vote_average) + '% LIKES'}</strong>
+        <span>{formatOfData(detailData?.release_date ?? detailData?.first_air_date, 1)}</span>
+        <p>{arrayToStr(detailData?.genres, ' · ')}</p>
+      </S.VoteYearGenre>
       <S.Overview>{!loading ? formatOfStr(detailData?.overview) : <SkeletonPost />}</S.Overview>
 
       {/* Section - 2 */}
@@ -70,11 +79,11 @@ function DetailViewContent({ loading, detailData, similarData, showSimilarConten
       {!loading ? <S.InfoBox>
         <S.Info>
         <strong>Productions: </strong>
-        {formatOfArr(detailData?.production_companies)}
+        {arrayToStr(detailData?.production_companies, ', ')}
       </S.Info>
       <S.Info>
         <strong>Genres: </strong>
-        {formatOfArr(detailData?.genres)}
+        {arrayToStr(detailData?.genres, ', ')}
       </S.Info>
       <S.Info>
         <strong>Original Name: </strong>
@@ -82,7 +91,7 @@ function DetailViewContent({ loading, detailData, similarData, showSimilarConten
       </S.Info>
       <S.Info>
         <strong>Release Date: </strong>
-        <span>{formatOfStr(detailData?.release_date ?? detailData?.first_air_date)}</span>
+        <span>{formatOfData(detailData?.release_date ?? detailData?.first_air_date, 3)}</span>
       </S.Info>
       <S.Info>
         <strong>Run Time: </strong>
