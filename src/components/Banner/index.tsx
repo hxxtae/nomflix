@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilValue } from 'recoil';
 import { useState, memo } from 'react'
 
-import { Loading, PortalModal, DetailView } from '../../components';
+import { Loading, PortalModal, DetailView, SimpleView } from '../../components';
 import { MovieCategory, TvCategory } from '../../constants';
 import { atomOfContentData } from '../../global'
 import { formatImagePath } from '../../utils';
@@ -17,6 +17,7 @@ function Banner({ kind }: IBanner) {
   console.log('banner')
   const contentData = useRecoilValue(atomOfContentData);
   const [detailState, setDetailState] = useState(false);
+  const [videoState, setVideoState] = useState(false);
 
   const showDetail = () => {
     if (!contentData?.id) return;
@@ -27,17 +28,27 @@ function Banner({ kind }: IBanner) {
     setDetailState(false);
   }
 
+  const showVideo = () => {
+    setVideoState(true);
+  }
+
+  const clostVideo = () => {
+    setVideoState(false);
+  }
+
   return (
     <>
       {contentData.id ?
         <S.Banner bgphoto={formatImagePath(contentData.backdrop_path)}>
           <S.Title>{contentData.title}</S.Title>
           <S.ButtonWrapper>
-            <S.BannerButton>
-              <FontAwesomeIcon icon={faPlay} /><span>재생</span>
+            <S.BannerButton onClick={showVideo}>
+              <FontAwesomeIcon icon={faPlay} />
+              <span>Play</span>
             </S.BannerButton>
             <S.BannerButton onClick={showDetail}>
-              <FontAwesomeIcon icon={faPlus} /><span>상세 정보</span>
+              <FontAwesomeIcon icon={faInfoCircle} />
+              <span>상세 정보</span>
             </S.BannerButton>
           </S.ButtonWrapper>
           <S.Overview>{contentData.overview}</S.Overview>
@@ -47,6 +58,11 @@ function Banner({ kind }: IBanner) {
       {detailState && 
         <PortalModal>
           <DetailView kind={kind} data={contentData} closeDetail={closeDetail} onBanner={true} />
+        </PortalModal>}
+      
+      {videoState &&
+        <PortalModal>
+          <SimpleView contentData={contentData} kind={kind} closeSimple={clostVideo} />
         </PortalModal>}
     </>
   )

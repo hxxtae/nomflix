@@ -39,22 +39,22 @@ export const ButtonWrapper = styled.div`
   margin-bottom: 40px;
 `;
 
-export const BannerButton= styled.button`
+export const BannerButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 2.7em;
+  padding: 0 50px;
   border-radius: 5px;
   border: none;
-  padding: 0 50px;
+  margin-right: 20px;
   background-color: rgba(0, 0, 0, .4);
   font-size: 20px;
   font-weight: bold;
   color: #ffffff;
-  margin-right: 20px;
   transition: box-shadow 200ms ease-in-out;
   cursor: pointer;
-
-  span {
-    display: inline-block;
-    padding: 14px 0 14px 10px;
-  }
 
   :last-child {
     margin-right: 0;
@@ -64,6 +64,10 @@ export const BannerButton= styled.button`
     background-color: #e7e7e7;
     color: #000000;
     box-shadow: 0 10px 20px 0 #000000;
+  }
+
+  ${media('mobile')} {
+    font-size: 16px;
   }
 `;
 
