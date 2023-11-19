@@ -5,7 +5,7 @@ import { useSetRecoilState } from 'recoil';
 
 import { api, dto } from '../../apis';
 import { MovieCategory, TvCategory, queryKey } from '../../constants';
-import { addContentStorage, deleteContentStorage, formatImagePath } from '../../utils';
+import { addContentStorage, deleteContentStorage, formatImagePath, videosKeySorting } from '../../utils';
 import { VideoPlayer } from '../../components';
 import { atomOfMylistData } from '../../global';
 import { useContentFetch, useContentDetailFetch } from '../../hooks';
@@ -24,15 +24,6 @@ const popularContentSorting = (datas?: dto.IContentData[]) => {
   return datas
     ?.sort(({ popularity: a }, { popularity: b }) => Math.floor(b) - Math.floor(a))
     .slice(0, 9);
-}
-
-// Videos 필터링 함수
-const videosKeySorting = (datas?: dto.IVideos[]) => {
-  if (!datas?.length) return;
-
-  const videos = datas.filter(item => item.type === "Trailer");
-  if (!videos.length) return datas[datas.length - 1].key;
-  return videos[videos.length - 1].key;
 }
 
 function DetailView({ data, kind, closeDetail, onBanner }: IDetailView) {
@@ -91,15 +82,15 @@ function DetailView({ data, kind, closeDetail, onBanner }: IDetailView) {
 
   const onFavorit = () => {
     setMylistDatas((prev) => {
-      if (prev.get(data.id)) {
+      if (prev.get(contentData.id)) {
         // [Delete]: 스토리지에 해당 콘텐츠 삭제
-        return deleteContentStorage('mylist', data.id);
+        return deleteContentStorage('mylist', contentData.id);
       }
       // [Add]: 스토리지에 해당 콘텐츠 추가
       let setKind;
       if (kind < 20) setKind = MovieCategory.Mylist;
       else if (kind < 30) setKind = TvCategory.Mylist;
-      return addContentStorage('mylist', { ...data, kind: setKind });
+      return addContentStorage('mylist', { ...contentData, kind: setKind });
     })
   }
 
@@ -130,7 +121,7 @@ function DetailView({ data, kind, closeDetail, onBanner }: IDetailView) {
         className={`detail`}
         layoutId={contentData.id + kind.toString()}
         {...onForBannerStyle(onBanner)}>
-        <S.Close onClick={closeDetail}><FontAwesomeIcon icon={faClose} /></S.Close>
+        <S.Close onClick={closeDetail}><FontAwesomeIcon icon={faClose} aria-label='close' /></S.Close>
         {contentHistory.length ? <S.Prev onClick={onPrevClick}><FontAwesomeIcon icon={faLeftLong} /></S.Prev> : null}
         <S.Image bgphoto={formatImagePath(contentData.backdrop_path)} />
         {videoShowState ? <VideoPlayer videoKey={videosKeySorting(detailData?.videos.results)} /> : null}
