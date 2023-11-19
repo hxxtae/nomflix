@@ -46,17 +46,22 @@ export const ButtonGroup = styled(motion.div)`
   align-items: center;
   gap: 10px;
   padding: 20px 0px;
+  margin-bottom: 50px;
 `;
 
 export const Play = styled.button`
   ${Button};
   width: 150px;
   background-color: rgba(255, 255, 255, 1);
-  border-radius: 10px;
+  border-radius: 5px;
   font-size: 24px;
   border: none;
   font-weight: bold;
   color: rgba(0, 0, 0, 1);
+
+  &:hover {
+    opacity: .8;
+  }
 
   span {
     margin-left: 14px;
@@ -65,6 +70,11 @@ export const Play = styled.button`
 
 export const Favorit = styled.button`
   ${Button};
+
+  i {
+    width: 1rem;
+    height: 1rem;
+  }
 `;
 
 export const Like = styled.button`
