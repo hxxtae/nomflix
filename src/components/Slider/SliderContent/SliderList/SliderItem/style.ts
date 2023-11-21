@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const boxHoverVariants = (match: boolean) => ({
@@ -93,6 +93,23 @@ export const Box = styled(motion.li)`
   }
   &:hover {
     z-index: 1;
+    .move {
+      position: relative;
+      animation: leftright 3s infinite alternate ease-in-out;
+    }
+  }
+  
+  @keyframes leftright {
+    0%,
+    20% {
+      transform: translateX(0%);
+      left: 0%;
+    }
+    80%,
+    100% {
+      transform: translateX(-100%);
+      left: 100%;
+    }
   }
 `;
 
@@ -180,5 +197,13 @@ export const VoteAndGenre = styled.div`
 
   p {
     color: ${({ theme }) => theme.textColor};
+    overflow: hidden;
+
+    span {
+      display: inline-block;
+    }
   }
 `;
+
+
+

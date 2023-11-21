@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnimatePresence } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 import { motion } from 'framer-motion';
-import { memo, useState } from 'react';
+import { memo, useRef, useState, useEffect } from 'react';
 
 import { dto } from '../../../../../apis';
 import { useMediaQuery } from '../../../../../hooks';
@@ -23,8 +23,15 @@ interface ISliderItem {
 function SliderItem({ data, kind, detailClick }: ISliderItem) {
   const [showVideo, setShowVideo] = useState(false);
   const [mylistDatas, setMylistDatas] = useRecoilState(atomOfMylistData);
+  const genreRef = useRef<HTMLParagraphElement>(null);
   const tablet = useMediaQuery(`(max-width: ${mediaScreenSize.tablet.MAX}px)`);
-  console.log('item')
+
+  const formatOfPercent = (num?: string | number) => {
+    if (typeof num === 'number' || typeof num === 'string') {
+      return parseInt((+num * 10).toString(), 10);
+    }
+    return '-';
+  }
 
   // NOTE: 콘텐츠 영상 재생 팝업 이벤트
   const onPlay = (e: any) => {
@@ -58,6 +65,14 @@ function SliderItem({ data, kind, detailClick }: ISliderItem) {
     console.log('Click Recommend Button');
   }
 
+  useEffect(() => {
+    const target = genreRef.current
+    if (!target) return;
+    if (target.clientWidth < target.children[0].clientWidth) {
+      target.children[0].classList.add('move');
+    }
+  }, []);
+
   return (
     <>
       <S.Box
@@ -87,8 +102,10 @@ function SliderItem({ data, kind, detailClick }: ISliderItem) {
           </AnimatePresence>
           <S.Title>{data.title || data.name}</S.Title>
           <S.VoteAndGenre>
-            <strong>{parseInt((data.vote_average * 10).toString(), 10) + '% LIKES'}</strong>
-            <p>{genresFormat(data.genre_ids, kind)}</p>
+            <strong>{formatOfPercent(data.vote_average) + '% LIKES'}</strong>
+            <p ref={genreRef}>
+              <span>{genresFormat(data.genre_ids, kind, 3)}</span>
+            </p>
           </S.VoteAndGenre>
         </S.Info>
       </S.Box>
