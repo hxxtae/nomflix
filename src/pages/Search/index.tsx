@@ -63,9 +63,9 @@ function Search() {
           <S.List>
             {isMovieLoading ?
               <Loading /> :
-              movieDatas?.map(item => item.backdrop_path ?
+              movieDatas?.map((item, idx) => item.backdrop_path ?
                 <SliderItem
-                  key={item.id}
+                  key={item.id + idx}
                   data={item}
                   kind={MovieCategory.Search}
                   detailClick={openMovieDetail} /> :
@@ -76,9 +76,9 @@ function Search() {
           <S.List>
             {isTvLoading ?
               <Loading /> :
-              tvDatas?.map(item => item.backdrop_path ?
+              tvDatas?.map((item, idx) => item.backdrop_path ?
                 <SliderItem
-                  key={item.id}
+                  key={item.id + idx}
                   data={item}
                   kind={TvCategory.Search}
                   detailClick={openTvDetail} /> :
