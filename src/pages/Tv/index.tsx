@@ -36,7 +36,7 @@ function Tv() {
       <Slider
         key={TvCategory.OnAir}
         kind={TvCategory.OnAir}
-        title='현재 방영중인 시리즈'
+        title='Series Currently Airing'
         getSlider={clicksSlider === TvCategory.OnAir ? clicksSlider : 0}
         setSliderKind={setSliderKind}
         queryKey={getQueryKey(TvCategory.OnAir)}
@@ -45,7 +45,7 @@ function Tv() {
       <Slider
         key={TvCategory.Popular}
         kind={TvCategory.Popular}
-        title='인기 상승 시리즈'
+        title='Rising Popular Series'
         getSlider={clicksSlider === TvCategory.Popular ? clicksSlider : 0}
         setSliderKind={setSliderKind}
         queryKey={getQueryKey(TvCategory.Popular)}
@@ -54,7 +54,7 @@ function Tv() {
       <Slider
         key={TvCategory.Top}
         kind={TvCategory.Top}
-        title='베스트 인기 시리즈'
+        title='Highly Rated Series'
         getSlider={clicksSlider === TvCategory.Top ? clicksSlider : 0}
         setSliderKind={setSliderKind}
         queryKey={getQueryKey(TvCategory.Top)}
@@ -63,7 +63,7 @@ function Tv() {
       <Slider
         key={TvCategory.AiringToday}
         kind={TvCategory.AiringToday}
-        title='오늘 관심도 높은 시리즈'
+        title='Series Airing Today'
         getSlider={clicksSlider === TvCategory.AiringToday ? clicksSlider : 0}
         setSliderKind={setSliderKind}
         queryKey={getQueryKey(TvCategory.AiringToday)}

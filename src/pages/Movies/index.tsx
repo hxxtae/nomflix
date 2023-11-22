@@ -36,7 +36,7 @@ function Movies() {
       <Slider
         key={MovieCategory.NowPlaying}
         kind={MovieCategory.NowPlaying}
-        title='지금 뜨는 콘텐츠'
+        title='Now Currently Showing Contents'
         getSlider={clicksSlider === MovieCategory.NowPlaying ? clicksSlider : 0}
         setSliderKind={setSliderKind}
         queryKey={getQueryKey(MovieCategory.NowPlaying)}
@@ -45,7 +45,7 @@ function Movies() {
       <Slider
         key={MovieCategory.Popular}
         kind={MovieCategory.Popular}
-        title='인기 상승 콘텐츠'
+        title='Rising Popular Contents'
         getSlider={clicksSlider === MovieCategory.Popular ? clicksSlider : 0}
         setSliderKind={setSliderKind}
         queryKey={getQueryKey(MovieCategory.Popular)}
@@ -54,7 +54,7 @@ function Movies() {
       <Slider
         key={MovieCategory.Top}
         kind={MovieCategory.Top}
-        title='베스트 인기 콘텐츠'
+        title='Highly Rated Contents'
         getSlider={clicksSlider === MovieCategory.Top ? clicksSlider : 0}
         setSliderKind={setSliderKind}
         queryKey={getQueryKey(MovieCategory.Top)}
@@ -64,7 +64,7 @@ function Movies() {
       <Slider
         key={MovieCategory.Upcoming}
         kind={MovieCategory.Upcoming}
-        title='개봉 예정작 콘텐츠'
+        title='Upcoming Release Contents'
         getSlider={clicksSlider === MovieCategory.Upcoming ? clicksSlider : 0}
         setSliderKind={setSliderKind}
         queryKey={getQueryKey(MovieCategory.Upcoming)}
