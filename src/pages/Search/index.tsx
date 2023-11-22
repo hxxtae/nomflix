@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { api, dto } from '../../apis';
 import { useContentFetch } from '../../hooks';
 import { MovieCategory, TvCategory, initContentData, queryKey } from '../../constants';
-import { DetailView, Loading, PortalModal } from '../../components';
+import { DetailView, PortalModal, SkeletonList } from '../../components';
 import * as S from './style';
 import SliderItem from '../../components/Slider/SliderContent/SliderList/SliderItem';
 
@@ -62,7 +62,7 @@ function Search() {
           <S.Title>MOVIE</S.Title>
           <S.List>
             {isMovieLoading ?
-              <Loading /> :
+              <SkeletonList /> :
               movieDatas?.map((item, idx) => item.backdrop_path ?
                 <SliderItem
                   key={item.id + idx}
@@ -75,7 +75,7 @@ function Search() {
           <S.Title>SERIES</S.Title>
           <S.List>
             {isTvLoading ?
-              <Loading /> :
+              <SkeletonList /> :
               tvDatas?.map((item, idx) => item.backdrop_path ?
                 <SliderItem
                   key={item.id + idx}
