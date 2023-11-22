@@ -35,6 +35,6 @@ export const apiDetailPath = (detailId: string, kind: number) => {
 // -------------------------------------
 // USE TO Movie & Tv Content Search Path
 // -------------------------------------
-export const apiSearchPath = (page: number, mainKind: IMainKinds, query: string, include_adult: boolean = true) => {
+export const apiSearchPath = (page: number, mainKind: IMainKinds, query: string, include_adult: boolean = false) => {
   return `${BASE_URL}/search/${mainKind}?api_key=${API_KEY}&query=${query}&language=${LANGUAGE}&page=${page}&include_adult=${include_adult}`;
 }
