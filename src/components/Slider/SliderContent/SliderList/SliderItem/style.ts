@@ -1,5 +1,7 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
+
+import { media } from '../../../../../utils';
 
 export const boxHoverVariants = (match: boolean) => ({
   // Parent Hover
@@ -7,7 +9,7 @@ export const boxHoverVariants = (match: boolean) => ({
     scale: match ? 1 : 1.3,
     top: match ? "0" : "-50px",
     transition: {
-      delay: 0.5,
+      delay: 0.3,
       duration: 0.3
     }
   }
@@ -19,7 +21,7 @@ export const imageHoverVariants = (match: boolean) => ({
     borderBottomLeftRadius: match ? "6px" : 0,
     borderBottomRightRadius: match ? "6px" : 0,
     transition: {
-      delay: 0.5,
+      delay: 0.3,
       duration: 0.3
     }
   },
@@ -30,7 +32,7 @@ export const infoHoverVariants = (match: boolean) => ({
   hover: {
     opacity: match ? 0 : 1,
     transition: {
-      delay: 0.5,
+      delay: 0.3,
       duration: 0.3
     }
   },
@@ -98,6 +100,10 @@ export const Box = styled(motion.li)`
       animation: leftright 3s infinite alternate ease-in-out;
     }
   }
+
+  ${media('mobile')} {
+    height: 122px;
+  }
   
   @keyframes leftright {
     0%,
@@ -137,6 +143,10 @@ export const Info = styled(motion.div)`
   box-shadow: 0 0 10px rgba(0, 0, 0, 1);
   opacity: 0;
   overflow: hidden;
+
+  ${media('mobile')} {
+    display: none;
+  }
 `;
 
 export const ButtonGroup = styled(motion.div)`

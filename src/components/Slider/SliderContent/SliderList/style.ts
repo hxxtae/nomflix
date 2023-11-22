@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import { media } from '../../../../utils';
 
 export const slideVariants = {
   hidden: (direction: boolean) => ({
@@ -25,9 +26,13 @@ export const Row = styled(motion.ul)<{offset: number}>`
   display: grid;
   gap: 10px;
   grid-template-columns: ${({ offset }) => `repeat(${offset}, 1fr)`};
-  margin-bottom: 5px;
   position: absolute;
   width: 100%;
   padding: 0 60px;
+  margin-bottom: 5px;
+
+  ${media('mobile')} {
+    padding: 0 35px;
+  }
 `;
 
