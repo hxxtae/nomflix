@@ -40,18 +40,20 @@ function Banner({ kind }: IBanner) {
     <>
       {contentData.id ?
         <S.Banner bgphoto={formatImagePath(contentData.backdrop_path)}>
-          <S.Title>{contentData.title}</S.Title>
-          <S.ButtonWrapper>
-            <S.BannerButton onClick={showVideo}>
-              <FontAwesomeIcon icon={faPlay} />
-              <span>Play</span>
-            </S.BannerButton>
-            <S.BannerButton onClick={showDetail}>
-              <FontAwesomeIcon icon={faInfoCircle} />
-              <span>상세 정보</span>
-            </S.BannerButton>
-          </S.ButtonWrapper>
-          <S.Overview>{contentData.overview}</S.Overview>
+          <S.Wrapper>
+            <S.Title>{kind <= 20 ? contentData.title : contentData.name}</S.Title>
+            <S.Overview>{contentData.overview}</S.Overview>
+            <S.ButtonWrapper>
+              <S.BannerButton onClick={showVideo}>
+                <FontAwesomeIcon icon={faPlay} />
+                <span>Play</span>
+              </S.BannerButton>
+              <S.BannerButton onClick={showDetail}>
+                <FontAwesomeIcon icon={faInfoCircle} />
+                <span>More Info</span>
+              </S.BannerButton>
+            </S.ButtonWrapper>
+          </S.Wrapper>
         </S.Banner>
         : <Loading />}
       

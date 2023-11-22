@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { media } from '../../utils';
 
-export const Banner = styled.div<{bgphoto: string}>`
+export const Banner = styled.div<{ bgphoto: string }>`
+  position: relative;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -12,23 +13,58 @@ export const Banner = styled.div<{bgphoto: string}>`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+
+  ${media('mobile')} {
+    padding: 20px;
+  }
+`;
+
+export const Wrapper = styled.div`
+  position: absolute;
+  bottom: 30%;
+  width: 40%;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  ${media('mobile')} {
+    width: 70%;
+  }
 `;
 
 export const Title = styled.h2`
-  font-size: 68px;
+  font-size: 3.2vw;
   font-weight: bold;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 
   &::selection {
     background-color: transparent;
   }
 
-  ${media('tablet')} {
-    font-size: 3.5rem;
+  ${media('mobile')} {
+    font-size: 26px;
+  }
+`;
+
+export const Overview = styled.p`
+  font-size: 1.2vw;
+  margin-bottom: 40px;
+  letter-spacing: .8px;
+  line-height: 1.5;
+  /* _line-clamp */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  cursor: default;
+
+  &::selection {
+    background-color: transparent;
   }
 
   ${media('mobile')} {
-    font-size: 3rem;
+    font-size: 12px;
   }
 `;
 
@@ -36,7 +72,6 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 40px;
 `;
 
 export const BannerButton = styled.button`
@@ -66,29 +101,12 @@ export const BannerButton = styled.button`
     box-shadow: 0 10px 20px 0 #000000;
   }
 
-  ${media('mobile')} {
-    font-size: 16px;
-  }
-`;
-
-export const Overview = styled.p`
-  font-size: 25px;
-  width: 50%;
-  min-width: 350px;
-  letter-spacing: .8px;
-  line-height: 50px;
-  /* _line-clamp */
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  cursor: default;
-
-  &::selection {
-    background-color: transparent;
+  ${media('tablet')} {
+    font-size: 14px;
+    padding: 0 20px;
   }
 
   ${media('mobile')} {
-    font-size: 1.4rem;
+    gap: 10px;
   }
 `;
