@@ -77,7 +77,7 @@ export async function getTvPopular(page: number): Promise<IContentsData> {
 }
 
 export async function getTvPopularAll() {
-  return Promise.all([getTvPopular(1), getTvPopular(2), getTvPopular(3)]);
+  return Promise.all([getTvPopular(2), getTvPopular(1), getTvPopular(3)]);
 }
 
 // (3) Top rated
