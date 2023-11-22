@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import styled from 'styled-components';
 
 import { HEADER_HEIGHT } from '../../global';
+import { media } from '../../utils';
 
 export const menuVariants = {
   top: {
@@ -20,11 +21,17 @@ export const Nav = styled(motion.menu)`
   top: 0;
   width: 100%;
   height: ${HEADER_HEIGHT}px;
-  background-color: ${props => props.theme.bgColor};
+  /* background-color: ${props => props.theme.bgColor}; */
+  background-image: linear-gradient(180deg, rgba(0,0,0,.7) 10%, transparent);;
   font-size: 14px;
   padding: 0px 60px;
   color: white;
   z-index: 10;
+
+  ${media('mobile')} {
+    font-size: .7rem;
+    padding: 0px 20px;
+  }
 `;
 
 export const Col = styled.div`
@@ -33,14 +40,18 @@ export const Col = styled.div`
 `;
 
 export const Logo = styled.a`
-  margin-right: 50px;
   width: 95px;
-  height: 25px;
+  margin-right: 50px;
 
   img {
     display: block;
     width: 100%;
     height: 100%;
+  }
+
+  ${media('mobile')} {
+    width: 75px;
+    margin-right: 30px;
   }
 `;
 
@@ -54,6 +65,7 @@ export const Item = styled(motion.li)`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  flex-shrink: 0;
   margin-right: 25px;
   transition: color 0.3s ease-in-out;
   color: ${(props) => props.theme.textColor};
