@@ -9,6 +9,10 @@ export const Content = styled.div<{ videoShow: boolean }>`
   padding: 0 50px;
   transition: transform 1s ease-in-out;
   transform: ${({ videoShow }) => (videoShow ? `translateY(${TOP_DISTANCE}px);` : 'translateY(0);')};
+
+  ${media('mobile')} {
+    padding: 0 30px;
+  }
 `;
 
 export const Title = styled.h1`
@@ -16,6 +20,12 @@ export const Title = styled.h1`
   padding: 20px 0px;
   font-size: 46px;
   line-height: 1.4;
+
+  ${media('mobile')} {
+    padding: 20px 0px;
+    font-size: 26px;
+    font-weight: 600;
+  }
 `;
 
 export const VoteYearGenre = styled.div`
@@ -54,6 +64,11 @@ export const Overview = styled.div`
   font-size: 1.12rem;
   line-height: 30px;
   margin-bottom: 60px;
+
+  ${media('mobile')} {
+    margin-bottom: 30px;
+    font-size: 1rem;
+  }
 `;
 
 export const SubTitle = styled.h2`
@@ -62,6 +77,11 @@ export const SubTitle = styled.h2`
   margin-bottom: 20px;
   font-size: 26px;
   line-height: 1.4;
+
+  ${media('mobile')} {
+    padding: 10px 0px;
+    font-size: 20px;
+  }
 `;
 
 export const ImageBox = styled.div`
@@ -83,6 +103,7 @@ export const ImageBox = styled.div`
   }
   
   ${media('mobile')} {
+    margin-bottom: 30px;
     img {
       max-width: 150px;
       width: 100%;
@@ -92,6 +113,10 @@ export const ImageBox = styled.div`
 
 export const InfoBox = styled.ul`
   margin-bottom: 30px;
+
+  ${media('mobile')} {
+    font-size: 14px;
+  }
 `;
 
 export const Info = styled.li`
