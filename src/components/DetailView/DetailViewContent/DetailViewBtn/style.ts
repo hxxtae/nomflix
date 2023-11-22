@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
+import { media } from '../../../../utils';
 
 export const iconAniProps = {
   initial: {
@@ -47,6 +48,11 @@ export const ButtonGroup = styled(motion.div)`
   gap: 10px;
   padding: 20px 0px;
   margin-bottom: 50px;
+
+  ${media('mobile')} {
+    padding: 10px 0px;
+    margin-bottom: 20px;
+  }
 `;
 
 export const Play = styled.button`
@@ -66,6 +72,11 @@ export const Play = styled.button`
   span {
     margin-left: 14px;
   }
+
+  ${media('mobile')} {
+    width: 80px;
+    font-size: 1rem;
+  }
 `;
 
 export const Favorit = styled.button`
@@ -75,10 +86,20 @@ export const Favorit = styled.button`
     width: 1rem;
     height: 1rem;
   }
+
+  ${media('mobile')} {
+    width: 30px;
+    height: 30px;
+  }
 `;
 
 export const Like = styled.button`
   ${Button};
+
+  ${media('mobile')} {
+    width: 30px;
+    height: 30px;
+  }
 `;
 
 export const Popular = styled.p`
