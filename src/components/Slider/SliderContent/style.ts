@@ -1,10 +1,9 @@
 import styled from 'styled-components';
+import { media } from '../../../utils';
 
 export const Slider = styled.div`
   position: relative;
-  transform: translateY(-100px);
   height: 162px;
-  margin-bottom: 100px;
   z-index: 1;
 `;
 export const Increadiv = styled.div`
@@ -17,11 +16,15 @@ export const Decreadiv = styled.div`
   right: 0;
 `;
 export const NextButton = styled.button`
+  width: 50px;
   height: 162px;
-  background-color: rgba(0, 0, 0, .5);
   border: transparent;
   border-radius: 5px;
+  background-color: rgba(0, 0, 0, .5);
   color: rgba(255, 255, 255, 1);
-  width: 50px;
   cursor: pointer;
+  ${media('mobile')} {
+    width: 30px;
+    height: 122px;
+  }
 `;

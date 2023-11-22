@@ -22,6 +22,7 @@ function SliderContent({ data, kind, slider }: ISliderData) {
   const [slideDirection, setSlideDirection] = useState(false);
   const [thisContent, setThisContent] = useState<dto.IContentData>(initContentData);
   const [offset, setOffset] = useState(6);
+  const small = useMediaQuery(`(max-width: ${mediaScreenSize.mobile.MAX}px)`);
   const medium = useMediaQuery(`(max-width: ${mediaScreenSize.tablet.MAX}px)`);
 
   const openDetail = useCallback((content: dto.IContentData) => {
@@ -59,6 +60,12 @@ function SliderContent({ data, kind, slider }: ISliderData) {
     setSlideDirection(true);
     setSlideIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
   }, [toggleCaraucel, leaving, offset]);
+
+  useEffect(() => {
+    if (!medium && !small) setOffset(6);
+    if (medium) setOffset(4);
+    if (small) setOffset(2);
+  }, [small, medium]);
 
   return (
     <>
