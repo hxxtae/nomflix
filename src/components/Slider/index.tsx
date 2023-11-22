@@ -4,7 +4,7 @@ import { useSetRecoilState } from 'recoil';
 import { MovieCategory, TvCategory } from '../../constants';
 import { atomOfContentData } from '../../global';
 import { useContentFetch } from '../../hooks';
-import { Loading } from '../../components';
+import { SkeletonList } from '../../components';
 import * as S from './style';
 import SliderContent from './SliderContent';
 
@@ -18,7 +18,7 @@ interface ISlider {
 }
 
 function Slider({ kind, title, getSlider, setSliderKind, queryKey, queryFn }: ISlider) {
-  console.log('Slider: ' + kind)
+  // console.log('Slider: ' + kind)
   const { isLoading, datas } = useContentFetch(queryKey(), queryFn);
   const setBannerData = useSetRecoilState(atomOfContentData);
 
@@ -33,15 +33,11 @@ function Slider({ kind, title, getSlider, setSliderKind, queryKey, queryFn }: IS
   }, [kind, datas, setBannerData]);
 
   return (
-    <>
-      { isLoading ? 
-        <Loading /> : !!datas ? 
-          <S.SliderWrapper onClick={() => setSliderKind(kind)}>
-            <S.SliderTitle>{title}</S.SliderTitle>
-            <SliderContent data={ datas } kind={kind} slider={getSlider} />
-          </S.SliderWrapper> : <Loading />
-      }
-    </>
+    <S.SliderWrapper onClick={() => setSliderKind(kind)}>
+      <S.SliderTitle>{title}</S.SliderTitle>
+      {isLoading ? <SkeletonList height={162} /> :
+        !!datas ? <SliderContent data={datas} kind={kind} slider={getSlider} /> : <SkeletonList height={162} />}
+    </S.SliderWrapper>
   )
   
 }
