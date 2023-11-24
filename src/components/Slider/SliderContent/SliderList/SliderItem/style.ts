@@ -83,7 +83,7 @@ export const Box = styled(motion.li)`
   flex-direction: column;
   color: red;
   font-size: 30px;
-  height: 162px;
+  height: 100%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 1);
   cursor: pointer;
 
@@ -99,10 +99,6 @@ export const Box = styled(motion.li)`
       position: relative;
       animation: leftright 3s infinite alternate ease-in-out;
     }
-  }
-
-  ${media('mobile')} {
-    height: 122px;
   }
   
   @keyframes leftright {

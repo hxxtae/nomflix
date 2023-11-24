@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { media } from '../../utils';
 
 export const SliderWrapper = styled.div`
+  position: relative;
   transform: translateY(-120px);
   margin-bottom: 100px;
 
