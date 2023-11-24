@@ -5,6 +5,7 @@ import { MovieCategory, TvCategory } from '../../constants';
 import { atomOfContentData } from '../../global';
 import { useContentFetch } from '../../hooks';
 import { SkeletonList } from '../../components';
+import { dto } from '../../apis';
 import * as S from './style';
 import SliderContent from './SliderContent';
 
@@ -15,6 +16,11 @@ interface ISlider {
   setSliderKind: (sliderNum: number) => void;
   queryKey: () => readonly string[];
   queryFn: Function;
+}
+
+const setFetchDataLength = (datas: dto.IContentData[], kind: number) => {
+  if (kind === 18 || kind === 28) return datas.slice(0, 10); // 데이터 개수 10개로 제한
+  return datas;
 }
 
 function Slider({ kind, title, getSlider, setSliderKind, queryKey, queryFn }: ISlider) {
@@ -33,10 +39,14 @@ function Slider({ kind, title, getSlider, setSliderKind, queryKey, queryFn }: IS
   }, [kind, datas, setBannerData]);
 
   return (
-    <S.SliderWrapper onClick={() => setSliderKind(kind)}>
+    <S.SliderWrapper className={'slider' + kind} onClick={() => setSliderKind(kind)} >
       <S.SliderTitle>{title}</S.SliderTitle>
       {isLoading ? <SkeletonList height={162} /> :
-        !!datas ? <SliderContent data={datas} kind={kind} slider={getSlider} /> : <SkeletonList height={162} />}
+        !!datas ? <SliderContent
+          data={setFetchDataLength(datas, kind)}
+          kind={kind}
+          slider={getSlider}
+        /> : <SkeletonList height={162} />}
     </S.SliderWrapper>
   )
   
