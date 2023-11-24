@@ -16,6 +16,7 @@ function Tv() {
     if (kind === TvCategory.OnAir) return api.getTvOnAirAll;
     if (kind === TvCategory.Popular) return api.getTvPopularAll;
     if (kind === TvCategory.Top) return api.getTvTopAll;
+    if (kind === TvCategory.Ranking) return api.getTvPopularAll;
     return api.getTvAiringTodayAll;
   }, []);
 
@@ -23,6 +24,7 @@ function Tv() {
     if (kind === TvCategory.OnAir) return queryKey.tv.onAir;
     if (kind === TvCategory.Popular) return queryKey.tv.popular;
     if (kind === TvCategory.Top) return queryKey.tv.top;
+    if (kind === TvCategory.Ranking) return queryKey.tv.popular;
     return queryKey.tv.airingToday;
   }, []);
 
@@ -32,7 +34,7 @@ function Tv() {
 
   return (
     <S.Wrapper>
-      <Banner kind={TvCategory.OnAir} />
+      <Banner kind={TvCategory.Tv} />
       <Slider
         key={TvCategory.OnAir}
         kind={TvCategory.OnAir}
@@ -43,13 +45,13 @@ function Tv() {
         queryFn={getQueryFunction(TvCategory.OnAir)}
       />
       <Slider
-        key={TvCategory.Popular}
-        kind={TvCategory.Popular}
-        title='Rising Popular Series'
-        getSlider={clicksSlider === TvCategory.Popular ? clicksSlider : 0}
+        key={TvCategory.Ranking}
+        kind={TvCategory.Ranking}
+        title='Top 10 Series in Today'
+        getSlider={clicksSlider === TvCategory.Ranking ? clicksSlider : 0}
         setSliderKind={setSliderKind}
-        queryKey={getQueryKey(TvCategory.Popular)}
-        queryFn={getQueryFunction(TvCategory.Popular)}
+        queryKey={getQueryKey(TvCategory.Ranking)}
+        queryFn={getQueryFunction(TvCategory.Ranking)}
       />
       <Slider
         key={TvCategory.Top}
@@ -59,6 +61,15 @@ function Tv() {
         setSliderKind={setSliderKind}
         queryKey={getQueryKey(TvCategory.Top)}
         queryFn={getQueryFunction(TvCategory.Top)}
+      />
+      <Slider
+        key={TvCategory.Popular}
+        kind={TvCategory.Popular}
+        title='Rising Popular Series'
+        getSlider={clicksSlider === TvCategory.Popular ? clicksSlider : 0}
+        setSliderKind={setSliderKind}
+        queryKey={getQueryKey(TvCategory.Popular)}
+        queryFn={getQueryFunction(TvCategory.Popular)}
       />
       <Slider
         key={TvCategory.AiringToday}

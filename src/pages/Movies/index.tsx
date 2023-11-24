@@ -16,6 +16,7 @@ function Movies() {
     if (kind === MovieCategory.NowPlaying) return api.getNowPlayAll;
     if (kind === MovieCategory.Popular) return api.getPopularAll;
     if (kind === MovieCategory.Top) return api.getTopAll;
+    if (kind === MovieCategory.Ranking) return api.getPopularAll;
     return api.getUpcomingAll;
   }, []);
 
@@ -23,6 +24,7 @@ function Movies() {
     if (kind === MovieCategory.NowPlaying) return queryKey.movie.nowPlaying;
     if (kind === MovieCategory.Popular) return queryKey.movie.popular;
     if (kind === MovieCategory.Top) return queryKey.movie.top;
+    if (kind === MovieCategory.Ranking) return queryKey.movie.popular;
     return queryKey.movie.upcoming;
   }, []);
 
@@ -32,7 +34,7 @@ function Movies() {
 
   return (
     <S.Wrapper>
-      <Banner kind={MovieCategory.NowPlaying} />
+      <Banner kind={MovieCategory.Movie} />
       <Slider
         key={MovieCategory.NowPlaying}
         kind={MovieCategory.NowPlaying}
@@ -41,6 +43,24 @@ function Movies() {
         setSliderKind={setSliderKind}
         queryKey={getQueryKey(MovieCategory.NowPlaying)}
         queryFn={getQueryFunction(MovieCategory.NowPlaying)}
+      />
+      <Slider
+        key={MovieCategory.Ranking}
+        kind={MovieCategory.Ranking}
+        title='Top 10 Movies in Today'
+        getSlider={clicksSlider === MovieCategory.Ranking ? clicksSlider : 0}
+        setSliderKind={setSliderKind}
+        queryKey={getQueryKey(MovieCategory.Ranking)}
+        queryFn={getQueryFunction(MovieCategory.Ranking)}
+      />
+      <Slider
+        key={MovieCategory.Upcoming}
+        kind={MovieCategory.Upcoming}
+        title='Upcoming Release Contents'
+        getSlider={clicksSlider === MovieCategory.Upcoming ? clicksSlider : 0}
+        setSliderKind={setSliderKind}
+        queryKey={getQueryKey(MovieCategory.Upcoming)}
+        queryFn={getQueryFunction(MovieCategory.Upcoming)}
       />
       <Slider
         key={MovieCategory.Popular}
@@ -59,16 +79,6 @@ function Movies() {
         setSliderKind={setSliderKind}
         queryKey={getQueryKey(MovieCategory.Top)}
         queryFn={getQueryFunction(MovieCategory.Top)}
-      />
-      
-      <Slider
-        key={MovieCategory.Upcoming}
-        kind={MovieCategory.Upcoming}
-        title='Upcoming Release Contents'
-        getSlider={clicksSlider === MovieCategory.Upcoming ? clicksSlider : 0}
-        setSliderKind={setSliderKind}
-        queryKey={getQueryKey(MovieCategory.Upcoming)}
-        queryFn={getQueryFunction(MovieCategory.Upcoming)}
       />
     </S.Wrapper>
   );
