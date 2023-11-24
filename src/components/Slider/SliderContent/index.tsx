@@ -2,7 +2,7 @@ import { useCallback, useState, useEffect } from 'react';
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useMediaQuery } from '../../../hooks';
+import { useMediaQuery, useResize } from '../../../hooks';
 import { initContentData, mediaScreenSize } from '../../../constants';
 import { dto } from '../../../apis';
 import * as S from './style';
@@ -22,8 +22,11 @@ function SliderContent({ data, kind, slider }: ISliderData) {
   const [slideDirection, setSlideDirection] = useState(false);
   const [thisContent, setThisContent] = useState<dto.IContentData>(initContentData);
   const [offset, setOffset] = useState(6);
+  const smallS = useMediaQuery(`(max-width: ${mediaScreenSize.mobileS.MAX}px)`);
   const small = useMediaQuery(`(max-width: ${mediaScreenSize.mobile.MAX}px)`);
   const medium = useMediaQuery(`(max-width: ${mediaScreenSize.tablet.MAX}px)`);
+  const mediumL = useMediaQuery(`(max-width: ${mediaScreenSize.tabletL.MAX}px)`);
+  const sliderHeight = useResize(`.slider${kind.toString()} .sliderList`);
 
   const openDetail = useCallback((content: dto.IContentData) => {
     if (!content?.id) return;
@@ -45,42 +48,59 @@ function SliderContent({ data, kind, slider }: ISliderData) {
 
   const increaFunc = useCallback((data: dto.IContentData[]) => {
     if (leaving || !data?.length) return;
-    const totalMovie = data.length - 1;
-    const maxIndex = Math.floor(totalMovie / offset) - 1;
+    const totalMovie = data.length;
+    const maxIndex = ((kind === 18 || kind === 28) ? Math.ceil(totalMovie / offset) : Math.floor(totalMovie / offset)) - 1;
     toggleCaraucel();
     setSlideDirection(false);
-    setSlideIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
-  }, [toggleCaraucel, leaving, offset]);
+    setSlideIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+  }, [toggleCaraucel, leaving, offset, kind]);
 
   const decreaFunc = useCallback((data: dto.IContentData[]) => {
     if (leaving || !data?.length) return;
-    const totalMovie = data.length - 1;
-    const maxIndex = Math.floor(totalMovie / offset) - 1;
+    const totalMovie = data.length;
+    const maxIndex = ((kind === 18 || kind === 28) ? Math.ceil(totalMovie / offset) : Math.floor(totalMovie / offset)) - 1;
     toggleCaraucel();
     setSlideDirection(true);
-    setSlideIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
-  }, [toggleCaraucel, leaving, offset]);
+    setSlideIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+  }, [toggleCaraucel, leaving, offset, kind]);
 
   useEffect(() => {
-    if (!medium && !small) setOffset(6);
-    if (medium) setOffset(4);
-    if (small) setOffset(2);
-  }, [small, medium]);
+    if (!mediumL && !medium && !small && !smallS) {
+      setOffset(6);
+      return;
+    }
+    if (smallS) {
+      setOffset(2);
+      return;
+    }
+    if (small) {
+      setOffset(3);
+      return;
+    }
+    if (medium) {
+      setOffset(4);
+      return;
+    }
+    if (mediumL) {
+      setOffset(5);
+      return;
+    }
+  }, [smallS, small, medium, mediumL]);
 
   return (
     <>
-      <S.Slider>
+      <S.Slider setHeight={sliderHeight}>
         <S.Increadiv>
           <S.NextButton onClick={() => decreaFunc(data)}>
             <FontAwesomeIcon icon={faChevronLeft} size={'2x'} />
           </S.NextButton>
         </S.Increadiv>
         <SliderList
+          data={data}
+          kind={kind}
           slideIndex={slideIndex}
           slideDirection={slideDirection}
           offset={offset}
-          kind={kind}
-          data={data}
           toggleCaraucel={toggleCaraucel}
           detailClick={openDetail}
         />
