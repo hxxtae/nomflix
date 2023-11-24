@@ -38,10 +38,10 @@ function DetailView({ data, kind, closeDetail, onBanner }: IDetailView) {
   const { isLoading: isDetailLoading, data: detailData } = useContentDetailFetch(queryKeyOfDetail, queryFuncOfDetail);
 
   // Content(Similar) Fetch
-  const queryKeyStata = kind < 20 ?
+  const queryKeyStata = kind <= 20 ?
     queryKey.movie.similar(contentData.id.toString()) :
     queryKey.tv.similar(contentData.id.toString());
-  const queryFuncState = kind < 20 ?
+  const queryFuncState = kind <= 20 ?
     () => api.getMovieSimilarAll(contentData.id.toString()) :
     () => api.getTvSimilarAll(contentData.id.toString());
   const { isLoading: isSimilarLoading, datas: similarData } = useContentFetch(queryKeyStata, queryFuncState);
@@ -88,8 +88,8 @@ function DetailView({ data, kind, closeDetail, onBanner }: IDetailView) {
       }
       // [Add]: 스토리지에 해당 콘텐츠 추가
       let setKind;
-      if (kind < 20) setKind = MovieCategory.Mylist;
-      else if (kind < 30) setKind = TvCategory.Mylist;
+      if (kind <= 20) setKind = MovieCategory.Mylist;
+      else if (kind <= 30) setKind = TvCategory.Mylist;
       return addContentStorage('mylist', { ...contentData, kind: setKind });
     })
   }
