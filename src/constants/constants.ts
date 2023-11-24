@@ -6,6 +6,8 @@ export enum MovieCategory {
   "Similar" = 15,
   "Search" = 16,
   "Mylist" = 17,
+  "Ranking" = 18,
+  "Movie" = 20,
 }
 
 export enum TvCategory {
@@ -16,11 +18,13 @@ export enum TvCategory {
   "Similar" = 25,
   "Search" = 26,
   "Mylist" = 27,
+  "Ranking" = 28,
+  "Tv" = 30,
 }
 
 export const queryKinds = {
-  movie: ['NowPlaying', 'Popular', 'Top', 'Upcoming', 'Similar', 'Search', 'Credits'],
-  tv: ['OnAir', 'Popular', 'Top', 'AiringToday', 'Similar', 'Search', 'Credits']
+  movie: ['NowPlaying', 'Popular', 'Top', 'Upcoming', 'Similar', 'Search', 'Mylist', 'Ranking'],
+  tv: ['OnAir', 'Popular', 'Top', 'AiringToday', 'Similar', 'Search', 'Mylist', 'Ranking']
 };
 
 export const queryKey = {
@@ -32,6 +36,7 @@ export const queryKey = {
     upcoming: () => [...queryKey.movie.all, queryKinds.movie[3]] as const,
     similar: (movie_id: string) => [...queryKey.movie.all, queryKinds.movie[4], movie_id] as const,
     search: (query: string) => [...queryKey.movie.all, query] as const,
+    ranking: () => [...queryKey.movie.all, queryKinds.movie[7]] as const,
   },
   tv: {
     all: ['tv'] as const,
@@ -41,6 +46,7 @@ export const queryKey = {
     airingToday: () => [...queryKey.tv.all, queryKinds.tv[3]] as const,
     similar: (tv_id: string) => [...queryKey.tv.all, queryKinds.tv[4], tv_id] as const,
     search: (query: string) => [...queryKey.tv.all, query] as const,
+    ranking: () => [...queryKey.tv.all, queryKinds.tv[7]] as const,
   },
   detail: {
     all: ['detail'] as const,
@@ -48,12 +54,18 @@ export const queryKey = {
   }
 }
 
-// - 노트북 & 태블릿 가로 : 1181px~
-// - 태블릿 가로 : 768px ~ 1180px
-// - 모바일 가로 & 태블릿 세로 : ~767px
+// - 노트북 : 1400px~
+// - 태블릿 가로(L) : 1181px ~ 1399ox
+// - 태블릿 가로(M) : 768px ~ 1180px
+// - 모바일 가로 & 태블릿 세로 : 500px ~ 767px
+// - 모바일 : ~499px
 export const mediaScreenSize = {
   pc: {
     MAX: Infinity,
+    MIN: 1400
+  },
+  tabletL: {
+    MAX: 1399,
     MIN: 1181
   },
   tablet: {
@@ -62,6 +74,10 @@ export const mediaScreenSize = {
   },
   mobile: {
     MAX: 767,
+    MIN: 500
+  },
+  mobileS: {
+    MAX: 499,
     MIN: 0
   }
 }
