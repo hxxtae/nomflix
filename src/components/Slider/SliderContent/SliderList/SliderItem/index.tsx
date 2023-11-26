@@ -66,7 +66,7 @@ function SliderItem({ data, kind, detailClick }: ISliderItem) {
   }
 
   useEffect(() => {
-    const target = genreRef.current
+    const target = genreRef.current;
     if (!target) return;
     if (target.clientWidth < target.children[0].clientWidth) {
       target.children[0].classList.add('move');

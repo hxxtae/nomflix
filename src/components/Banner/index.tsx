@@ -14,7 +14,7 @@ interface IBanner {
 }
 
 function Banner({ kind }: IBanner) {
-  console.log('banner')
+  // console.log('banner')
   const contentData = useRecoilValue(atomOfContentData);
   const [detailState, setDetailState] = useState(false);
   const [videoState, setVideoState] = useState(false);
