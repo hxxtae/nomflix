@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useLayoutEffect } from 'react';
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -26,7 +26,7 @@ function SliderContent({ data, kind, slider }: ISliderData) {
   const small = useMediaQuery(`(max-width: ${mediaScreenSize.mobile.MAX}px)`);
   const medium = useMediaQuery(`(max-width: ${mediaScreenSize.tablet.MAX}px)`);
   const mediumL = useMediaQuery(`(max-width: ${mediaScreenSize.tabletL.MAX}px)`);
-  const sliderHeight = useResize(`.slider${kind.toString()} .sliderList`);
+  const sliderHeight = useResize(`.slider${kind.toString()} .sliderList`, offset);
 
   const openDetail = useCallback((content: dto.IContentData) => {
     if (!content?.id) return;
@@ -64,7 +64,7 @@ function SliderContent({ data, kind, slider }: ISliderData) {
     setSlideIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   }, [toggleCaraucel, leaving, offset, kind]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!mediumL && !medium && !small && !smallS) {
       setOffset(6);
       return;
