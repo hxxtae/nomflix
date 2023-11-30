@@ -3,13 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnimatePresence } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 import { motion } from 'framer-motion';
-import { memo, useRef, useState, useEffect } from 'react';
+import { memo, useRef, useState, useEffect, SyntheticEvent } from 'react';
 
 import { dto } from '../../../../../apis';
 import { useMediaQuery } from '../../../../../hooks';
 import { atomOfMylistData } from '../../../../../global';
 import { MovieCategory, TvCategory, mediaScreenSize } from '../../../../../constants';
-import { addContentStorage, deleteContentStorage, formatImagePath, genresFormat } from '../../../../../utils';
+import { addContentStorage, deleteContentStorage, formatImagePath, genresFormat, publicUrlStr } from '../../../../../utils';
 import * as S from './style';
 import SimpleView from '../../../../SimpleView';
 import PortalModal from '../../../../PortalModal';
@@ -65,6 +65,12 @@ function SliderItem({ data, kind, detailClick }: ISliderItem) {
     console.log('Click Recommend Button');
   }
 
+  const onImgError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.onerror = null; // prevents looping
+    e.currentTarget.src = `${publicUrlStr()}/assets/png/netflix_logo_RGB.png`;
+    e.currentTarget.style.objectFit = "contain";
+  }
+
   useEffect(() => {
     const target = genreRef.current;
     if (!target) return;
@@ -81,7 +87,11 @@ function SliderItem({ data, kind, detailClick }: ISliderItem) {
         variants={S.boxHoverVariants(tablet)}
         whileHover="hover"
         transition={{ type: "tween" }}>
-        <S.BoxImg variants={S.imageHoverVariants(tablet)} src={formatImagePath(data.backdrop_path, 'w500')} />
+        <S.BoxImg
+          variants={S.imageHoverVariants(tablet)}
+          src={formatImagePath(data.backdrop_path, 'w500')}
+          onError={onImgError}
+        />
         <S.Info variants={S.infoHoverVariants(tablet)}>
           <AnimatePresence>
             <S.ButtonGroup>

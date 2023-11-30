@@ -120,6 +120,7 @@ export const BoxImg = styled(motion.img)`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background-color: ${({ theme }) => theme.bgColor};
 `;
 
 export const Info = styled(motion.div)`
