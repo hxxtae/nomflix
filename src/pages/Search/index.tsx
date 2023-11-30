@@ -8,6 +8,7 @@ import { MovieCategory, TvCategory, initContentData, queryKey } from '../../cons
 import { DetailView, PortalModal, SkeletonList } from '../../components';
 import * as S from './style';
 import SliderItem from '../../components/Slider/SliderContent/SliderList/SliderItem';
+import Search404 from './Search404';
 
 
 function Search() {
@@ -25,6 +26,8 @@ function Search() {
   const queryKeyOfTvSearch = queryKey.tv.search(keyword);
   const queryFuncOfTvSearch = () => api.getTvSearchAll(keyword);
   const { isLoading: isTvLoading, datas: tvDatas } = useContentFetch(queryKeyOfTvSearch, queryFuncOfTvSearch);
+
+  const isLoading = isMovieLoading || isTvLoading;
 
   const openMovieDetail = useCallback((content: dto.IContentData) => {
     if (!content?.id) return;
@@ -85,6 +88,12 @@ function Search() {
                 null)}
           </S.List>
         </S.Wrapper>
+
+        {(!isLoading && !movieDatas?.length && !tvDatas?.length) && (
+          <PortalModal>
+            <Search404 searchText={keyword} />
+          </PortalModal>
+        )}
         
         {(!!chooseContent.id) && (
           <PortalModal>
