@@ -2,12 +2,14 @@ import styled from 'styled-components';
 import { media } from '../../utils';
 
 export const FooterWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 70px 0;
   box-shadow: 0 -10px 50px rgba(255, 255, 255, 1);
+  z-index: 1;
 
   ${media('mobile')} {
     font-size: .8rem;
