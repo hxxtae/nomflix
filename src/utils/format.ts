@@ -29,7 +29,7 @@ export function publicUrlStr(deploy: boolean = true) {
  * @returns 
  */
 export const toTime = (num: number = 0) => {
-  return `${Math.floor((num / 60)).toString().padStart(2, '0')}:${(num % 60).toString().padStart(2, '0')}`;
+  return `${Math.floor((num / 60)).toString()}h ${(num % 60).toString().padStart(2, '0')}m`;
 }
 
 /**
