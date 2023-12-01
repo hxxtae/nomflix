@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import { dto } from '../../apis';
 import { atomOfMylistData } from '../../global';
@@ -11,7 +11,7 @@ import SliderItem from '../../components/Slider/SliderContent/SliderList/SliderI
 
 function MyList() {
   const [chooseContent, setChooseContent] = useState<dto.IContentData>(initContentData);
-  const [mylistDatas, setMylistDatas] = useRecoilState(atomOfMylistData);
+  const mylistDatas = useRecoilValue(atomOfMylistData);
   const [contentKind, setContentKind] = useState(0);
   
   const getMylistArr = useCallback((): dto.IContentData[] | undefined => {

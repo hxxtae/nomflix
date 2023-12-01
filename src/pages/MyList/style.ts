@@ -5,7 +5,7 @@ import { media } from '../../utils';
 
 export const Wrapper = styled.div`
   padding-top: ${HEADER_HEIGHT}px;
-  margin: 0px 4% 10px;
+  margin: 0px 4% 100px;
   min-height: 100vh;
 `;
 
@@ -26,10 +26,10 @@ export const List = styled.ul`
   grid-template-columns: repeat(6, 1fr);
 
   ${media('tablet')} {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 
   ${media('mobile')} {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
