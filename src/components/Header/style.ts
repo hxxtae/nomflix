@@ -22,7 +22,7 @@ export const Nav = styled(motion.menu)`
   width: 100%;
   height: ${HEADER_HEIGHT}px;
   /* background-color: ${props => props.theme.bgColor}; */
-  background-image: linear-gradient(180deg, rgba(0,0,0,.7) 10%, transparent);;
+  background-image: linear-gradient(180deg, rgba(0,0,0,.7) 10%, transparent);
   font-size: 14px;
   padding: 0px 60px;
   color: white;
