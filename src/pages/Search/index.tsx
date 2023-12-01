@@ -5,10 +5,10 @@ import { useLocation } from 'react-router-dom';
 import { api, dto } from '../../apis';
 import { useContentFetch } from '../../hooks';
 import { MovieCategory, TvCategory, initContentData, queryKey } from '../../constants';
-import { DetailView, PortalModal, SkeletonList } from '../../components';
+import { DetailView, PortalModal } from '../../components';
 import * as S from './style';
-import SliderItem from '../../components/Slider/SliderContent/SliderList/SliderItem';
 import Search404 from './Search404';
+import SearchContent from './SearchContent';
 
 
 function Search() {
@@ -62,38 +62,21 @@ function Search() {
     <AnimatePresence>
       <>
         <S.Wrapper>
-          <S.Title>MOVIE</S.Title>
-          <S.List>
-            {isMovieLoading ?
-              <SkeletonList /> :
-              movieDatas?.map((item, idx) => item.backdrop_path ?
-                <SliderItem
-                  key={item.id + idx}
-                  data={item}
-                  kind={MovieCategory.Search}
-                  detailClick={openMovieDetail} /> :
-                null)}
-          </S.List>
-
-          <S.Title>SERIES</S.Title>
-          <S.List>
-            {isTvLoading ?
-              <SkeletonList /> :
-              tvDatas?.map((item, idx) => item.backdrop_path ?
-                <SliderItem
-                  key={item.id + idx}
-                  data={item}
-                  kind={TvCategory.Search}
-                  detailClick={openTvDetail} /> :
-                null)}
-          </S.List>
+          <SearchContent
+            title='MOVIE'
+            isLoading={isMovieLoading}
+            datas={movieDatas}
+            kind={MovieCategory.Search}
+            detailClick={openMovieDetail} />
+          <SearchContent
+            title='SERIES'
+            isLoading={isTvLoading}
+            datas={tvDatas}
+            kind={TvCategory.Search}
+            detailClick={openTvDetail} />          
+          {!isLoading && !movieDatas?.length && !tvDatas?.length &&
+            <Search404 searchText={keyword} />}
         </S.Wrapper>
-
-        {(!isLoading && !movieDatas?.length && !tvDatas?.length) && (
-          <PortalModal>
-            <Search404 searchText={keyword} />
-          </PortalModal>
-        )}
         
         {(!!chooseContent.id) && (
           <PortalModal>
