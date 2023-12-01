@@ -87,7 +87,7 @@ export const Prev = styled.button`
 
 export const Image = styled(motion.div)<{bgphoto: string}>`
   width: 100%;
-  min-height: 300px;
+  /* min-height: 300px; */
   aspect-ratio: 16 / 9;
   background-image: linear-gradient(rgba(20, 20, 20, 0), rgba(20, 20, 20, 1)), url(${(props) => props.bgphoto});
   background-size: cover;
