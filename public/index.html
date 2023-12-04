@@ -9,12 +9,14 @@
       name="description"
       content="Web site created using create-react-app"
     />
+    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="%PUBLIC_URL%/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="%PUBLIC_URL%/android-chrome-512x512.png" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon.png">
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-    <link rel="mask-icon" href="%PUBLIC_URL%/safari-pinned-tab.svg" color="#141414">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="mask-icon" href="%PUBLIC_URL%/safari-pinned-tab.svg" color="#141414" />
     
     <script src="https://kit.fontawesome.com/9324e5e35c.js" crossorigin="anonymous"></script>
 
@@ -54,7 +56,7 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <div id="modal-root"></div>
+    <div id="root" style="position: relative; z-index: 0"></div>
+    <div id="modal-root" style="position: fixed; top:0; z-index: 1"></div>
   </body>
 </html>
