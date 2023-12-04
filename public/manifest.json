@@ -1,6 +1,6 @@
 {
-    "name": "Nomflix Web Manifest",
-    "short_name": "nomflix manifest",
+    "name": "Netflix Web Manifest",
+    "short_name": "Netflix",
     "icons": [
         {
             "src": "/favicon.ico",
