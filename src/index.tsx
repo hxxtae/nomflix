@@ -3,6 +3,10 @@ import { createRoot } from 'react-dom/client';
 import AllProvider from './AllProvider';
 import App from './App';
 
+const img = new Image();
+img.src = `${process.env.PUBLIC_URL}/assets/svg/netflix_logo.svg`;
+
+
 const el = document.getElementById('root');
 
 if (el) {
