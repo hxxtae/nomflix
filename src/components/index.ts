@@ -1,3 +1,4 @@
+// TSX
 export { default as Footer } from './Footer';
 export { default as Header } from './Header';
 export { default as Loading } from './Loading';
@@ -12,3 +13,5 @@ export { default as SearchBox } from './SearchBox';
 export { default as VideoPlayer } from './VideoPlayer';
 export { default as PortalModal } from './PortalModal';
 
+// HOC
+export { default as withSplashScreen } from './withSplashScreen';
