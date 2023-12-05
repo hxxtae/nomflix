@@ -1,11 +1,7 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
-import { publicUrlStr } from './utils'
-import { Header, Footer } from './components';
-import Movies from './pages/Movies';
-import Tv from './pages/Tv';
-import MyList from './pages/MyList';
-import Search from './pages/Search';
+import { Header, Footer, withSplashScreen } from './components';
+import RouterSwitch from './router';
 
 function App() {
   // console.log('App');
@@ -13,26 +9,13 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      <Switch>
-        <Route exact path={[`${publicUrlStr()}`, `${publicUrlStr()}/movies`, `${publicUrlStr()}/movies/:movieId`]}>
-          <Movies />
-        </Route>
-        <Route exact path={[`${publicUrlStr()}/tv`, `${publicUrlStr()}/tv/:tvId`]}>
-          <Tv />
-        </Route>
-        <Route exact path={`${publicUrlStr()}/mylist`}>
-          <MyList />
-        </Route>
-        <Route exact path={`${publicUrlStr()}/search`}>
-          <Search />
-        </Route>
-      </Switch>
+      <RouterSwitch />
       <Footer />
     </BrowserRouter>
   );
 }
 
-export default App;
+export default withSplashScreen(App);
 
 // NOTE: Refactoring
 // - /movies/:movieId 는 Home 컴포넌트에서 중첩 라우터로 따로 지정해 주어야 한다.

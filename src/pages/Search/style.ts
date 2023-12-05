@@ -17,5 +17,4 @@ export const Wrapper = styled.div`
   position: relative;
   padding-top: ${HEADER_HEIGHT}px;
   margin: 0px 4% 100px;
-  min-height: 100vh;
 `;

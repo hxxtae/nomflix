@@ -6,7 +6,6 @@ import { media } from '../../utils';
 export const Wrapper = styled.div`
   padding-top: ${HEADER_HEIGHT}px;
   margin: 0px 4% 100px;
-  min-height: 100vh;
 `;
 
 export const Title = styled.h2`
