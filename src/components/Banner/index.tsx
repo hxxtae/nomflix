@@ -3,7 +3,7 @@ import { faInfoCircle, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilValue } from 'recoil';
 import { useState, memo } from 'react'
 
-import { Loading, PortalModal, DetailView, SimpleView } from '../../components';
+import { PortalModal, DetailView, SimpleView } from '../../components';
 import { MovieCategory, TvCategory } from '../../constants';
 import { atomOfContentData } from '../../global'
 import { formatImagePath } from '../../utils';
@@ -38,24 +38,22 @@ function Banner({ kind }: IBanner) {
 
   return (
     <>
-      {contentData.id ?
-        <S.Banner bgphoto={formatImagePath(contentData.backdrop_path)}>
-          <S.Wrapper>
-            <S.Title>{kind <= 20 ? contentData.title : contentData.name}</S.Title>
-            <S.Overview>{contentData.overview}</S.Overview>
-            <S.ButtonWrapper>
-              <S.BannerButton onClick={showVideo}>
-                <FontAwesomeIcon icon={faPlay} />
-                <span>Play</span>
-              </S.BannerButton>
-              <S.BannerButton onClick={showDetail}>
-                <FontAwesomeIcon icon={faInfoCircle} />
-                <span>More Info</span>
-              </S.BannerButton>
-            </S.ButtonWrapper>
-          </S.Wrapper>
-        </S.Banner>
-        : <Loading />}
+      <S.Banner bgphoto={formatImagePath(contentData.backdrop_path)}>
+        <S.Wrapper>
+          <S.Title>{kind <= 20 ? contentData.title : contentData.name}</S.Title>
+          <S.Overview>{contentData.overview}</S.Overview>
+          <S.ButtonWrapper>
+            <S.BannerButton onClick={showVideo}>
+              <FontAwesomeIcon icon={faPlay} />
+              <span>Play</span>
+            </S.BannerButton>
+            <S.BannerButton onClick={showDetail}>
+              <FontAwesomeIcon icon={faInfoCircle} />
+              <span>More Info</span>
+            </S.BannerButton>
+          </S.ButtonWrapper>
+        </S.Wrapper>
+      </S.Banner>
       
       {detailState && 
         <PortalModal>
