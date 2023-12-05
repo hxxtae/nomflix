@@ -1,10 +1,18 @@
 {
   "files": {
-    "main.js": "/react-masterclass-nomflix/static/js/main.8027eca1.js",
+    "main.js": "/react-masterclass-nomflix/static/js/main.cfa52bd1.js",
+    "static/js/361.9917856d.chunk.js": "/react-masterclass-nomflix/static/js/361.9917856d.chunk.js",
+    "static/js/950.62b95789.chunk.js": "/react-masterclass-nomflix/static/js/950.62b95789.chunk.js",
+    "static/js/931.bd6dfb09.chunk.js": "/react-masterclass-nomflix/static/js/931.bd6dfb09.chunk.js",
+    "static/js/234.64a88639.chunk.js": "/react-masterclass-nomflix/static/js/234.64a88639.chunk.js",
     "index.html": "/react-masterclass-nomflix/index.html",
-    "main.8027eca1.js.map": "/react-masterclass-nomflix/static/js/main.8027eca1.js.map"
+    "main.cfa52bd1.js.map": "/react-masterclass-nomflix/static/js/main.cfa52bd1.js.map",
+    "361.9917856d.chunk.js.map": "/react-masterclass-nomflix/static/js/361.9917856d.chunk.js.map",
+    "950.62b95789.chunk.js.map": "/react-masterclass-nomflix/static/js/950.62b95789.chunk.js.map",
+    "931.bd6dfb09.chunk.js.map": "/react-masterclass-nomflix/static/js/931.bd6dfb09.chunk.js.map",
+    "234.64a88639.chunk.js.map": "/react-masterclass-nomflix/static/js/234.64a88639.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.8027eca1.js"
+    "static/js/main.cfa52bd1.js"
   ]
 }
