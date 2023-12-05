@@ -1,4 +1,4 @@
-import { useCallback, useState, useLayoutEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -64,7 +64,7 @@ function SliderContent({ data, kind, slider }: ISliderData) {
     setSlideIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   }, [toggleCaraucel, leaving, offset, kind]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!mediumL && !medium && !small && !smallS) {
       setOffset(6);
       return;
