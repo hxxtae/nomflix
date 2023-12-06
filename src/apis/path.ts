@@ -1,3 +1,5 @@
+import { publicUrlStr } from '../utils';
+
 type IMainKinds = 'movie' | 'tv';
 type ISubKinds = 'now_playing' | 'popular' | 'top_rated' | 'latest' | 'upcoming' | 'on_the_air' | 'airing_today' | 'similar' | 'credits';
 type IRequestKind = 'api_key' | 'token';
@@ -37,4 +39,11 @@ export const apiDetailPath = (detailId: string, kind: number) => {
 // -------------------------------------
 export const apiSearchPath = (page: number, mainKind: IMainKinds, query: string, include_adult: boolean = false) => {
   return `${BASE_URL}/search/${mainKind}?api_key=${API_KEY}&query=${query}&language=${LANGUAGE}&page=${page}&include_adult=${include_adult}`;
+}
+
+// -------------------------------------
+// USE TO Profiles Path
+// -------------------------------------
+export const apiProfilesPath = () => {
+  return `${publicUrlStr()}/temporary-data.json`;
 }

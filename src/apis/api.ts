@@ -1,5 +1,5 @@
-import { IContentDetailsData, IContentsData } from './dto';
-import { apiContentPath, apiDetailPath, apiSearchPath } from './path';
+import { IContentDetailsData, IContentsData, IProfilesData } from './dto';
+import { apiContentPath, apiDetailPath, apiProfilesPath, apiSearchPath } from './path';
 
 // const apiAccessToken = process.env.REACT_APP_API_ACCESS_TOKEN;
 
@@ -144,6 +144,9 @@ export async function getDetail(detail_id: string, kind: number): Promise<IConte
 // --------------------------
 // Movie & Tv Content Search api
 // --------------------------
+// - search movie
+// - search tv
+// --------------------------
 export async function getMovieSearch(page: number, query: string): Promise<IContentsData> {
   return (await fetch(apiSearchPath(page, 'movie', query))).json();
 }
@@ -160,5 +163,11 @@ export async function getTvSearchAll(query: string) {
   return Promise.all([getTvSearch(1, query), getTvSearch(2, query)]);
 }
 
+// --------------------------
+// Profiles api
+// --------------------------
+export async function getProfiles(): Promise<IProfilesData[]> {
+  return (await fetch(apiProfilesPath())).json();
+}
 
 

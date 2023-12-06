@@ -79,3 +79,9 @@ export interface IContentDetailsData {
     results: IVideos[];
   }
 }
+
+export interface IProfilesData {
+  id: number;
+  name: string;
+  background_path: string;
+}
