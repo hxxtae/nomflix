@@ -1,9 +1,11 @@
 import { useAnimation, useScroll, useMotionValueEvent } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
 
 import { publicUrlStr } from '../../utils';
 import { SearchBox } from '../../components';
+import { atomOfProfileData } from '../../global';
 import * as S from './style';
 
 const menus = [
@@ -26,6 +28,7 @@ function Header() {
   const { pathname } = useLocation();
   const { scrollY } = useScroll();
   const [selected, setSelected] = useState<string>(initSelect(pathname));
+  const profileData = useRecoilValue(atomOfProfileData);
 
   useMotionValueEvent(scrollY, 'change', (getY) => {
     getY > 40 ?
@@ -61,6 +64,9 @@ function Header() {
       </S.Col>
       <S.Col>
         <SearchBox />
+        <S.ProfileBox layoutId={profileData.id ? '' : 'profile'}>
+          <img src={profileData.background_path} alt="user profile icon" />
+        </S.ProfileBox>
       </S.Col>
     </S.Nav>
   );

@@ -89,3 +89,24 @@ export const Line = styled(motion.span)`
   right: 0;
   background-color: ${(props) => props.theme.mainColor};
 `;
+
+export const ProfileBox = styled(motion.div)`
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  margin-left: 30px;
+  background-color: ${({ theme }) => theme.bgColor};
+  overflow: hidden;
+  cursor: pointer;
+
+  img {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  ${media('mobile')} {
+    margin-left: 10px;
+  }
+`;
