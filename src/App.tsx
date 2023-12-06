@@ -1,15 +1,21 @@
 import { BrowserRouter } from 'react-router-dom';
+import { useState } from 'react';
 
-import { Header, Footer, withSplashScreen } from './components';
+import { Header, Footer, withSplashScreen, Profiles } from './components';
 import RouterSwitch from './router';
 
 function App() {
   // console.log('App');
+  const [profileState, setProfileState] = useState(true);
+  const onChoiseProfile = () => {
+    setProfileState(false);
+  }
   
   return (
     <BrowserRouter>
       <Header />
       <RouterSwitch />
+      {profileState && <Profiles onChoiseProfile={onChoiseProfile} />}
       <Footer />
     </BrowserRouter>
   );
