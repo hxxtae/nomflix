@@ -12,6 +12,7 @@ export { default as SimpleView } from './SimpleView';
 export { default as SearchBox } from './SearchBox';
 export { default as VideoPlayer } from './VideoPlayer';
 export { default as PortalModal } from './PortalModal';
+export { default as Profiles } from './Profiles';
 
 // HOC
 export { default as withSplashScreen } from './withSplashScreen';
