@@ -11,4 +11,13 @@ export const atomOfContentData = atom<dto.IContentData>({
 export const atomOfMylistData = atom<Map<number, dto.IContentData>>({
   key: 'mylistState',
   default: getContentsStorage('mylist')
+});
+
+export const atomOfProfileData = atom<dto.IProfilesData>({
+  key: 'profileState',
+  default: {
+    id: 0,
+    name: '',
+    background_path: ''
+  }
 })
