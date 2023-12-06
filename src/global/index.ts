@@ -1,5 +1,6 @@
-export { atomOfContentData, atomOfMylistData } from './globalState';
+export { atomOfContentData, atomOfMylistData, atomOfProfileData } from './globalState';
 export {
   GlobalStyled,
-  HEADER_HEIGHT
+  HEADER_HEIGHT,
+  LAYOUT_Z_INDEX
 } from './globalStyle';

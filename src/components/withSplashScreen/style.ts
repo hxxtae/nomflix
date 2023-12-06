@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+
 import { media } from '../../utils';
+import { LAYOUT_Z_INDEX } from '../../global';
 
 export const splashVariant = {
   variants: {
@@ -32,7 +34,7 @@ export const Section = styled(motion.section)`
   height: 100vh;
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.mainColor};
-  z-index: 100;
+  z-index: ${LAYOUT_Z_INDEX.splash};
 `;
 
 export const ImageBox = styled.div`

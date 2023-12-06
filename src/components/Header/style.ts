@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import styled from 'styled-components';
 
-import { HEADER_HEIGHT } from '../../global';
+import { HEADER_HEIGHT, LAYOUT_Z_INDEX } from '../../global';
 import { media } from '../../utils';
 
 export const menuVariants = {
@@ -26,7 +26,7 @@ export const Nav = styled(motion.menu)`
   font-size: 14px;
   padding: 0px 60px;
   color: white;
-  z-index: 10;
+  z-index: ${LAYOUT_Z_INDEX.header};
 
   ${media('mobile')} {
     font-size: .7rem;
@@ -51,7 +51,7 @@ export const Logo = styled.a`
 
   ${media('mobile')} {
     width: 75px;
-    margin-right: 30px;
+    margin-right: 20px;
   }
 `;
 
