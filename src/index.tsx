@@ -18,7 +18,7 @@ if (el) {
   )
 }
 
-console.log('Website by %c https://heetae.me ', `
+console.log('Website by %c https://heetae.dev ', `
   font-size: 14px; 
   line-height: 44px;
   color: #e7e7e7;
