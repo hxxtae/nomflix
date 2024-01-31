@@ -34,7 +34,7 @@ export const FooterBox = styled.div`
     font-size: 20px;
 
     &:first-child {
-      margin-right: 50px;
+      /* margin-right: 50px; */
     }
   }
 
