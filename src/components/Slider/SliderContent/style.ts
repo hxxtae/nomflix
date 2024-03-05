@@ -25,10 +25,17 @@ export const NextButton = styled.button`
   height: 100%;
   border: transparent;
   border-radius: 5px;
-  background-color: rgba(0, 0, 0, .5);
-  color: rgba(255, 255, 255, 1);
+  background-color: rgba(0, 0, 0, .4);
+  color: rgba(255, 255, 255, .2);
   cursor: pointer;
+
+  &:active,
+  &:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+
   ${media('mobile')} {
     width: 30px;
+    font-size: 10px;
   }
 `;
