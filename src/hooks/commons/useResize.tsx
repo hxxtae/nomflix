@@ -23,14 +23,17 @@ export function useResize( classname: string, other?: any ) {
   // Init element set height
   // -----------------------
   useEffect(() => {
-    const timeRef = window.setTimeout(() => {
+    const timeRef = window.setInterval(() => {
       const $ul = document.querySelector(classname);
       if (!$ul) return;
       setSize($ul.clientHeight);
+      if ($ul.clientHeight > 50) {
+        window.clearInterval(timeRef)
+      }
     }, 500);
 
     return () => {
-      window.clearTimeout(timeRef);
+      window.clearInterval(timeRef);
     }
   }, [classname]);
 
