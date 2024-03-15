@@ -21,6 +21,7 @@ export function useResize( classname: string, other?: any ) {
 
   // -----------------------
   // Init element set height
+  // - min height: 30
   // -----------------------
   useEffect(() => {
     const timeRef = window.setInterval(() => {
