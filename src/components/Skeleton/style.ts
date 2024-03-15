@@ -46,6 +46,12 @@ export const Box = styled.div`
     border-radius: 50%;
   }
 
+  &.profile-square {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+  }
+
   @keyframes pulse {
     50% {
       opacity: .4;
