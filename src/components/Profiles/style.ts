@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 import { LAYOUT_Z_INDEX } from '../../global';
+import { media } from '../../utils';
 
 export const Wrapper = styled.section`
   position: fixed;
@@ -62,4 +63,12 @@ export const Title = styled.span`
   text-align: center;
   text-overflow: ellipsis;
   overflow: hidden;
+
+  ${media('tablet')} {
+    font-size: 16px;
+  }
+
+  ${media('mobile')} {
+    font-size: 14px;
+  }
 `;

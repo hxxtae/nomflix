@@ -27,6 +27,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  user-select: none;
 
   ${media('mobile')} {
     width: 70%;
