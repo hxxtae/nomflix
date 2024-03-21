@@ -1,5 +1,5 @@
 {
-  "name": "react-masterclass-nomflix",
+  "name": "nomflix",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -66,5 +66,5 @@
     "@types/testing-library__jest-dom": "^6.0.0",
     "@types/testing-library__user-event": "^4.2.0"
   },
-  "homepage": "https://hxxtae.github.io/react-masterclass-nomflix"
+  "homepage": "https://hxxtae.github.io/nomflix"
 }

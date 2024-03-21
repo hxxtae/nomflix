@@ -10,7 +10,7 @@ function Footer() {
         <span>Side Project : Netflix Clone Website.</span>
       </S.FooterText>
       <S.FooterBox>
-        <a title="깃 허브" href="https://github.com/hxxtae/react-masterclass-nomflix" target='_blank' rel="noopener noreferrer" >
+        <a title="깃 허브" href="https://github.com/hxxtae/nomflix" target='_blank' rel="noopener noreferrer" >
           <i className="fab fa-github"></i>
         </a>
         {/* <a title="노마드코더" href="https://nomadcoders.co/" target="_blank" rel="noopener noreferrer" >

@@ -11,15 +11,15 @@
 </p>
    
 <p align="center">
-  <img src="https://img.shields.io/github/languages/code-size/hxxtae/react-masterclass-nomflix?color=%23&logo=github" alt="git-code-size">
-  <img src="https://img.shields.io/github/repo-size/hxxtae/react-masterclass-nomflix?color=%23&logo=github" alt="git-repository-size">
-  <img src="https://img.shields.io/github/last-commit/hxxtae/react-masterclass-nomflix?color=%23e7e7e7&logo=github" alt="git-last-commit">
-  <img src="https://img.shields.io/github/checks-status/hxxtae/react-masterclass-nomflix/gh-pages?label=main&logo=github" alt="git-branch-check-state">
-  <img src="https://img.shields.io/github/deployments/hxxtae/react-masterclass-nomflix/github-pages?label=deploy-state&logo=github" alt="git-deployments">
+  <img src="https://img.shields.io/github/languages/code-size/hxxtae/nomflix?color=%23&logo=github" alt="git-code-size">
+  <img src="https://img.shields.io/github/repo-size/hxxtae/nomflix?color=%23&logo=github" alt="git-repository-size">
+  <img src="https://img.shields.io/github/last-commit/hxxtae/nomflix?color=%23e7e7e7&logo=github" alt="git-last-commit">
+  <img src="https://img.shields.io/github/checks-status/hxxtae/nomflix/gh-pages?label=main&logo=github" alt="git-branch-check-state">
+  <img src="https://img.shields.io/github/deployments/hxxtae/nomflix/github-pages?label=deploy-state&logo=github" alt="git-deployments">
   <br>
-  <img src="https://img.shields.io/github/languages/top/hxxtae/react-masterclass-nomflix" alt="git-top-language">
-  <img src="https://img.shields.io/github/languages/count/hxxtae/react-masterclass-nomflix" alt="git-language-count">
-  <img src="https://img.shields.io/github/directory-file-count/hxxtae/react-masterclass-nomflix" alt="git-repo-file-count">
+  <img src="https://img.shields.io/github/languages/top/hxxtae/nomflix" alt="git-top-language">
+  <img src="https://img.shields.io/github/languages/count/hxxtae/nomflix" alt="git-language-count">
+  <img src="https://img.shields.io/github/directory-file-count/hxxtae/nomflix" alt="git-repo-file-count">
 </p>
 
 ## index
@@ -65,7 +65,7 @@
 
 This project is licensed under the MIT License.
 
-![git-license](https://img.shields.io/github/license/hxxtae/react-masterclass-nomflix?color=%23e7e7e7&logo=github&style=for-the-badge)
+![git-license](https://img.shields.io/github/license/hxxtae/?color=%23e7e7e7&logo=github&style=for-the-badge)
 
 <br />
 <br />
