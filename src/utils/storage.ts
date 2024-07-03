@@ -32,3 +32,20 @@ export const deleteContentStorage = (storage_key: string, delete_id: number) => 
   return contentMap;
 }
 
+// --------------------------------------
+// Get/Set Splash Screen state (SessionStorage)
+// --------------------------------------
+const SPLASH_KEY = 'nomflix_splash';
+
+export const onSplashStorage = (): boolean => {
+  const splashState = sessionStorage.getItem(SPLASH_KEY);
+  if (!splashState || !splashState.length || JSON.parse(splashState) === 'true') {
+    return true;
+  }
+  return false;
+}
+
+export const offSplashStorage = (): void => {
+  sessionStorage.setItem(SPLASH_KEY, JSON.stringify('false'));
+}
+

@@ -1,7 +1,7 @@
 import { useState, useEffect, FunctionComponent } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
-import { publicUrlStr } from '../../utils';
+import { offSplashStorage, onSplashStorage, publicUrlStr } from '../../utils';
 import * as S from './style';
 
 function SplashMessage() {
@@ -16,17 +16,19 @@ function SplashMessage() {
 
 function withSplashScreen<wrappedProps extends {}>(WrappedComponent: FunctionComponent<wrappedProps>) {
   return (props: wrappedProps) => {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(onSplashStorage());
 
     useEffect(() => {
       const apiRequest = async () => {
         try {
           // Put here your await requests / API requests
           setTimeout(() => {
+            offSplashStorage()
             setIsLoading(false);
           }, 2500);
         } catch (err) {
           console.log(err);
+          offSplashStorage()
           setIsLoading(false);
         }
       }
