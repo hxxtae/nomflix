@@ -18,8 +18,11 @@ interface IOptions {
 // USE TO Movie & Tv Content Path
 // --------------------------------------
 export const apiContentPath = (page: number, mainKind: IMainKinds, subKind: ISubKinds, options: IOptions = {}) => {
-  const { request_id: content_Id = '' } = options;
-  return `${BASE_URL}/${mainKind}/${content_Id}/${subKind}?api_key=${API_KEY}&page=${page}`;
+  const { request_id: content_Id } = options;
+  if (content_Id) {
+    return `${BASE_URL}/${mainKind}/${content_Id}/${subKind}?api_key=${API_KEY}&page=${page}`;
+  }
+  return `${BASE_URL}/${mainKind}/${subKind}?api_key=${API_KEY}&page=${page}`;
 }
 
 // -------------------------------------
